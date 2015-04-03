@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+	<metadata>
+		<id>Linq2Rest.Reactive</id>
+		<version>4.1.0.0</version>
+		<title>Reactive Extensions for Linq2Rest</title>
+		<authors>Jacob Reimers</authors>
+		<owners>Jacob Reimers</owners>
+		<licenseUrl>http://www.opensource.org/licenses/MS-PL</licenseUrl>
+		<projectUrl>https://bitbucket.org/jjrdk/linq2rest</projectUrl>
+		<iconUrl>https://bitbucket-assetroot.s3.amazonaws.com/c/photos/2013/Sep/07/linq2rest-logo-4047795347-2_avatar.png</iconUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>Generates OData style Rx Observables from LINQ queries against a REST service.</description>
+		<releaseNotes>Added support for observing GET, POST, PUT and DELETE operations. Added support for WP8. Updated to use Rx v. 2.2.2.</releaseNotes>
+		<copyright>Jacob Reimers (Reimers.dk)</copyright>
+		<tags>OData LINQ REST Rx Reactive SL5 WP8 WinRT</tags>
+		<dependencies>
+			<group>
+				<dependency id="Rx-Providers"
+							version="2.2.4" />
+				<dependency id="Linq2Rest"
+							version="4.1.0.0" />
+			</group>
+			<group targetFramework="net45">
+				<dependency id="Rx-Providers"
+							version="2.2.4" />
+				<dependency id="Linq2Rest"
+							version="4.1.0.0" />
+			</group>
+			<group targetFramework="wp8">
+				<dependency id="Rx-Providers"
+							version="2.2.4" />
+			</group>
+			<group targetFramework="NetCore45">
+				<dependency id="Rx-Providers"
+							version="2.2.4" />
+			</group>
+		</dependencies>
+		<frameworkAssemblies>
+			<frameworkAssembly assemblyName="System" />
+			<frameworkAssembly assemblyName="System.Core" />
+			<frameworkAssembly assemblyName="Microsoft.CSharp"
+							   targetFramework="net45" />
+		</frameworkAssemblies>
+		<references>
+			<reference file="Linq2Rest.Reactive.dll" />
+			<reference file="Linq2Rest.Reactive.xml" />
+		</references>
+	</metadata>
+	<files>
+		<file src="Linq2Rest.Reactive\bin\v4.0\Release\Linq2Rest.Reactive.dll"
+			  target="lib\Net40" />
+		<file src="Linq2Rest.Reactive\bin\v4.0\Release\Linq2Rest.Reactive.xml"
+			  target="lib\Net40" />
+		<file src="Linq2Rest.Reactive\bin\v4.0\Release\CodeContracts\Linq2Rest.Reactive.Contracts.dll"
+			  target="lib\Net40\CodeContracts" />
+		<file src="Linq2Rest.Reactive\bin\v4.5\Release\Linq2Rest.Reactive.dll"
+			  target="lib\Net45" />
+		<file src="Linq2Rest.Reactive\bin\v4.5\Release\Linq2Rest.Reactive.xml"
+			  target="lib\Net45" />
+		<file src="Linq2Rest.Reactive\bin\v4.5\Release\CodeContracts\Linq2Rest.Reactive.Contracts.dll"
+			  target="lib\Net45\CodeContracts" />
+		<file src="Linq2Rest.Reactive\bin\v4.5.1\Release\Linq2Rest.Reactive.dll"
+			  target="lib\Net451" />
+		<file src="Linq2Rest.Reactive\bin\v4.5.1\Release\Linq2Rest.Reactive.xml"
+			  target="lib\Net451" />
+		<file src="Linq2Rest.Reactive\bin\v4.5.1\Release\CodeContracts\Linq2Rest.Reactive.Contracts.dll"
+			  target="lib\Net451\CodeContracts" />
+		<file src="Linq2Rest.Reactive.WinPhone\bin\wp8\Release\Linq2Rest.Reactive.dll"
+			  target="lib\wp8" />
+		<file src="Linq2Rest.Reactive.WinPhone\bin\wp8\Release\Linq2Rest.Reactive.xml"
+			  target="lib\wp8" />
+		<file src="Linq2Rest.Reactive.WinRT\bin\Release\Linq2Rest.Reactive.dll"
+			  target="lib\NetCore45" />
+		<file src="Linq2Rest.Reactive.WinRT\bin\Release\Linq2Rest.Reactive.xml"
+			  target="lib\NetCore45" />
+		<file src="Linq2Rest.Reactive.WinRT\bin\Release\CodeContracts\Linq2Rest.Reactive.Contracts.dll"
+			  target="lib\NetCore45\CodeContracts" />
+	</files>
+</package>

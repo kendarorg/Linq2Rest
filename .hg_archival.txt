@@ -1,0 +1,6 @@
+repo: a9fe769f576dcddb30be7e24087970fe20d6f042
+node: a69c105090179dfe576084bea71402cdc7d604ca
+branch: default
+latesttag: Released Linq2Rest 4.0.1.0
+latesttag: Released Linq2Rest.Reactive 4.0.1.0
+latesttagdistance: 13

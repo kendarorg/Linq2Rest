@@ -1,0 +1,18 @@
+syntax: glob
+_ReSharper.*
+*.suo
+bin
+obj
+*.dotCover
+*.user
+*.nupkg
+*.Cache
+packages
+*.pidb
+*.userprefs
+Bin
+*.xap
+TestResult.xml
+*.Moles.dll
+*.snk
+*.ide
