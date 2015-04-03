@@ -22,7 +22,7 @@ namespace Linq2Rest
 	using Linq2Rest.Parser.Readers;
 	using Linq2Rest.Provider;
 	using Linq2Rest.Provider.Writers;
-
+    
 	/// <summary>
 	/// Converts LINQ expressions to OData queries.
 	/// </summary>

@@ -12,6 +12,17 @@
 
 namespace Linq2Rest
 {
+    /// <summary>
+    /// Settings
+    /// </summary>
+    public static class Linq2RestSettings
+    {
+        /// <summary>
+        /// If should use contains instead of substring
+        /// </summary>
+        public static bool UseContainsInsteadOfSubstring { get; set; }
+    }
+
 	internal static class StringConstants
 	{
 		internal const string OrderByParameter = "$orderby";

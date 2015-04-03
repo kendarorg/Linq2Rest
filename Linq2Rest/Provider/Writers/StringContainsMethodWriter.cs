@@ -37,10 +37,20 @@ namespace Linq2Rest.Provider.Writers
 			Contract.Assume(obj != null);
 			Contract.Assume(argumentExpression != null);
 
-			return string.Format(
-				"substringof({0}, {1})", 
-				expressionWriter(argumentExpression), 
-				expressionWriter(obj));
+		    if (Linq2RestSettings.UseContainsInsteadOfSubstring)
+		    {
+		        return string.Format(
+		            "contains({1}, {0})",
+		            expressionWriter(argumentExpression),
+		            expressionWriter(obj));
+		    }
+		    else
+		    {
+                return string.Format(
+                "substringof({0}, {1})",
+                expressionWriter(argumentExpression),
+                expressionWriter(obj));
+		    }
 		}
 	}
 }
