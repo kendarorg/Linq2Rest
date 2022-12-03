@@ -25,11 +25,11 @@ namespace Linq2Rest.Provider
 		public RestGetQueryProvider(IRestClient client, ISerializerFactory serializerFactory, IExpressionProcessor expressionProcessor, IMemberNameResolver memberNameResolver, IEnumerable<IValueWriter> valueWriters, Type sourceType)
 			: base(client, serializerFactory, expressionProcessor, memberNameResolver, valueWriters, sourceType)
 		{
-			Contract.Requires(client != null);
-			Contract.Requires(serializerFactory != null);
-			Contract.Requires(expressionProcessor != null);
-			Contract.Requires(valueWriters != null);
-			Contract.Requires(sourceType != null);
+			
+			
+			
+			
+			
 		}
 
 		protected override Func<IRestClient, ISerializerFactory, IMemberNameResolver, IEnumerable<IValueWriter>, Expression, Type, IQueryable<TResult>> CreateQueryable<TResult>()
@@ -44,7 +44,7 @@ namespace Linq2Rest.Provider
 			var serializer = GetSerializer(builder.SourceType);
 			var resultSet = serializer.DeserializeList(response);
 
-			Contract.Assume(resultSet != null);
+			
 
 			return resultSet;
 		}
@@ -63,12 +63,12 @@ namespace Linq2Rest.Provider
 
 		private IQueryable<TResult> InnerCreateQueryable<TResult>(IRestClient client, ISerializerFactory serializerFactory, IMemberNameResolver memberNameResolver, IEnumerable<IValueWriter> valueWriters, Expression expression, Type sourceType)
 		{
-			Contract.Requires(client != null);
-			Contract.Requires(serializerFactory != null);
-			Contract.Requires(memberNameResolver != null);
-			Contract.Requires(valueWriters != null);
-			Contract.Requires(expression != null);
-			Contract.Requires(sourceType != null);
+			
+			
+			
+			
+			
+			
 
 			return new RestGetQueryable<TResult>(
 				client,

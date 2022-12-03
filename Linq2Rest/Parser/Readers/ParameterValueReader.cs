@@ -25,7 +25,7 @@ namespace Linq2Rest.Parser.Readers
 
 		public ParameterValueReader(IEnumerable<IValueExpressionFactory> expressionFactories)
 		{
-			Contract.Requires(expressionFactories != null);
+			
 
 			_expressionFactories = expressionFactories.Concat(
 				new IValueExpressionFactory[]
@@ -54,8 +54,8 @@ namespace Linq2Rest.Parser.Readers
 
 		public Expression Read(Type type, string token, IFormatProvider formatProvider)
 		{
-			Contract.Requires(token != null);
-			Contract.Requires(type != null);
+			
+			
 
 			var factory = _expressionFactories.FirstOrDefault(x => x.Handles(type));
 
@@ -66,7 +66,7 @@ namespace Linq2Rest.Parser.Readers
 
 		private static Expression GetParseExpression(string filter, IFormatProvider formatProvider, Type type)
 		{
-			Contract.Requires(type != null);
+			
 
 			var parseMethods = type.GetMethods(BindingFlags.Static | BindingFlags.Public).Where(x => x.Name == "Parse").ToArray();
 			if (parseMethods.Length > 0)
@@ -104,8 +104,8 @@ namespace Linq2Rest.Parser.Readers
 
 		private Expression GetKnownConstant(Type type, string token, IFormatProvider formatProvider)
 		{
-			Contract.Requires(token != null);
-			Contract.Requires(type != null);
+			
+			
 
 			if (type.IsEnum)
 			{
@@ -139,7 +139,7 @@ namespace Linq2Rest.Parser.Readers
 		[ContractInvariantMethod]
 		private void Invariants()
 		{
-			Contract.Invariant(_expressionFactories != null);
+			
 		}
 	}
 }

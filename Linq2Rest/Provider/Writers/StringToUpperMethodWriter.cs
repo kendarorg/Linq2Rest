@@ -20,7 +20,7 @@ namespace Linq2Rest.Provider.Writers
 	{
 		public bool CanHandle(MethodCallExpression expression)
 		{
-			Contract.Assert(expression.Method != null);
+			
 
 			return expression.Method.DeclaringType == typeof(string)
 				   && (expression.Method.Name == "ToUpper" || expression.Method.Name == "ToUpperInvariant");
@@ -30,7 +30,7 @@ namespace Linq2Rest.Provider.Writers
 		{
 			var obj = expression.Object;
 
-			Contract.Assume(obj != null);
+			
 
 			return string.Format("toupper({0})", expressionWriter(obj));
 		}

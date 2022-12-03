@@ -126,7 +126,7 @@ namespace Linq2Rest.Parser
 
 		public static TokenSet GetArithmeticToken(this string expression)
 		{
-			Contract.Requires<ArgumentNullException>(expression != null);
+			
 
 			var cleanMatch = expression.EnclosedMatch();
 
@@ -157,7 +157,7 @@ namespace Linq2Rest.Parser
 
 		public static TokenSet GetAnyAllFunctionTokens(this string filter)
 		{
-			Contract.Requires(filter != null);
+			
 
 			var functionMatch = AnyAllFunctionRx.Match(filter);
 			if (!functionMatch.Success)
@@ -179,7 +179,7 @@ namespace Linq2Rest.Parser
 
 		public static TokenSet GetFunctionTokens(this string filter)
 		{
-			Contract.Requires(filter != null);
+			
 
 			var functionMatch = FunctionRx.Match(filter);
 			if (!functionMatch.Success)
@@ -209,7 +209,7 @@ namespace Linq2Rest.Parser
 
 		private static int GetArithmeticOperationIndex(IList<string> blocks)
 		{
-			Contract.Requires(blocks != null);
+			
 
 			var openGroups = 0;
 			var operationIndex = -1;
@@ -217,7 +217,7 @@ namespace Linq2Rest.Parser
 			{
 				var source = blocks[i];
 
-				Contract.Assume(source != null, "Does not generate null token parts.");
+				
 
 				var netEnclosed = source.Count(c => c == '(') - source.Count(c => c == ')');
 				openGroups += netEnclosed;
@@ -233,7 +233,7 @@ namespace Linq2Rest.Parser
 
 		private static bool HasOrphanedOpenParenthesis(string expression)
 		{
-			Contract.Requires(expression != null);
+			
 
 			var opens = new List<int>();
 			var closes = new List<int>();

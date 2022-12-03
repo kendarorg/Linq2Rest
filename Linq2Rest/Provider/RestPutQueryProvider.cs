@@ -28,11 +28,11 @@ namespace Linq2Rest.Provider
 		public RestPutQueryProvider(IRestClient client, ISerializerFactory serializerFactory, IExpressionProcessor expressionProcessor, IMemberNameResolver memberNameResolver, IEnumerable<IValueWriter> valueWriters, Stream inputData, Type sourceType)
 			: base(client, serializerFactory, expressionProcessor, memberNameResolver, valueWriters, sourceType)
 		{
-			Contract.Requires(client != null);
-			Contract.Requires(serializerFactory != null);
-			Contract.Requires(expressionProcessor != null);
-			Contract.Requires(valueWriters != null);
-			Contract.Requires(inputData != null);
+			
+			
+			
+			
+			
 
 			_inputData = inputData;
 		}
@@ -49,7 +49,7 @@ namespace Linq2Rest.Provider
 			var serializer = GetSerializer(builder.SourceType);
 			var resultSet = serializer.DeserializeList(response);
 
-			Contract.Assume(resultSet != null);
+			
 
 			return resultSet;
 		}
@@ -67,11 +67,11 @@ namespace Linq2Rest.Provider
 		
 		private IQueryable<TResult> InnerCreateQueryable<TResult>(IRestClient client, ISerializerFactory serializerFactory, IMemberNameResolver memberNameResolver, IEnumerable<IValueWriter> valueWriters, Expression expression, Type sourceType)
 		{
-			Contract.Requires(client != null);
-			Contract.Requires(serializerFactory != null);
-			Contract.Requires(expression != null);
-			Contract.Requires(memberNameResolver != null);
-			Contract.Requires(valueWriters != null);
+			
+			
+			
+			
+			
 
 			return new RestGetQueryable<TResult>(client, serializerFactory, memberNameResolver, valueWriters, sourceType, expression);
 		}
@@ -79,7 +79,7 @@ namespace Linq2Rest.Provider
 		[ContractInvariantMethod]
 		private void Invariants()
 		{
-			Contract.Invariant(_inputData != null);
+			
 		}
 	}
 }

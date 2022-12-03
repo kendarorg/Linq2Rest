@@ -32,7 +32,7 @@ namespace Linq2Rest.Parser
 		/// <param name="direction">The sort direction.</param>
 		public SortDescription(Expression keySelector, SortDirection direction)
 		{
-			Contract.Requires<ArgumentNullException>(keySelector != null);
+			
 
 			_keySelector = keySelector;
 			_direction = direction;
@@ -57,7 +57,7 @@ namespace Linq2Rest.Parser
 		[ContractInvariantMethod]
 		private void Invariants()
 		{
-			Contract.Invariant(_keySelector != null);
+			
 		}
 	}
 }

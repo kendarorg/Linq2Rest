@@ -36,7 +36,7 @@ namespace Linq2Rest.Provider
 
 		public ExpressionWriter(IMemberNameResolver memberNameResolver, IEnumerable<IValueWriter> valueWriters)
 		{
-			Contract.Requires<ArgumentNullException>(memberNameResolver != null);
+			
 
 			_valueWriter = new ParameterValueWriter(valueWriters ?? new IntValueWriter[0]);
 			_memberNameResolver = memberNameResolver;
@@ -68,14 +68,14 @@ namespace Linq2Rest.Provider
 
 		private static Type GetUnconvertedType(Expression expression)
 		{
-			Contract.Requires(expression != null);
+			
 
 			switch (expression.NodeType)
 			{
 				case ExpressionType.Convert:
 					var unaryExpression = expression as UnaryExpression;
 
-					Contract.Assume(unaryExpression != null, "Matches node type.");
+					
 
 					return unaryExpression.Operand.Type;
 				default:
@@ -85,8 +85,8 @@ namespace Linq2Rest.Provider
 
 		private static string GetMemberCall(MemberExpression memberExpression)
 		{
-			Contract.Requires(memberExpression != null);
-			Contract.Ensures(Contract.Result<string>() != null);
+			
+			
 
 			var declaringType = memberExpression.Member.DeclaringType;
 			var name = memberExpression.Member.Name;
@@ -159,7 +159,7 @@ namespace Linq2Rest.Provider
 
 		private static object GetValue(Expression input)
 		{
-			Contract.Requires(input != null);
+			
 
 			var objectMember = Expression.Convert(input, typeof(object));
 			var getterLambda = Expression.Lambda<Func<object>>(objectMember).Compile();
@@ -192,7 +192,7 @@ namespace Linq2Rest.Provider
 
 		private static string GetOperation(Expression expression)
 		{
-			Contract.Requires(expression != null);
+			
 
 			switch (expression.NodeType)
 			{
@@ -255,15 +255,15 @@ namespace Linq2Rest.Provider
 
 		private string Write(Expression expression, Type type, ParameterExpression rootParameter, Type sourceType)
 		{
-			Contract.Requires(expression != null);
-			Contract.Requires(type != null);
+			
+			
 
 			switch (expression.NodeType)
 			{
 				case ExpressionType.Parameter:
 					var parameterExpression = expression as ParameterExpression;
 
-					Contract.Assume(parameterExpression != null);
+					
 
 					return parameterExpression.Name;
 				case ExpressionType.Constant:
@@ -324,7 +324,7 @@ namespace Linq2Rest.Provider
 		{
 			var lambdaExpression = expression as LambdaExpression;
 
-			Contract.Assume(lambdaExpression != null);
+			
 
 			var body = lambdaExpression.Body;
 			return Write(body, rootParameter, sourceType);
@@ -334,7 +334,7 @@ namespace Linq2Rest.Provider
 		{
 			var unaryExpression = expression as UnaryExpression;
 
-			Contract.Assume(unaryExpression != null);
+			
 
 			var operand = unaryExpression.Operand;
 
@@ -345,7 +345,7 @@ namespace Linq2Rest.Provider
 		{
 			var unaryExpression = expression as UnaryExpression;
 
-			Contract.Assume(unaryExpression != null);
+			
 
 			var operand = unaryExpression.Operand;
 
@@ -356,7 +356,7 @@ namespace Linq2Rest.Provider
 		{
 			var unaryExpression = expression as UnaryExpression;
 
-			Contract.Assume(unaryExpression != null);
+			
 
 			var operand = unaryExpression.Operand;
 			return Write(operand, rootParameterName, sourceType);
@@ -366,7 +366,7 @@ namespace Linq2Rest.Provider
 		{
 			var methodCallExpression = expression as MethodCallExpression;
 
-			Contract.Assume(methodCallExpression != null);
+			
 
 			return GetMethodCall(methodCallExpression, rootParameterName, sourceType);
 		}
@@ -375,7 +375,7 @@ namespace Linq2Rest.Provider
 		{
 			var memberExpression = expression as MemberExpression;
 
-			Contract.Assume(memberExpression != null);
+			
 
 			if (memberExpression.Expression == null)
 			{
@@ -413,7 +413,7 @@ namespace Linq2Rest.Provider
 				var collapsedExpression = CollapseCapturedOuterVariables(memberExpression);
 				if (!(collapsedExpression is MemberExpression))
 				{
-					Contract.Assume(collapsedExpression != null);
+					
 
 					return Write(collapsedExpression, rootParameterName, sourceType);
 				}
@@ -425,7 +425,7 @@ namespace Linq2Rest.Provider
 
 			var innerExpression = memberExpression.Expression;
 
-			Contract.Assume(innerExpression != null);
+			
 
 			return string.IsNullOrWhiteSpace(memberCall)
 					   ? prefix
@@ -436,7 +436,7 @@ namespace Linq2Rest.Provider
 		{
 			var unaryExpression = expression as UnaryExpression;
 
-			Contract.Assume(unaryExpression != null);
+			
 
 			var operand = unaryExpression.Operand;
 
@@ -447,7 +447,7 @@ namespace Linq2Rest.Provider
 		{
 			var binaryExpression = expression as BinaryExpression;
 
-			Contract.Assume(binaryExpression != null);
+			
 
 			var operation = GetOperation(binaryExpression);
 
@@ -518,7 +518,7 @@ namespace Linq2Rest.Provider
 
 		private string GetMethodCall(MethodCallExpression expression, ParameterExpression rootParameterName, Type sourceType)
 		{
-			Contract.Requires(expression != null);
+			
 
 			var methodCallWriter = _methodCallWriters.FirstOrDefault(w => w.CanHandle(expression));
 			if (methodCallWriter == null)

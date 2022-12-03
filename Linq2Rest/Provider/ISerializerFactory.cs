@@ -42,13 +42,13 @@ namespace Linq2Rest.Provider
 	{
 		public ISerializer<T> Create<T>()
 		{
-			Contract.Ensures(Contract.Result<ISerializer<T>>() != null);
+			
 			throw new NotImplementedException();
 		}
 
 		public ISerializer<T> Create<T, TSource>()
 		{
-			Contract.Ensures(Contract.Result<ISerializer<T>>() != null);
+			
 			throw new NotImplementedException();
 		}
 	}

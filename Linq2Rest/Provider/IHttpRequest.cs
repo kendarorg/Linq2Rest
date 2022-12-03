@@ -69,16 +69,16 @@ namespace Linq2Rest.Provider
     {
         public Stream GetRequestStream()
         {
-            Contract.Ensures(Contract.Result<Stream>() != null);
-            Contract.Ensures(Contract.Result<Stream>().CanWrite);
+            
+            
 
             throw new NotImplementedException();
         }
 
         public Stream GetResponseStream()
         {
-            Contract.Ensures(Contract.Result<Stream>() != null);
-            Contract.Ensures(Contract.Result<Stream>().CanRead);
+            
+            
 
             throw new NotImplementedException();
         }

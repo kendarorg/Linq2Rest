@@ -22,7 +22,7 @@ namespace Linq2Rest.Provider.Writers
 
 		public DefaultMethodWriter(ParameterValueWriter valueWriter)
 		{
-			Contract.Requires(valueWriter != null);
+			
 
 			_valueWriter = valueWriter;
 		}
@@ -39,7 +39,7 @@ namespace Linq2Rest.Provider.Writers
 
 		private static object GetValue(Expression input)
 		{
-			Contract.Requires(input != null);
+			
 
 			var objectMember = Expression.Convert(input, typeof(object));
 			var getterLambda = Expression.Lambda<Func<object>>(objectMember).Compile();
@@ -50,7 +50,7 @@ namespace Linq2Rest.Provider.Writers
 		[ContractInvariantMethod]
 		private void Invariants()
 		{
-			Contract.Invariant(_valueWriter != null);
+			
 		}
 	}
 }

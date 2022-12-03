@@ -30,8 +30,8 @@ namespace Linq2Rest.Implementations
         public XmlContext(Uri source, params Type[] knownTypes)
             : base(new XmlRestClient(source), new XmlDataContractSerializerFactory(knownTypes))
 		{
-			Contract.Requires<ArgumentNullException>(source != null);
-			Contract.Requires<ArgumentNullException>(knownTypes != null);
+			
+			
 			Contract.Requires<ArgumentException>(source.Scheme == Uri.UriSchemeHttp || source.Scheme == Uri.UriSchemeHttps);
         }
     }

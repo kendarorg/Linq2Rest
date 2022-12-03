@@ -37,7 +37,7 @@ namespace Linq2Rest.Provider
 
 		public TResult Execute<TResult>(Expression expression)
 		{
-			Contract.Assume(expression != null);
+			
 			return (TResult)Execute(expression);
 		}
 

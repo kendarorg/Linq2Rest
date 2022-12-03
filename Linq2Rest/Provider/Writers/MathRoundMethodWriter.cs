@@ -25,7 +25,7 @@ namespace Linq2Rest.Provider.Writers
 
 		public override bool CanHandle(MethodCallExpression expression)
 		{
-			Contract.Assert(expression.Method != null);
+			
 
 			return expression.Method.DeclaringType == typeof(Math)
 				   && expression.Method.Name == "Round";

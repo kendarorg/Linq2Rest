@@ -28,7 +28,7 @@ namespace Linq2Rest.Provider.Writers
 
 		public ParameterValueWriter(IEnumerable<IValueWriter> valueWriters)
 		{
-			Contract.Requires(valueWriters != null);
+			
 
 			_valueWriters = valueWriters.Concat(
 				new IValueWriter[]
@@ -96,7 +96,7 @@ namespace Linq2Rest.Provider.Writers
 		[ContractInvariantMethod]
 		private void Invariants()
 		{
-			Contract.Invariant(_valueWriters != null);
+			
 		}
 	}
 }

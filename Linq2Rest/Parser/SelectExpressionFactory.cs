@@ -36,8 +36,8 @@ namespace Linq2Rest.Parser
 		/// </summary>
 		public SelectExpressionFactory(IMemberNameResolver nameResolver, IRuntimeTypeProvider runtimeTypeProvider)
 		{
-			Contract.Requires<ArgumentNullException>(nameResolver != null);
-			Contract.Requires<ArgumentNullException>(runtimeTypeProvider != null);
+			
+			
 
 			_nameResolver = nameResolver;
 			_runtimeTypeProvider = runtimeTypeProvider;
@@ -90,7 +90,7 @@ namespace Linq2Rest.Parser
 
 			var constructorInfo = dynamicType.GetConstructor(Type.EmptyTypes);
 
-			Contract.Assume(constructorInfo != null, "Created type has default constructor.");
+			
 
 			var selector = Expression.Lambda<Func<T, object>>(
 															  Expression.MemberInit(Expression.New(constructorInfo), bindings), 
@@ -109,9 +109,9 @@ namespace Linq2Rest.Parser
 		[ContractInvariantMethod]
 		private void Invariants()
 		{
-			Contract.Invariant(_knownSelections != null);
-			Contract.Invariant(_nameResolver != null);
-			Contract.Invariant(_runtimeTypeProvider != null);
+			
+			
+			
 		}
 	}
 }

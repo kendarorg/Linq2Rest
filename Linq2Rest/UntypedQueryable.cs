@@ -25,7 +25,7 @@ namespace Linq2Rest
 
 		public UntypedQueryable(IQueryable<T> source, Expression<Func<T, object>> projection)
 		{
-			Contract.Requires(projection == null || source != null);
+			
 
 			_source = projection == null
 						  ? (IQueryable)source
@@ -60,7 +60,7 @@ namespace Linq2Rest
 		[ContractInvariantMethod]
 		private void Invariants()
 		{
-			Contract.Invariant(_source != null);
+			
 		}
 	}
 }

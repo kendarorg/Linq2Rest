@@ -31,14 +31,14 @@ namespace Linq2Rest.Provider.Writers
 
 		public bool CanHandle(MethodCallExpression expression)
 		{
-			Contract.Assert(expression.Method != null);
+			
 
 			return expression.Method.Name == "Any" && expression.Arguments.Count == 1;
 		}
 
 		public string Handle(MethodCallExpression expression, Func<Expression, string> expressionWriter)
 		{
-			Contract.Assume(expression.Arguments.Count > 0);
+			
 
 #if !NETFX_CORE
 			var argumentType = expression.Arguments[0].Type;

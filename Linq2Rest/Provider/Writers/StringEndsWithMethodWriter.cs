@@ -20,7 +20,7 @@ namespace Linq2Rest.Provider.Writers
 	{
 		public bool CanHandle(MethodCallExpression expression)
 		{
-			Contract.Assert(expression.Method != null);
+			
 
 			return expression.Method.DeclaringType == typeof(string)
 				   && expression.Method.Name == "EndsWith";
@@ -28,14 +28,14 @@ namespace Linq2Rest.Provider.Writers
 
 		public string Handle(MethodCallExpression expression, Func<Expression, string> expressionWriter)
 		{
-			Contract.Assert(expression.Arguments != null);
-			Contract.Assume(expression.Arguments.Count > 0);
+			
+			
 
 			var argumentExpression = expression.Arguments[0];
 			var obj = expression.Object;
 
-			Contract.Assume(obj != null);
-			Contract.Assume(argumentExpression != null);
+			
+			
 
 			return string.Format(
 				"endswith({0}, {1})", 

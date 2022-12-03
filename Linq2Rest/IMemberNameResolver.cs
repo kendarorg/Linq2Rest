@@ -44,8 +44,8 @@ namespace Linq2Rest
 		[Pure]
 		public string ResolveName(MemberInfo member)
 		{
-			Contract.Requires<ArgumentNullException>(member != null);
-			Contract.Ensures(Contract.Result<string>() != null);
+			
+			
 
 			throw new NotImplementedException();
 		}
@@ -53,8 +53,8 @@ namespace Linq2Rest
 		[Pure]
 		public MemberInfo ResolveAlias(Type type, string alias)
 		{
-			Contract.Requires<ArgumentNullException>(type != null);
-			Contract.Requires<ArgumentException>(!string.IsNullOrWhiteSpace(alias));
+			
+			
 			throw new NotImplementedException();
 		}
 	}

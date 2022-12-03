@@ -42,14 +42,14 @@ namespace Linq2Rest.Parser.Readers
 	{
 		public bool Handles(Type type)
 		{
-			Contract.Requires(type != null);
+			
 			throw new NotImplementedException();
 		}
 
 		public ConstantExpression Convert(string token)
 		{
-			Contract.Requires(token != null);
-			Contract.Ensures(Contract.Result<ConstantExpression>() != null);
+			
+			
 			throw new NotImplementedException();
 		}
 	}

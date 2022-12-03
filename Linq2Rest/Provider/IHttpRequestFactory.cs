@@ -37,9 +37,9 @@ namespace Linq2Rest.Provider
 	{
 		public IHttpRequest Create(Uri uri, HttpMethod method, string responseMimeType, string requestMimeType)
 		{
-			Contract.Requires<ArgumentNullException>(uri != null);
-			Contract.Requires<ArgumentNullException>(responseMimeType != null);
-			Contract.Requires<ArgumentException>(method != HttpMethod.None);
+			
+			
+			
 
 			throw new NotImplementedException();
 		}

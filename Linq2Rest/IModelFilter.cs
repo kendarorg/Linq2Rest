@@ -81,7 +81,7 @@ namespace Linq2Rest
 		{
 			get
 			{
-				Contract.Ensures(Contract.Result<IEnumerable<SortDescription<T>>>() != null);
+				
 
 				throw new NotImplementedException();
 			}
@@ -89,7 +89,7 @@ namespace Linq2Rest
 
 		public IQueryable<object> Filter(IEnumerable<T> source)
 		{
-			Contract.Requires<ArgumentNullException>(source != null);
+			
 
 			throw new NotImplementedException();
 		}

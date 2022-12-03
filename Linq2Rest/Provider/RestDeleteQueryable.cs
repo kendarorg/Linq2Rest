@@ -25,18 +25,18 @@ namespace Linq2Rest.Provider
 		public RestDeleteQueryable(IRestClient client, ISerializerFactory serializerFactory, IEnumerable<IValueWriter> valueWriters, Type sourceType)
 			: this(client, serializerFactory, new MemberNameResolver(), valueWriters, sourceType)
 		{
-			Contract.Requires(client != null);
-			Contract.Requires(serializerFactory != null);
-			Contract.Requires(valueWriters != null);
+			
+			
+			
 		}
 
 		public RestDeleteQueryable(IRestClient client, ISerializerFactory serializerFactory, IMemberNameResolver memberNameResolver, IEnumerable<IValueWriter> valueWriters, Type sourceType)
 			: base(client, serializerFactory, memberNameResolver, valueWriters)
 		{
-			Contract.Requires(client != null);
-			Contract.Requires(serializerFactory != null);
-			Contract.Requires(memberNameResolver != null);
-			Contract.Requires(valueWriters != null);
+			
+			
+			
+			
 
 			_restDeleteQueryProvider = new RestDeleteQueryProvider<T>(client, serializerFactory, new ExpressionProcessor(new ExpressionWriter(MemberNameResolver, ValueWriters), MemberNameResolver), MemberNameResolver, ValueWriters, sourceType);
 			Provider = _restDeleteQueryProvider;
@@ -46,11 +46,11 @@ namespace Linq2Rest.Provider
 		public RestDeleteQueryable(IRestClient client, ISerializerFactory serializerFactory, IMemberNameResolver memberNameResolver, IEnumerable<IValueWriter> valueWriters, Expression expression, Type sourceType)
 			: this(client, serializerFactory, memberNameResolver, valueWriters, sourceType)
 		{
-			Contract.Requires(client != null);
-			Contract.Requires(serializerFactory != null);
-			Contract.Requires(memberNameResolver != null);
-			Contract.Requires(valueWriters != null);
-			Contract.Requires(expression != null);
+			
+			
+			
+			
+			
 
 			Expression = expression;
 		}
@@ -73,7 +73,7 @@ namespace Linq2Rest.Provider
 		[ContractInvariantMethod]
 		private void Invariants()
 		{
-			Contract.Invariant(_restDeleteQueryProvider != null);
+			
 		}
 	}
 }

@@ -41,7 +41,7 @@ namespace Linq2Rest.Parser.Readers
 				var type = KnownTypes.GetOrAdd(match.Groups[1].Value, LoadType);
 				var value = match.Groups[2].Value;
 
-				Contract.Assume(type != null);
+				
 
 				return Expression.Constant(Enum.Parse(type, value));
 			}

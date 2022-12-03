@@ -39,8 +39,8 @@ namespace Linq2Rest.Parser
 		/// <param name="expressionFactories">The custom <see cref="IValueExpressionFactory"/> to use for value conversion.</param>
 		public FilterExpressionFactory(IMemberNameResolver memberNameResolver, IEnumerable<IValueExpressionFactory> expressionFactories)
 		{
-			Contract.Requires<ArgumentNullException>(memberNameResolver != null);
-			Contract.Requires<ArgumentNullException>(expressionFactories != null);
+			
+			
 
 			_valueReader = new ParameterValueReader(expressionFactories);
 			_memberNameResolver = memberNameResolver;
@@ -85,7 +85,7 @@ namespace Linq2Rest.Parser
 
 		private static Type GetFunctionParameterType(string operation)
 		{
-			Contract.Requires(operation != null);
+			
 
 			switch (operation.ToLowerInvariant())
 			{
@@ -98,17 +98,17 @@ namespace Linq2Rest.Parser
 
 		private static Expression GetOperation(string token, Expression left, Expression right)
 		{
-			Contract.Requires(token != null);
-			Contract.Requires(right != null);
+			
+			
 
 			return left == null ? GetRightOperation(token, right) : GetLeftRightOperation(token, left, right);
 		}
 
 		private static Expression GetLeftRightOperation(string token, Expression left, Expression right)
 		{
-			Contract.Requires(token != null);
-			Contract.Requires(left != null);
-			Contract.Requires(right != null);
+			
+			
+			
 
 			switch (token.ToLowerInvariant())
 			{
@@ -154,8 +154,8 @@ namespace Linq2Rest.Parser
 
 		private static Expression GetRightOperation(string token, Expression right)
 		{
-			Contract.Requires(token != null);
-			Contract.Requires(right != null);
+			
+			
 
 			Expression result = null;
 			switch (token.ToLowerInvariant())
@@ -175,8 +175,8 @@ namespace Linq2Rest.Parser
 
 		private static Expression GetFunction(string function, Expression left, Expression right, ParameterExpression sourceParameter, ICollection<ParameterExpression> lambdaParameters)
 		{
-			Contract.Requires(function != null);
-			Contract.Requires(left != null);
+			
+			
 
 			switch (function.ToLowerInvariant())
 			{
@@ -219,8 +219,8 @@ namespace Linq2Rest.Parser
 				case "any":
 				case "all":
 					{
-						Contract.Assume(right != null);
-						Contract.Assume(!string.IsNullOrEmpty(function));
+						
+						
 
 						return CreateAnyAllExpression(
 													  left,
@@ -242,8 +242,8 @@ namespace Linq2Rest.Parser
 			IEnumerable<ParameterExpression> lambdaParameters,
 			MethodInfo anyAllMethod)
 		{
-			Contract.Requires(left != null);
-			Contract.Requires(right != null);
+			
+			
 
 			var genericFunc = typeof(Func<,>)
 				.MakeGenericType(
@@ -267,7 +267,7 @@ namespace Linq2Rest.Parser
 
 		private static Type GetNonNullableType(Type type)
 		{
-			Contract.Requires(type != null);
+			
 
 			return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>)
 					? type.GetGenericArguments()[0]
@@ -276,7 +276,7 @@ namespace Linq2Rest.Parser
 
 		private static bool SupportsNegate(Type type)
 		{
-			Contract.Requires(type != null);
+			
 
 			type = GetNonNullableType(type);
 			if (!type.IsEnum)
@@ -297,7 +297,7 @@ namespace Linq2Rest.Parser
 
 		private Expression GetBooleanExpression(string filter, IFormatProvider formatProvider)
 		{
-			Contract.Requires(filter != null);
+			
 
 			var booleanExpression = _valueReader.Read(typeof(bool), filter, formatProvider) as ConstantExpression;
 			return booleanExpression != null && booleanExpression.Value != null
@@ -307,7 +307,7 @@ namespace Linq2Rest.Parser
 
 		private Expression GetParameterExpression(string filter, Type type, IFormatProvider formatProvider)
 		{
-			Contract.Requires(filter != null);
+			
 
 			return type != null
 				? _valueReader.Read(type, filter, formatProvider)
@@ -316,8 +316,8 @@ namespace Linq2Rest.Parser
 
 		private Type GetExpressionType<T>(TokenSet set, ParameterExpression parameter, ICollection<ParameterExpression> lambdaParameters)
 		{
-			Contract.Requires(parameter != null);
-			Contract.Requires(lambdaParameters != null);
+			
+			
 
 			if (set == null)
 			{
@@ -351,9 +351,9 @@ namespace Linq2Rest.Parser
 
 		private Expression GetPropertyExpression<T>(string propertyToken, ParameterExpression parameter, ICollection<ParameterExpression> lambdaParameters)
 		{
-			Contract.Requires(propertyToken != null);
-			Contract.Requires(parameter != null);
-			Contract.Requires(lambdaParameters != null);
+			
+			
+			
 
 			if (string.IsNullOrWhiteSpace(propertyToken))
 			{
@@ -374,13 +374,13 @@ namespace Linq2Rest.Parser
 
 			var propertyChain = propertyToken.Split('/');
 
-			Contract.Assert(propertyChain != null);
+			
 
 			if (propertyChain.Any() && lambdaParameters.Any(p => p.Name == propertyChain.First()))
 			{
 				var lambdaParameter = lambdaParameters.First(p => p.Name == propertyChain.First());
 
-				Contract.Assume(lambdaParameter != null);
+				
 
 				parentType = lambdaParameter.Type;
 				propertyExpression = lambdaParameter;
@@ -393,9 +393,9 @@ namespace Linq2Rest.Parser
 
 		private Expression CreateExpression<T>(string filter, ParameterExpression sourceParameter, ICollection<ParameterExpression> lambdaParameters, Type type, IFormatProvider formatProvider)
 		{
-			Contract.Requires(filter != null);
-			Contract.Requires(sourceParameter != null);
-			Contract.Requires(lambdaParameters != null);
+			
+			
+			
 
 			if (string.IsNullOrWhiteSpace(filter))
 			{
@@ -430,7 +430,7 @@ namespace Linq2Rest.Parser
 					type,
 					formatProvider);
 
-				Contract.Assert(negateExpression != null);
+				
 
 				if (SupportsNegate(negateExpression.Type))
 				{
@@ -457,9 +457,9 @@ namespace Linq2Rest.Parser
 
 		private Expression GetTokenExpression<T>(ParameterExpression parameter, ICollection<ParameterExpression> lambdaParameters, Type type, IFormatProvider formatProvider, ICollection<TokenSet> tokens)
 		{
-			Contract.Requires(tokens != null);
-			Contract.Requires(parameter != null);
-			Contract.Requires(lambdaParameters != null);
+			
+			
+			
 
 			string combiner = null;
 			Expression existing = null;
@@ -516,9 +516,9 @@ namespace Linq2Rest.Parser
 
 		private Expression GetArithmeticExpression<T>(string filter, ParameterExpression parameter, ICollection<ParameterExpression> lambdaParameters, Type type, IFormatProvider formatProvider)
 		{
-			Contract.Requires(filter != null);
-			Contract.Requires(parameter != null);
-			Contract.Requires(lambdaParameters != null);
+			
+			
+			
 
 			var arithmeticToken = filter.GetArithmeticToken();
 			if (arithmeticToken == null)
@@ -537,9 +537,9 @@ namespace Linq2Rest.Parser
 
 		private Expression GetAnyAllFunctionExpression<T>(string filter, ParameterExpression sourceParameter, ICollection<ParameterExpression> lambdaParameters, IFormatProvider formatProvider)
 		{
-			Contract.Requires(filter != null);
-			Contract.Requires(sourceParameter != null);
-			Contract.Requires(lambdaParameters != null);
+			
+			
+			
 
 			var functionTokens = filter.GetAnyAllFunctionTokens();
 			if (functionTokens == null)
@@ -577,9 +577,9 @@ namespace Linq2Rest.Parser
 
 		private Expression GetFunctionExpression<T>(string filter, ParameterExpression sourceParameter, ICollection<ParameterExpression> lambdaParameters, Type type, IFormatProvider formatProvider)
 		{
-			Contract.Requires(filter != null);
-			Contract.Requires(sourceParameter != null);
-			Contract.Requires(lambdaParameters != null);
+			
+			
+			
 
 			var functionTokens = filter.GetFunctionTokens();
 			if (functionTokens == null)
@@ -618,8 +618,8 @@ namespace Linq2Rest.Parser
 
 			public IEnumerable<ParameterExpression> GetParameters(Expression expr)
 			{
-				Contract.Requires(expr != null);
-				Contract.Ensures(Contract.Result<IEnumerable<ParameterExpression>>() != null);
+				
+				
 
 				_parameters = new List<ParameterExpression>();
 				Visit(expr);
@@ -628,7 +628,7 @@ namespace Linq2Rest.Parser
 
 			public override Expression Visit(Expression node)
 			{
-				Contract.Assume(node != null);
+				
 
 				if (node.NodeType == ExpressionType.Call && AnyAllMethodNames.Contains(((MethodCallExpression)node).Method.Name))
 				{
@@ -641,7 +641,7 @@ namespace Linq2Rest.Parser
 
 			protected override Expression VisitBinary(BinaryExpression node)
 			{
-				Contract.Assume(node != null);
+				
 
 				if (node.NodeType == ExpressionType.AndAlso)
 				{
@@ -655,8 +655,8 @@ namespace Linq2Rest.Parser
 
 			protected override Expression VisitParameter(ParameterExpression node)
 			{
-				Contract.Assume(node != null);
-				Contract.Assume(_parameters != null);
+				
+				
 
 				if (!_parameters.Contains(node))
 				{

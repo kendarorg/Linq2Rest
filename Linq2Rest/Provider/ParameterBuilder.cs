@@ -27,13 +27,13 @@ namespace Linq2Rest.Provider
 
 		public ParameterBuilder(Uri serviceBase, Type sourceType)
 		{
-			Contract.Requires(serviceBase != null);
-			Contract.Requires(sourceType != null);
+			
+			
 #if !NETFX_CORE
-			Contract.Requires(serviceBase.Scheme == Uri.UriSchemeHttp || serviceBase.Scheme == Uri.UriSchemeHttps);
+			
 #endif
-			Contract.Ensures(((System.Collections.ICollection)this.OrderByParameter).Count == 0);
-			Contract.Ensures(serviceBase == this._serviceBase);
+			
+			
 
 			_serviceBase = serviceBase;
 			SourceType = sourceType;
@@ -56,9 +56,9 @@ namespace Linq2Rest.Provider
 
 		public Uri GetFullUri()
 		{
-			Contract.Ensures(Contract.Result<Uri>() != null);
+			
 #if !NETFX_CORE
-			Contract.Ensures(Contract.Result<Uri>().Scheme == Uri.UriSchemeHttp || Contract.Result<Uri>().Scheme == Uri.UriSchemeHttps);
+			
 #endif
 
 			var parameters = new List<string>();
@@ -102,8 +102,8 @@ namespace Linq2Rest.Provider
 			var resultUri = builder.Uri;
 
 #if !NETFX_CORE
-			Contract.Assume(_serviceBase.Scheme == Uri.UriSchemeHttp || _serviceBase.Scheme == Uri.UriSchemeHttps);
-			Contract.Assume(resultUri.Scheme == Uri.UriSchemeHttp || resultUri.Scheme == Uri.UriSchemeHttps);
+			
+			
 #endif
 
 			return resultUri;
@@ -111,8 +111,8 @@ namespace Linq2Rest.Provider
 
 		private static string BuildParameter(string name, string value)
 		{
-			Contract.Ensures(Contract.Result<string>() != null);
-			Contract.Ensures(0 <= Contract.Result<string>().Length); 
+			
+			 
 
 			return name + "=" + value;
 		}
@@ -120,11 +120,11 @@ namespace Linq2Rest.Provider
 		[ContractInvariantMethod]
 		private void Invariants()
 		{
-			Contract.Invariant(_serviceBase != null);
+			
 #if !NETFX_CORE
-			Contract.Invariant(_serviceBase.Scheme == Uri.UriSchemeHttp || _serviceBase.Scheme == Uri.UriSchemeHttps);
+			
 #endif
-			Contract.Invariant(OrderByParameter != null);
+			
 		}
 	}
 }

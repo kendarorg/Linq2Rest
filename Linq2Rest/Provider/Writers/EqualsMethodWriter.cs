@@ -25,8 +25,8 @@ namespace Linq2Rest.Provider.Writers
 
 		public string Handle(MethodCallExpression expression, Func<Expression, string> expressionWriter)
 		{
-			Contract.Assert(expression.Arguments != null);
-			Contract.Assume(expression.Arguments.Count > 0);
+			
+			
 
 			return string.Format(
 				"{0} eq {1}", 

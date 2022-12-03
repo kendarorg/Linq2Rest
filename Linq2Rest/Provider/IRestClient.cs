@@ -65,8 +65,8 @@ namespace Linq2Rest.Provider
 		{
 			get
 			{
-				Contract.Ensures(Contract.Result<Uri>() != null);
-				Contract.Ensures(Contract.Result<Uri>().Scheme == Uri.UriSchemeHttp || Contract.Result<Uri>().Scheme == Uri.UriSchemeHttps);
+				
+				
 
 				throw new NotImplementedException();
 			}
@@ -74,38 +74,38 @@ namespace Linq2Rest.Provider
 
 		public Stream Get(Uri uri)
 		{
-			Contract.Requires<ArgumentNullException>(uri != null);
+			
 			Contract.Requires<ArgumentException>(uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps);
-			Contract.Ensures(Contract.Result<Stream>() != null);
+			
 
 			throw new NotImplementedException();
 		}
 
 		public Stream Post(Uri uri, Stream input)
 		{
-			Contract.Requires<ArgumentNullException>(uri != null);
+			
 			Contract.Requires<ArgumentException>(uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps);
-			Contract.Requires<ArgumentNullException>(input != null);
-			Contract.Ensures(Contract.Result<Stream>() != null);
+			
+			
 
 			throw new NotImplementedException();
 		}
 
 		public Stream Put(Uri uri, Stream input)
 		{
-			Contract.Requires<ArgumentNullException>(uri != null);
+			
 			Contract.Requires<ArgumentException>(uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps);
-			Contract.Requires<ArgumentNullException>(input != null);
-			Contract.Ensures(Contract.Result<Stream>() != null);
+			
+			
 
 			throw new NotImplementedException();
 		}
 
 		public Stream Delete(Uri uri)
 		{
-			Contract.Requires<ArgumentNullException>(uri != null);
+			
 			Contract.Requires<ArgumentException>(uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps);
-			Contract.Ensures(Contract.Result<Stream>() != null);
+			
 
 			throw new NotImplementedException();
 		}

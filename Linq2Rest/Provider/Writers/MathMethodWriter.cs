@@ -26,11 +26,11 @@ namespace Linq2Rest.Provider.Writers
 
 		public string Handle(MethodCallExpression expression, Func<Expression, string> expressionWriter)
 		{
-			Contract.Assume(expression.Arguments.Count > 0);
+			
 
 			var mathArgument = expression.Arguments[0];
 
-			Contract.Assume(mathArgument != null);
+			
 
 			return string.Format("{0}({1})", MethodName, expressionWriter(mathArgument));
 		}
@@ -45,7 +45,7 @@ namespace Linq2Rest.Provider.Writers
 		{
 			get
 			{
-				Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
+				
 				throw new NotImplementedException();
 			}
 		}

@@ -37,8 +37,8 @@ namespace Linq2Rest
 	{
 		public Type Get(Type sourceType, IEnumerable<MemberInfo> properties)
 		{
-			Contract.Requires<ArgumentNullException>(sourceType != null);
-			Contract.Requires<ArgumentNullException>(properties != null);
+			
+			
 
 			throw new NotImplementedException();
 		}

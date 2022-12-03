@@ -80,7 +80,7 @@ namespace Linq2Rest
 		[ContractInvariantMethod]
 		private void Invariants()
 		{
-			Contract.Invariant(_writer != null);
+			
 		}
 	}
 }

@@ -47,7 +47,7 @@ namespace Linq2Rest
 		/// <param name="nameResolver"></param>
 		public RuntimeTypeProvider(IMemberNameResolver nameResolver)
 		{
-			Contract.Requires(nameResolver != null);
+			
 
 			_nameResolver = nameResolver;
 		}
@@ -77,7 +77,7 @@ namespace Linq2Rest
 						className, 
 						TypeAttributes.Public | TypeAttributes.Class | TypeAttributes.Serializable);
 
-					Contract.Assume(typeBuilder != null);
+					
 
 					SetAttributes(typeBuilder, sourceType);
 
@@ -92,7 +92,7 @@ namespace Linq2Rest
 
 		private static void CreateProperty(TypeBuilder typeBuilder, KeyValuePair<string, MemberInfo> field)
 		{
-			Contract.Requires(typeBuilder != null);
+			
 
 			var propertyType = field.Value.MemberType == MemberTypes.Property
 								? ((PropertyInfo)field.Value).PropertyType
@@ -101,7 +101,7 @@ namespace Linq2Rest
 
 			var propertyBuilder = typeBuilder.DefineProperty(field.Key, PropertyAttributes.None, propertyType, null);
 
-			Contract.Assume(propertyBuilder != null, "Created above.");
+			
 
 			SetAttributes(propertyBuilder, field.Value);
 
@@ -134,8 +134,8 @@ namespace Linq2Rest
 
 		private static void SetAttributes(TypeBuilder typeBuilder, Type type)
 		{
-			Contract.Requires(typeBuilder != null);
-			Contract.Requires(type != null);
+			
+			
 
 			var attributeBuilders = TypeAttributeBuilders
 				.GetOrAdd(
@@ -146,7 +146,7 @@ namespace Linq2Rest
 							  return CreateCustomAttributeBuilders(customAttributes).ToArray();
 						  });
 
-			Contract.Assume(attributeBuilders != null);
+			
 
 			foreach (var attributeBuilder in attributeBuilders)
 			{
@@ -156,8 +156,8 @@ namespace Linq2Rest
 
 		private static void SetAttributes(PropertyBuilder propertyBuilder, MemberInfo memberInfo)
 		{
-			Contract.Requires(propertyBuilder != null);
-			Contract.Requires(memberInfo != null);
+			
+			
 
 			var customAttributeBuilders = PropertyAttributeBuilders
 				.GetOrAdd(
@@ -168,7 +168,7 @@ namespace Linq2Rest
 							  return CreateCustomAttributeBuilders(customAttributes).ToArray();
 						  });
 
-			Contract.Assume(customAttributeBuilders != null);
+			
 
 			foreach (var attribute in customAttributeBuilders)
 			{
@@ -178,7 +178,7 @@ namespace Linq2Rest
 
 		private static IEnumerable<CustomAttributeBuilder> CreateCustomAttributeBuilders(IEnumerable<CustomAttributeData> customAttributes)
 		{
-			Contract.Requires(customAttributes != null);
+			
 
 			var attributeBuilders = customAttributes
 				.Select(
@@ -196,8 +196,8 @@ namespace Linq2Rest
 
 		private static string GetTypeKey(Type sourceType, Dictionary<string, MemberInfo> fields)
 		{
-			Contract.Requires(sourceType != null);
-			Contract.Requires(fields != null);
+			
+			
 
 			return fields.Aggregate("Linq2Rest<>" + sourceType.Name, (current, field) => current + (field.Key + field.Value.MemberType));
 		}

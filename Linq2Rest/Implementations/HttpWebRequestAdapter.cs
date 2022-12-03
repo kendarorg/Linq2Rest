@@ -43,9 +43,9 @@ namespace Linq2Rest.Implementations
 		/// <returns>Returns an HttpWebRequest initialized with the given parameters.</returns>
 		public static HttpWebRequest CreateHttpWebRequest(Uri uri, HttpMethod method, string responseMimeType, string requestMimeType)
 		{
-			Contract.Requires(uri != null);
-			Contract.Requires(responseMimeType != null);
-			Contract.Requires(method != HttpMethod.None);
+			
+			
+			
 
 			requestMimeType = requestMimeType ?? responseMimeType;
 

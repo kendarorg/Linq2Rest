@@ -33,7 +33,7 @@ namespace Linq2Rest.Implementations
 		protected RestClientBase(Uri uri, string acceptHeader)
 			: this(uri, acceptHeader, new HttpRequestFactory())
 		{
-			Contract.Requires<ArgumentNullException>(uri != null);
+			
 			Contract.Requires<ArgumentException>(uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps);
 		}
 
@@ -45,10 +45,10 @@ namespace Linq2Rest.Implementations
 		/// <param name="httpRequestFactory">The factory used to create Linq2Rest.Provider.IHttpRequest implementations.</param>
 		protected RestClientBase(Uri uri, string acceptHeader, IHttpRequestFactory httpRequestFactory)
 		{
-			Contract.Requires<ArgumentNullException>(uri != null);
+			
 			Contract.Requires<ArgumentException>(uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps);
-			Contract.Requires<ArgumentException>(!string.IsNullOrWhiteSpace(acceptHeader));
-			Contract.Requires<ArgumentException>(httpRequestFactory != null);
+			
+			
 
 			_acceptHeader = acceptHeader;
 			_httpRequestFactory = httpRequestFactory;
@@ -69,7 +69,7 @@ namespace Linq2Rest.Implementations
 		{
 			var stream = GetResponseStream(uri, HttpMethod.Get);
 
-			Contract.Assert(stream != null);
+			
 
 			return stream;
 		}
@@ -84,7 +84,7 @@ namespace Linq2Rest.Implementations
 		{
 			var stream = GetResponseStream(uri, HttpMethod.Post, input);
 
-			Contract.Assert(stream != null);
+			
 
 			return stream;
 		}
@@ -99,7 +99,7 @@ namespace Linq2Rest.Implementations
 		{
 			var stream = GetResponseStream(uri, HttpMethod.Put, input);
 
-			Contract.Assert(stream != null);
+			
 
 			return stream;
 		}
@@ -113,7 +113,7 @@ namespace Linq2Rest.Implementations
 		{
 			var stream = GetResponseStream(uri, HttpMethod.Delete, null);
 
-			Contract.Assert(stream != null);
+			
 
 			return stream;
 		}
@@ -141,7 +141,7 @@ namespace Linq2Rest.Implementations
 
 		private Stream GetResponseStream(Uri uri, HttpMethod method, Stream requestStream = null)
 		{
-			Contract.Requires(uri != null);
+			
 
 			var request = _httpRequestFactory.Create(uri, method, _acceptHeader, _acceptHeader);
 
@@ -156,8 +156,8 @@ namespace Linq2Rest.Implementations
 		[ContractInvariantMethod]
 		private void Invariants()
 		{
-			Contract.Invariant(_acceptHeader != null);
-			Contract.Invariant(_httpRequestFactory != null);
+			
+			
 		}
 	}
 }

@@ -45,15 +45,15 @@ namespace Linq2Rest.Provider.Writers
 	{
 		public bool Handles(Type type)
 		{
-			Contract.Requires(type != null);
+			
 
 			throw new NotImplementedException();
 		}
 
 		public string Write(object value)
 		{
-			Contract.Requires(value != null);
-			Contract.Ensures(Contract.Result<string>() != null);
+			
+			
 
 			throw new NotImplementedException();
 		}

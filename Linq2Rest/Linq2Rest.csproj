@@ -22,58 +22,9 @@
 		<AssemblyProduct>Linq2Rest</AssemblyProduct>
 	</PropertyGroup>
 
-	<PropertyGroup>
-		<CodeContractsInstallDir Condition="'$(CodeContractsInstallDir)'==''">C:\Program Files (x86)\Microsoft\Contracts\</CodeContractsInstallDir>
-	</PropertyGroup>
-	<Import Condition="'$(CodeContractsImported)' != 'true' AND '$(DontImportCodeContracts)' != 'true'" Project="$(CodeContractsInstallDir)MsBuild\v14.0\Microsoft.CodeContracts.targets" />
-
-	<!-- Code Contracts settings -->
-	<PropertyGroup>
-		<CodeContractsAssemblyMode>1</CodeContractsAssemblyMode>
-		<CodeContractsEnableRuntimeChecking>True</CodeContractsEnableRuntimeChecking>
-		<CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
-		<CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
-		<CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
-		<CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
-		<CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
-		<CodeContractsNonNullObligations>False</CodeContractsNonNullObligations>
-		<CodeContractsBoundsObligations>False</CodeContractsBoundsObligations>
-		<CodeContractsArithmeticObligations>False</CodeContractsArithmeticObligations>
-		<CodeContractsEnumObligations>False</CodeContractsEnumObligations>
-		<CodeContractsRedundantAssumptions>False</CodeContractsRedundantAssumptions>
-		<CodeContractsInferRequires>False</CodeContractsInferRequires>
-		<CodeContractsInferEnsures>False</CodeContractsInferEnsures>
-		<CodeContractsInferObjectInvariants>False</CodeContractsInferObjectInvariants>
-		<CodeContractsSuggestAssumptions>False</CodeContractsSuggestAssumptions>
-		<CodeContractsSuggestRequires>True</CodeContractsSuggestRequires>
-		<CodeContractsSuggestEnsures>False</CodeContractsSuggestEnsures>
-		<CodeContractsSuggestObjectInvariants>False</CodeContractsSuggestObjectInvariants>
-		<CodeContractsDisjunctiveRequires>False</CodeContractsDisjunctiveRequires>
-		<CodeContractsRunInBackground>True</CodeContractsRunInBackground>
-		<CodeContractsShowSquigglies>False</CodeContractsShowSquigglies>
-		<CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
-		<CodeContractsEmitXMLDocs>True</CodeContractsEmitXMLDocs>
-		<CodeContractsCacheAnalysisResults>True</CodeContractsCacheAnalysisResults>
-		<CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
-		<CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
-		<CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
-	</PropertyGroup>
-
-	<PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-	</PropertyGroup>
-
-	<PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-		<CodeContractsRuntimeCheckingLevel>ReleaseRequires</CodeContractsRuntimeCheckingLevel>
-	</PropertyGroup>
-	
 	<ItemGroup>
-	  <PackageReference Include="CodeContracts.MSBuild" Version="1.12.0">
-	    <PrivateAssets>all</PrivateAssets>
-	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-	  </PackageReference>
 	  <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.4.0" />
 	  <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-	  <PackageReference Include="System.Diagnostics.Contracts" Version="4.3.0" />
 	  <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
 	</ItemGroup>
 

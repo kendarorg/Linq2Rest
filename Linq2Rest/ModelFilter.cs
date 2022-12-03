@@ -86,7 +86,7 @@ namespace Linq2Rest
 				? model.AsQueryable().Where(_filterExpression)
 				: model.AsQueryable();
 
-			Contract.Assert(result != null);
+			
 
 			if (_sortDescriptions.Any())
 			{
@@ -104,7 +104,7 @@ namespace Linq2Rest
 					{
 						var orderedEnumerable = result as IOrderedQueryable<T>;
 
-						Contract.Assume(orderedEnumerable != null);
+						
 
 						result = sortDescription.Direction == SortDirection.Ascending
 									? orderedEnumerable.ThenBy(sortDescription.KeySelector)
@@ -115,19 +115,19 @@ namespace Linq2Rest
 
 			if (_skip > 0)
 			{
-				Contract.Assume(result != null);
+				
 
 				result = result.Skip(_skip);
 			}
 
 			if (_top > -1)
 			{
-				Contract.Assume(result != null);
+				
 
 				result = result.Take(_top);
 			}
 
-			Contract.Assume(_selectExpression == null || result != null);
+			
 
 			return new UntypedQueryable<T>(result, _selectExpression);
 		}

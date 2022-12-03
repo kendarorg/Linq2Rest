@@ -126,7 +126,7 @@ namespace Linq2Rest.Tests
 
 			var selectorFunction = CreateSelector(first);
 
-			Contract.Assume(selectorFunction != null, "Compiled above.");
+			
 
 			return objectEnumerable.Select(selectorFunction).ToList();
 		}
@@ -169,8 +169,8 @@ namespace Linq2Rest.Tests
 		[ContractInvariantMethod]
 		private void Invariants()
 		{
-			Contract.Invariant(_innerSerializerOptions is not null);
-			Contract.Invariant(_elementType is not null);
+			
+			
 		}
 	}
 }

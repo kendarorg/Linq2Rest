@@ -40,7 +40,7 @@ namespace Linq2Rest
 		/// <returns>An instance of a <see cref="PredicateMapper"/></returns>
 		public static PredicateMapper Map<TSource, TTarget>()
 		{
-			Contract.Ensures(Contract.Result<PredicateMapper>() != null);
+			
 
 			return new PredicateMapper(new PredicateConverter<TSource, TTarget>());
 		}
@@ -54,7 +54,7 @@ namespace Linq2Rest
 		public PredicateMapper And<TSource, TTarget>()
 		{
 
-			Contract.Ensures(Contract.Result<PredicateMapper>() != null);
+			
 
 			if (_converters.All(x => x.SourceType != typeof(TSource)))
 			{
@@ -79,9 +79,9 @@ namespace Linq2Rest
 			Expression<Func<TSource, TValue>> source,
 			Expression<Func<TTarget, TValue>> result)
 		{
-			Contract.Requires<ArgumentNullException>(result != null);
-			Contract.Requires<ArgumentNullException>(source != null);
-			Contract.Ensures(Contract.Result<PredicateMapper>() != null);
+			
+			
+			
 
 			var memberBody = result.Body as MemberExpression;
 			if (memberBody == null)
@@ -129,7 +129,7 @@ namespace Linq2Rest
 		[ContractInvariantMethod]
 		private void Invariants()
 		{
-			Contract.Invariant(_converters != null);
+			
 		}
 
 		private class InnerVisitor : ExpressionVisitor

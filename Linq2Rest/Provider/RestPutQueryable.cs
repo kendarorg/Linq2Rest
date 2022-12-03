@@ -26,21 +26,21 @@ namespace Linq2Rest.Provider
 		public RestPutQueryable(IRestClient client, ISerializerFactory serializerFactory, Expression expression, Stream inputData, Type sourceType)
 			: this(client, serializerFactory, new MemberNameResolver(), new IValueWriter[0], expression, inputData, sourceType)
 		{
-			Contract.Requires(client != null);
-			Contract.Requires(serializerFactory != null);
-			Contract.Requires(expression != null);
-			Contract.Requires(inputData != null);
+			
+			
+			
+			
 		}
 
 		public RestPutQueryable(IRestClient client, ISerializerFactory serializerFactory, IMemberNameResolver memberNameResolver, IEnumerable<IValueWriter> valueWriters, Expression expression, Stream inputData, Type sourceType)
 			: base(client, serializerFactory, memberNameResolver, valueWriters)
 		{
-			Contract.Requires(client != null);
-			Contract.Requires(serializerFactory != null);
-			Contract.Requires(memberNameResolver != null);
-			Contract.Requires(expression != null);
-			Contract.Requires(valueWriters != null);
-			Contract.Requires(inputData != null);
+			
+			
+			
+			
+			
+			
 
 			_restPutQueryProvider = new RestPutQueryProvider<T>(
 				client,
@@ -72,7 +72,7 @@ namespace Linq2Rest.Provider
 		[ContractInvariantMethod]
 		private void Invariants()
 		{
-			Contract.Invariant(_restPutQueryProvider != null);
+			
 		}
 	}
 }

@@ -32,13 +32,13 @@ namespace Linq2Rest.Parser
 		{
 			get
 			{
-				Contract.Ensures(Contract.Result<string>() != null);
+				
 				return _left;
 			}
 
 			set
 			{
-				Contract.Requires<ArgumentNullException>(value != null);
+				
 				_left = value;
 			}
 		}
@@ -47,13 +47,13 @@ namespace Linq2Rest.Parser
 		{
 			get
 			{
-				Contract.Ensures(Contract.Result<string>() != null);
+				
 				return _operation;
 			}
 
 			set
 			{
-				Contract.Requires<ArgumentNullException>(value != null);
+				
 				_operation = value;
 			}
 		}
@@ -62,13 +62,13 @@ namespace Linq2Rest.Parser
 		{
 			get
 			{
-				Contract.Ensures(Contract.Result<string>() != null);
+				
 				return _right;
 			}
 
 			set
 			{
-				Contract.Requires<ArgumentNullException>(value != null);
+				
 				_right = value;
 			}
 		}
@@ -81,9 +81,9 @@ namespace Linq2Rest.Parser
 		[ContractInvariantMethod]
 		private void Invariants()
 		{
-			Contract.Invariant(_left != null);
-			Contract.Invariant(_right != null);
-			Contract.Invariant(_operation != null);
+			
+			
+			
 		}
 	}
 }

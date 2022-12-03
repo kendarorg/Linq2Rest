@@ -56,7 +56,7 @@ namespace Linq2Rest.Provider
 		/// <returns>An instance of the serialized item.</returns>
 		public T Deserialize(Stream input)
 		{
-			Contract.Requires<ArgumentNullException>(input != null);
+			
 
 			throw new NotImplementedException();
 		}
@@ -68,7 +68,7 @@ namespace Linq2Rest.Provider
 		/// <returns>An list of the serialized items.</returns>
 		public IEnumerable<T> DeserializeList(Stream input)
 		{
-			Contract.Requires<ArgumentNullException>(input != null);
+			
 
 			throw new NotImplementedException();
 		}
@@ -80,8 +80,6 @@ namespace Linq2Rest.Provider
 		/// <returns>A <see cref="Stream"/> representation of the item.</returns>
 		public Stream Serialize(T item)
 		{
-			Contract.Requires<ArgumentNullException>(!ReferenceEquals(item, null));
-
 			throw new NotImplementedException();
 		}
 	}

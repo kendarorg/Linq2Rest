@@ -29,7 +29,10 @@ namespace Linq2Rest
 
 		public static bool IsAnonymousType(this Type type)
 		{
-			Contract.Requires<ArgumentNullException>(type != null);
+			if (type is null)
+			{
+				throw new ArgumentNullException(nameof(type));
+			}
 
 			return KnownAnonymousTypes.GetOrAdd(
 				type,
@@ -41,31 +44,31 @@ namespace Linq2Rest
 
 		public static string Capitalize(this string input)
 		{
-			Contract.Requires(!string.IsNullOrEmpty(input));
+			
 
 			return char.ToUpperInvariant(input[0]) + input.Substring(1);
 		}
 
 		public static Stream ToStream(this string input)
 		{
-			Contract.Requires(input != null);
+			
 
 			return new MemoryStream(Encoding.UTF8.GetBytes(input ?? string.Empty));
 		}
 
 		public static IEnumerable<T> Replace<T>(this IEnumerable<T> items, Func<T, bool> predicate, T replacement)
 		{
-			Contract.Requires(items != null);
-			Contract.Requires(predicate != null);
-			Contract.Ensures(Contract.Result<IEnumerable<T>>() != null);
+			
+			
+			
 
 			return items.Select(item => predicate(item) ? replacement : item);
 		}
 
 		public static Tuple<Type, Expression> CreateMemberExpression(this IMemberNameResolver memberNameResolver, ParameterExpression parameter, IEnumerable<string> propertyChain, Type parentType, Expression propertyExpression)
 		{
-			Contract.Requires(parentType != null);
-			Contract.Requires(propertyChain != null);
+			
+			
 
 			foreach (var propertyName in propertyChain)
 			{
@@ -85,9 +88,9 @@ namespace Linq2Rest
 
 		public static Tuple<Type, string> GetNameFromAlias(this IMemberNameResolver memberNameResolver, MemberInfo alias, Type sourceType)
 		{
-			Contract.Requires(sourceType != null);
-			Contract.Requires(alias != null);
-			Contract.Ensures(Contract.Result<Tuple<Type, string>>() != null);
+			
+			
+			
 
 			var source = sourceType.GetMembers()
 				.Select(x => new { Original = x, Name = memberNameResolver.ResolveName(x) })
@@ -99,14 +102,21 @@ namespace Linq2Rest
 		}
 
 		public static IOrderedQueryable<T> OrderBy<T>(this IQueryable<T> source, Expression keySelector)
-		{
-			Contract.Requires(source != null);
-			Contract.Requires(keySelector != null);
+        {
+            if (source is null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
 
-			var propertyType = keySelector.GetType().GetGenericArguments()[0].GetGenericArguments()[1];
+            if (keySelector is null)
+            {
+                throw new ArgumentNullException(nameof(keySelector));
+            }
+
+            var propertyType = keySelector.GetType().GetGenericArguments()[0].GetGenericArguments()[1];
 			var orderbyMethod = typeof(Queryable).GetMethods(BindingFlags.Public | BindingFlags.Static).FirstOrDefault(x => x.Name == "OrderBy" && x.GetParameters().Length == 2);
 
-			Contract.Assume(orderbyMethod != null);
+			
 
 			orderbyMethod = orderbyMethod.MakeGenericMethod(typeof(T), propertyType);
 
@@ -114,14 +124,21 @@ namespace Linq2Rest
 		}
 
 		public static IOrderedQueryable<T> OrderByDescending<T>(this IQueryable<T> source, Expression keySelector)
-		{
-			Contract.Requires(source != null);
-			Contract.Requires(keySelector != null);
+        {
+            if (source is null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
 
-			var propertyType = keySelector.GetType().GetGenericArguments()[0].GetGenericArguments()[1];
+            if (keySelector is null)
+            {
+                throw new ArgumentNullException(nameof(keySelector));
+            }
+
+            var propertyType = keySelector.GetType().GetGenericArguments()[0].GetGenericArguments()[1];
 			var orderbyMethod = typeof(Queryable).GetMethods(BindingFlags.Public | BindingFlags.Static).FirstOrDefault(x => x.Name == "OrderByDescending" && x.GetParameters().Length == 2);
 
-			Contract.Assume(orderbyMethod != null);
+			
 
 			orderbyMethod = orderbyMethod.MakeGenericMethod(typeof(T), propertyType);
 
@@ -130,13 +147,20 @@ namespace Linq2Rest
 
 		public static IOrderedQueryable<T> ThenBy<T>(this IOrderedQueryable<T> source, Expression keySelector)
 		{
-			Contract.Requires(source != null);
-			Contract.Requires(keySelector != null);
+			if (source is null)
+			{
+				throw new ArgumentNullException(nameof(source));
+			}
+
+			if (keySelector is null)
+			{
+				throw new ArgumentNullException(nameof(keySelector));
+			}
 
 			var propertyType = keySelector.GetType().GetGenericArguments()[0].GetGenericArguments()[1];
 			var orderbyMethod = typeof(Queryable).GetMethods(BindingFlags.Public | BindingFlags.Static).FirstOrDefault(x => x.Name == "ThenBy" && x.GetParameters().Length == 2);
 
-			Contract.Assume(orderbyMethod != null);
+			
 
 			orderbyMethod = orderbyMethod.MakeGenericMethod(typeof(T), propertyType);
 
@@ -145,13 +169,13 @@ namespace Linq2Rest
 
 		public static IOrderedQueryable<T> ThenByDescending<T>(this IOrderedQueryable<T> source, Expression keySelector)
 		{
-			Contract.Requires(source != null);
-			Contract.Requires(keySelector != null);
+			
+			
 
 			var propertyType = keySelector.GetType().GetGenericArguments()[0].GetGenericArguments()[1];
 			var orderbyMethod = typeof(Queryable).GetMethods(BindingFlags.Public | BindingFlags.Static).FirstOrDefault(x => x.Name == "ThenByDescending" && x.GetParameters().Length == 2);
 
-			Contract.Assume(orderbyMethod != null);
+			
 
 			orderbyMethod = orderbyMethod.MakeGenericMethod(typeof(T), propertyType);
 
@@ -160,7 +184,7 @@ namespace Linq2Rest
 
 		private static Type GetMemberType(MemberInfo member)
 		{
-			Contract.Requires(member != null);
+			
 
 			switch (member.MemberType)
 			{

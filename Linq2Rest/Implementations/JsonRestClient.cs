@@ -28,7 +28,7 @@ namespace Linq2Rest.Implementations
 		public JsonRestClient(Uri uri)
 			: this(uri, new HttpRequestFactory())
 		{
-			Contract.Requires<ArgumentNullException>(uri != null);
+			
 			Contract.Requires<ArgumentException>(uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps);
 		}
 
@@ -40,9 +40,9 @@ namespace Linq2Rest.Implementations
 		public JsonRestClient(Uri uri, IHttpRequestFactory httpRequestFactory)
 			: base(uri, StringConstants.JsonMimeType, httpRequestFactory)
 		{
-			Contract.Requires<ArgumentNullException>(uri != null);
+			
 			Contract.Requires<ArgumentException>(uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps);
-			Contract.Requires<ArgumentException>(httpRequestFactory != null);
+			
 		}
 	}
 }

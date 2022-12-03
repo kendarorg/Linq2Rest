@@ -29,9 +29,9 @@ namespace Linq2Rest.Provider
 	{
 		public object ProcessMethodCall<T>(MethodCallExpression methodCall, ParameterBuilder builder, Func<ParameterBuilder, IEnumerable<T>> resultLoader, Func<Type, ParameterBuilder, IEnumerable> intermediateResultLoader)
 		{
-			Contract.Requires(builder != null);
-			Contract.Requires(resultLoader != null);
-			Contract.Requires(intermediateResultLoader != null);
+			
+			
+			
 
 			throw new NotImplementedException();
 		}

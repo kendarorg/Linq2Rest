@@ -26,8 +26,8 @@ namespace Linq2Rest.Provider
 
 		public ExpressionProcessor(IExpressionWriter writer, IMemberNameResolver memberNameResolver)
 		{
-			Contract.Requires(writer != null);
-			Contract.Requires(memberNameResolver != null);
+			
+			
 
 			_writer = writer;
 			_memberNameResolver = memberNameResolver;
@@ -61,7 +61,7 @@ namespace Linq2Rest.Provider
 							? GetMethodResult(methodCall, builder, resultLoader, intermediateResultLoader)
 							: GetResult(methodCall, builder, resultLoader, intermediateResultLoader);
 				case "Where":
-					Contract.Assume(methodCall.Arguments.Count >= 2);
+					
 					{
 						var result = ProcessMethodCall(methodCall.Arguments[0] as MethodCallExpression, builder, resultLoader, intermediateResultLoader);
 						if (result != null)
@@ -78,7 +78,7 @@ namespace Linq2Rest.Provider
 
 					break;
 				case "Select":
-					Contract.Assume(methodCall.Arguments.Count >= 2);
+					
 					{
 						var result = ProcessMethodCall(methodCall.Arguments[0] as MethodCallExpression, builder, resultLoader, intermediateResultLoader);
 						if (result != null)
@@ -106,7 +106,7 @@ namespace Linq2Rest.Provider
 					break;
 				case "OrderBy":
 				case "ThenBy":
-					Contract.Assume(methodCall.Arguments.Count >= 2);
+					
 					{
 						var methodCallExpression = methodCall.Arguments[0] as MethodCallExpression;
 						var result = ProcessMethodCall(methodCallExpression, builder, resultLoader, intermediateResultLoader);
@@ -124,7 +124,7 @@ namespace Linq2Rest.Provider
 					break;
 				case "OrderByDescending":
 				case "ThenByDescending":
-					Contract.Assume(methodCall.Arguments.Count >= 2);
+					
 					{
 						var result = ProcessMethodCall(methodCall.Arguments[0] as MethodCallExpression, builder, resultLoader, intermediateResultLoader);
 						if (result != null)
@@ -138,7 +138,7 @@ namespace Linq2Rest.Provider
 
 					break;
 				case "Take":
-					Contract.Assume(methodCall.Arguments.Count >= 2);
+					
 					{
 						var result = ProcessMethodCall(methodCall.Arguments[0] as MethodCallExpression, builder, resultLoader, intermediateResultLoader);
 						if (result != null)
@@ -151,7 +151,7 @@ namespace Linq2Rest.Provider
 
 					break;
 				case "Skip":
-					Contract.Assume(methodCall.Arguments.Count >= 2);
+					
 					{
 						var result = ProcessMethodCall(methodCall.Arguments[0] as MethodCallExpression, builder, resultLoader, intermediateResultLoader);
 						if (result != null)
@@ -164,7 +164,7 @@ namespace Linq2Rest.Provider
 
 					break;
 				case "Expand":
-					Contract.Assume(methodCall.Arguments.Count >= 2);
+					
 					{
 						var result = ProcessMethodCall(methodCall.Arguments[0] as MethodCallExpression, builder, resultLoader, intermediateResultLoader);
 						if (result != null)
@@ -174,7 +174,7 @@ namespace Linq2Rest.Provider
 
 						var expression = methodCall.Arguments[1];
 
-						Contract.Assume(expression != null);
+						
 
 						var objectMember = Expression.Convert(expression, typeof(object));
 						var getterLambda = Expression.Lambda<Func<object>>(objectMember).Compile();
@@ -192,12 +192,12 @@ namespace Linq2Rest.Provider
 
 		private static object InvokeEager(MethodCallExpression methodCall, object source)
 		{
-			Contract.Requires(source != null);
-			Contract.Requires(methodCall != null);
+			
+			
 
 			var results = source as IEnumerable;
 
-			Contract.Assume(results != null);
+			
 
 			var parameters = ResolveInvocationParameters(results, methodCall);
 			return methodCall.Method.Invoke(null, parameters);
@@ -205,8 +205,8 @@ namespace Linq2Rest.Provider
 
 		private static object[] ResolveInvocationParameters(IEnumerable results, MethodCallExpression methodCall)
 		{
-			Contract.Requires(results != null);
-			Contract.Requires(methodCall != null);
+			
+			
 
 			var parameters = new object[] { results.AsQueryable() }
 				.Concat(methodCall.Arguments.Where((x, i) => i > 0).Select(GetExpressionValue))
@@ -231,7 +231,7 @@ namespace Linq2Rest.Provider
 
 		private object ResolveProjection(ParameterBuilder builder, LambdaExpression lambdaExpression, Type sourceType)
 		{
-			Contract.Requires(lambdaExpression != null);
+			
 
 			var selectFunction = lambdaExpression.Body as NewExpression;
 
@@ -267,11 +267,11 @@ namespace Linq2Rest.Provider
 
 		private object GetMethodResult<T>(MethodCallExpression methodCall, ParameterBuilder builder, Func<ParameterBuilder, IEnumerable<T>> resultLoader, Func<Type, ParameterBuilder, IEnumerable> intermediateResultLoader)
 		{
-			Contract.Requires(methodCall != null);
-			Contract.Requires(builder != null);
-			Contract.Requires(resultLoader != null);
-			Contract.Requires(intermediateResultLoader != null);
-			Contract.Assume(methodCall.Arguments.Count >= 2);
+			
+			
+			
+			
+			
 
 			ProcessMethodCall(methodCall.Arguments[0] as MethodCallExpression, builder, resultLoader, intermediateResultLoader);
 
@@ -284,18 +284,18 @@ namespace Linq2Rest.Provider
 			var genericArguments = methodCall.Method.GetGenericArguments();
 			var queryableMethods = typeof(Queryable).GetMethods();
 
-			Contract.Assume(queryableMethods.Any());
+			
 
 			var nonGenericMethod = queryableMethods
 				.Single(x => x.Name == methodCall.Method.Name && x.GetParameters().Length == 1);
 
-			Contract.Assume(nonGenericMethod != null);
+			
 
 			var method = nonGenericMethod.MakeGenericMethod(genericArguments);
 
 			var list = resultLoader(builder);
 
-			Contract.Assume(list != null);
+			
 
 			var queryable = list.AsQueryable();
 			var parameters = new object[] { queryable };
@@ -305,19 +305,19 @@ namespace Linq2Rest.Provider
 
 		private object GetResult<T>(MethodCallExpression methodCall, ParameterBuilder builder, Func<ParameterBuilder, IEnumerable<T>> resultLoader, Func<Type, ParameterBuilder, IEnumerable> intermediateResultLoader)
 		{
-			Contract.Requires(builder != null);
-			Contract.Requires(methodCall != null);
-			Contract.Requires(resultLoader != null);
-			Contract.Requires(intermediateResultLoader != null);
+			
+			
+			
+			
 
-			Contract.Assume(methodCall.Arguments.Count >= 1);
+			
 
 			var methodCallExpression = methodCall.Arguments[0] as MethodCallExpression;
 			ProcessMethodCall(methodCallExpression, builder, resultLoader, intermediateResultLoader);
 
 			var results = resultLoader(builder);
 
-			Contract.Assume(results != null);
+			
 
 			var parameters = ResolveInvocationParameters(results, methodCall);
 			var final = methodCall.Method.Invoke(null, parameters);
@@ -326,11 +326,11 @@ namespace Linq2Rest.Provider
 
 		private object ExecuteMethod<T>(MethodCallExpression methodCall, ParameterBuilder builder, Func<ParameterBuilder, IEnumerable<T>> resultLoader, Func<Type, ParameterBuilder, IEnumerable> intermediateResultLoader)
 		{
-			Contract.Requires(methodCall != null);
-			Contract.Requires(resultLoader != null);
-			Contract.Requires(intermediateResultLoader != null);
-			Contract.Requires(builder != null);
-			Contract.Assume(methodCall.Arguments.Count >= 2);
+			
+			
+			
+			
+			
 
 			var innerMethod = methodCall.Arguments[0] as MethodCallExpression;
 
@@ -352,7 +352,7 @@ namespace Linq2Rest.Provider
 			 ? intermediateResultLoader(genericArgument, builder)
 			 : resultLoader(builder);
 
-			Contract.Assume(list != null);
+			
 
 			var arguments = ResolveInvocationParameters(list, methodCall);
 
@@ -362,7 +362,7 @@ namespace Linq2Rest.Provider
 		[ContractInvariantMethod]
 		private void Invariants()
 		{
-			Contract.Invariant(_writer != null);
+			
 		}
 	}
 }

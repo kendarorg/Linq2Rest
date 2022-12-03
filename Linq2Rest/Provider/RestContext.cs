@@ -34,8 +34,8 @@ namespace Linq2Rest.Provider
 		public RestContext(IRestClient client, ISerializerFactory serializerFactory)
 			: this(client, serializerFactory, new MemberNameResolver(), new IntValueWriter[0])
 		{
-			Contract.Requires<ArgumentNullException>(client != null);
-			Contract.Requires<ArgumentNullException>(serializerFactory != null);
+			
+			
 		}
 
 		/// <summary>
@@ -47,9 +47,9 @@ namespace Linq2Rest.Provider
 		public RestContext(IRestClient client, ISerializerFactory serializerFactory, IEnumerable<IValueWriter> valueWriters)
 			: this(client, serializerFactory, new MemberNameResolver(), valueWriters)
 		{
-			Contract.Requires<ArgumentNullException>(client != null);
-			Contract.Requires<ArgumentNullException>(serializerFactory != null);
-			Contract.Requires<ArgumentNullException>(valueWriters != null);
+			
+			
+			
 		}
 
 		/// <summary>
@@ -61,10 +61,10 @@ namespace Linq2Rest.Provider
 		/// <param name="valueWriters">The <see cref="IEnumerable{IValueWriter}"/> for writing custom values.</param>
 		public RestContext(IRestClient client, ISerializerFactory serializerFactory, IMemberNameResolver memberNameResolver, IEnumerable<IValueWriter> valueWriters)
 		{
-			Contract.Requires<ArgumentNullException>(client != null);
-			Contract.Requires<ArgumentNullException>(serializerFactory != null);
-			Contract.Requires<ArgumentNullException>(memberNameResolver != null);
-			Contract.Requires<ArgumentNullException>(valueWriters != null);
+			
+			
+			
+			
 
 			_getQueryable = new RestGetQueryable<T>(client, serializerFactory, memberNameResolver, valueWriters, typeof(T));
 		}
@@ -76,7 +76,7 @@ namespace Linq2Rest.Provider
 		{
 			get
 			{
-				Contract.Ensures(Contract.Result<IQueryable<T>>() != null);
+				
 
 				return _getQueryable;
 			}
@@ -103,7 +103,7 @@ namespace Linq2Rest.Provider
 		[ContractInvariantMethod]
 		private void Invariants()
 		{
-			Contract.Invariant(_getQueryable != null);
+			
 		}
 	}
 }

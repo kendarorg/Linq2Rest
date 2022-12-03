@@ -33,8 +33,8 @@ namespace Linq2Rest
 		/// <returns>A filtered and projected enumeration of the source collection.</returns>
 		public static IQueryable<object> Filter<T>(this IEnumerable<T> source, NameValueCollection query)
 		{
-			Contract.Requires<ArgumentNullException>(source != null);
-			Contract.Requires<ArgumentNullException>(query != null);
+			
+			
 
 			var parser = new ParameterParser<T>();
 
@@ -50,7 +50,7 @@ namespace Linq2Rest
 		/// <returns>A filtered and projected enumeration of the source collection.</returns>
 		public static IQueryable<object> Filter<T>(this IEnumerable<T> source, IModelFilter<T> filter)
 		{
-			Contract.Requires<ArgumentNullException>(source != null);
+			
 
 			return filter == null ? source.OfType<object>().AsQueryable() : filter.Filter(source);
 		}

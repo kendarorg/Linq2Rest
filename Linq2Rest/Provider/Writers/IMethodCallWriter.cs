@@ -29,16 +29,16 @@ namespace Linq2Rest.Provider.Writers
 	{
 		public bool CanHandle(MethodCallExpression expression)
 		{
-			Contract.Requires(expression != null);
+			
 
 			throw new NotImplementedException();
 		}
 
 		public string Handle(MethodCallExpression expression, Func<Expression, string> expressionWriter)
 		{
-			Contract.Requires(expression != null);
-			Contract.Requires(expressionWriter != null);
-			Contract.Ensures(Contract.Result<string>() != null);
+			
+			
+			
 			
 			throw new NotImplementedException();
 		}

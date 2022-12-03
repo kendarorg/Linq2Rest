@@ -77,7 +77,7 @@ namespace Linq2Rest
 		{
 			get
 			{
-				Contract.Ensures(Contract.Result<MethodInfo>() != null);
+				
 				return InnerIndexOfMethod;
 			}
 		}
@@ -86,7 +86,7 @@ namespace Linq2Rest
 		{
 			get
 			{
-				Contract.Ensures(Contract.Result<MethodInfo>() != null);
+				
 				return InnerContainsMethod;
 			}
 		}
@@ -95,7 +95,7 @@ namespace Linq2Rest
 		{
 			get
 			{
-				Contract.Ensures(Contract.Result<MethodInfo>() != null);
+				
 				return EndsWithMethod1;
 			}
 		}
@@ -104,7 +104,7 @@ namespace Linq2Rest
 		{
 			get
 			{
-				Contract.Ensures(Contract.Result<MethodInfo>() != null);
+				
 				return InnerStartsWithMethod;
 			}
 		}
@@ -113,7 +113,7 @@ namespace Linq2Rest
 		{
 			get
 			{
-				Contract.Ensures(Contract.Result<PropertyInfo>() != null);
+				
 				return InnerLengthProperty;
 			}
 		}
@@ -122,7 +122,7 @@ namespace Linq2Rest
 		{
 			get
 			{
-				Contract.Ensures(Contract.Result<MethodInfo>() != null);
+				
 				return InnerSubstringMethod;
 			}
 		}
@@ -131,7 +131,7 @@ namespace Linq2Rest
 		{
 			get
 			{
-				Contract.Ensures(Contract.Result<MethodInfo>() != null);
+				
 				return InnerToLowerMethod;
 			}
 		}
@@ -140,7 +140,7 @@ namespace Linq2Rest
 		{
 			get
 			{
-				Contract.Ensures(Contract.Result<MethodInfo>() != null);
+				
 				return InnerToUpperMethod;
 			}
 		}
@@ -149,7 +149,7 @@ namespace Linq2Rest
 		{
 			get
 			{
-				Contract.Ensures(Contract.Result<MethodInfo>() != null);
+				
 				return InnerTrimMethod;
 			}
 		}
@@ -158,7 +158,7 @@ namespace Linq2Rest
 		{
 			get
 			{
-				Contract.Ensures(Contract.Result<PropertyInfo>() != null);
+				
 				return InnerDayProperty;
 			}
 		}
@@ -167,7 +167,7 @@ namespace Linq2Rest
 		{
 			get
 			{
-				Contract.Ensures(Contract.Result<PropertyInfo>() != null);
+				
 				return InnerHourProperty;
 			}
 		}
@@ -176,7 +176,7 @@ namespace Linq2Rest
 		{
 			get
 			{
-				Contract.Ensures(Contract.Result<PropertyInfo>() != null);
+				
 				return InnerMinuteProperty;
 			}
 		}
@@ -185,7 +185,7 @@ namespace Linq2Rest
 		{
 			get
 			{
-				Contract.Ensures(Contract.Result<PropertyInfo>() != null);
+				
 				return InnerSecondProperty;
 			}
 		}
@@ -194,7 +194,7 @@ namespace Linq2Rest
 		{
 			get
 			{
-				Contract.Ensures(Contract.Result<PropertyInfo>() != null);
+				
 				return InnerMonthProperty;
 			}
 		}
@@ -203,7 +203,7 @@ namespace Linq2Rest
 		{
 			get
 			{
-				Contract.Ensures(Contract.Result<PropertyInfo>() != null);
+				
 				return InnerYearProperty;
 			}
 		}
@@ -212,7 +212,7 @@ namespace Linq2Rest
 		{
 			get
 			{
-				Contract.Ensures(Contract.Result<MethodInfo>() != null);
+				
 				return InnerDoubleRoundMethod;
 			}
 		}
@@ -221,7 +221,7 @@ namespace Linq2Rest
 		{
 			get
 			{
-				Contract.Ensures(Contract.Result<MethodInfo>() != null);
+				
 				return InnerDecimalRoundMethod;
 			}
 		}
@@ -230,7 +230,7 @@ namespace Linq2Rest
 		{
 			get
 			{
-				Contract.Ensures(Contract.Result<MethodInfo>() != null);
+				
 				return InnerDoubleFloorMethod;
 			}
 		}
@@ -239,7 +239,7 @@ namespace Linq2Rest
 		{
 			get
 			{
-				Contract.Ensures(Contract.Result<MethodInfo>() != null);
+				
 				return InnerDecimalFloorMethod;
 			}
 		}
@@ -248,7 +248,7 @@ namespace Linq2Rest
 		{
 			get
 			{
-				Contract.Ensures(Contract.Result<MethodInfo>() != null);
+				
 				return InnerDoubleCeilingMethod;
 			}
 		}
@@ -257,14 +257,14 @@ namespace Linq2Rest
 		{
 			get
 			{
-				Contract.Ensures(Contract.Result<MethodInfo>() != null);
+				
 				return InnerDecimalCeilingMethod;
 			}
 		}
 
 		public static MethodInfo GetAnyAllMethod(string name, Type collectionType)
 		{
-			Contract.Requires(collectionType != null);
+			
 
 			var implementationType = GetIEnumerableImpl(collectionType);
 
@@ -283,7 +283,7 @@ namespace Linq2Rest
 
 		public static Type GetIEnumerableImpl(Type type)
 		{
-			Contract.Requires(type != null);
+			
 
 			// Get IEnumerable implementation. Either type is IEnumerable<T> for some T, 
 			// or it implements IEnumerable<T> for some T. We need to find the interface.
@@ -294,7 +294,7 @@ namespace Linq2Rest
 
 			var interfaces = type.FindInterfaces((m, o) => IsIEnumerable(m), null);
 
-			Contract.Assume(interfaces.Count() > 0);
+			
 
 			var t = interfaces.First();
 
@@ -303,9 +303,9 @@ namespace Linq2Rest
 
 		private static MethodBase GetGenericMethod(Type type, string name, Type[] typeArgs, Type[] argTypes, BindingFlags flags)
 		{
-			Contract.Requires(typeArgs != null);
-			Contract.Requires(type != null);
-			Contract.Assume(Type.DefaultBinder != null);
+			
+			
+			
 
 			var typeArity = typeArgs.Length;
 			var methods = type.GetMethods()
@@ -318,7 +318,7 @@ namespace Linq2Rest
 
 		private static bool IsIEnumerable(Type type)
 		{
-			Contract.Requires(type != null);
+			
 
 			return type.IsGenericType
 				&& type.GetGenericTypeDefinition() == typeof(IEnumerable<>);

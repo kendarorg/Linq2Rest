@@ -50,14 +50,14 @@ namespace Linq2Rest
 		{
 			var result = KnownMemberNames.GetOrAdd(member, ResolveNameInternal);
 
-			Contract.Assume(result != null);
+			
 
 			return result;
 		}
 
 		private static MemberInfo ResolveAliasInternal(Type type, string alias)
 		{
-			Contract.Requires(type != null);
+			
 
 			var member = GetMembers(type)
 				.Select(
@@ -88,7 +88,7 @@ namespace Linq2Rest
 
 		private static bool HasAliasAttribute(string alias, MemberInfo member)
 		{
-			Contract.Requires(member != null);
+			
 
 			var attributes = member.GetCustomAttributes(true);
 			var dataMember = attributes.OfType<DataMemberAttribute>()
@@ -116,7 +116,7 @@ namespace Linq2Rest
 
 		private static MemberInfo CheckFrontingProperty(MemberInfo field)
 		{
-			Contract.Requires(field != null);
+			
 
 			var declaringType = field.DeclaringType;
 #if !NETFX_CORE
@@ -131,7 +131,7 @@ namespace Linq2Rest
 
 		private static IEnumerable<MemberInfo> GetMembers(Type type)
 		{
-			Contract.Requires(type != null);
+			
 
 #if NETFX_CORE
 			var typeInfo = type.GetTypeInfo();
@@ -205,7 +205,7 @@ namespace Linq2Rest
 
 		private static string ResolveNameInternal(MemberInfo member)
 		{
-			Contract.Requires(member != null);
+			
 
 			var dataMember = member.GetCustomAttributes(typeof(DataMemberAttribute), true)
 				.OfType<DataMemberAttribute>()
@@ -234,7 +234,7 @@ namespace Linq2Rest
 				return xmlAttribute.AttributeName;
 			}
 
-			Contract.Assert(member.Name != null, "Member must have name");
+			
 			return member.Name;
 		}
 	}

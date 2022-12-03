@@ -27,8 +27,8 @@ namespace Linq2Rest.Provider
 		/// <param name="inputStream">The stream we want to write to our request.</param>
 		public static void WriteRequestStream(this IHttpRequest httpRequest, Stream inputStream)
 		{
-			Contract.Requires(httpRequest != null);
-			Contract.Requires(inputStream != null);
+			
+			
 
 			var requestStream = httpRequest.GetRequestStream();
 
