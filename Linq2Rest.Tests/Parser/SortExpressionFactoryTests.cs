@@ -39,7 +39,7 @@ namespace Linq2Rest.Tests.Parser
 						 };
 			}
 
-			[TestFixtureSetUp]
+			[OneTimeSetUp]
 			public void FixtureSetup()
 			{
 				_factory = new SortExpressionFactory(new MemberNameResolver());
@@ -228,7 +228,7 @@ namespace Linq2Rest.Tests.Parser
 						 };
 			}
 
-			[TestFixtureSetUp]
+			[OneTimeSetUp]
 			public void FixtureSetup()
 			{
 				_factory = new SortExpressionFactory(new MemberNameResolver());

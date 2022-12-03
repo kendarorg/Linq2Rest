@@ -24,7 +24,7 @@ namespace Linq2Rest.Tests.Parser
 		private FakeItem[] _items;
 		private FakeItem[] _nestedItems;
 
-		[TestFixtureSetUp]
+		[OneTimeSetUp]
 		public void TestFixtureSetup()
 		{
 			_parser = new ParameterParser<FakeItem>();

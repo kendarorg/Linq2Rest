@@ -29,7 +29,7 @@ namespace Linq2Rest.Tests.Provider
 		private Mock<IRestClient> _mockClient;
 		private Stream _inputData;
 
-		[TestFixtureSetUp]
+		[OneTimeSetUp]
 		public void FixtureSetup()
 		{
 			_inputData = "[]".ToStream();

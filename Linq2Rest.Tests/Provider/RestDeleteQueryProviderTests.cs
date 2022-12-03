@@ -28,7 +28,7 @@ namespace Linq2Rest.Tests.Provider
 		private RestDeleteQueryProvider<FakeItem> _provider;
 		private Mock<IRestClient> _mockClient;
 
-		[TestFixtureSetUp]
+		[OneTimeSetUp]
 		public void FixtureSetup()
 		{
 			_mockClient = new Mock<IRestClient>();

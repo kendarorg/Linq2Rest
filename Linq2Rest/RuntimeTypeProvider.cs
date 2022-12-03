@@ -37,11 +37,9 @@ namespace Linq2Rest
 
 		static RuntimeTypeProvider()
 		{
-			ModuleBuilder = Thread
-				.GetDomain()
-				.DefineDynamicAssembly(AssemblyName, AssemblyBuilderAccess.Run)
-				.DefineDynamicModule(AssemblyName.Name);
-		}
+			ModuleBuilder = 
+				AssemblyBuilder.DefineDynamicAssembly(AssemblyName,AssemblyBuilderAccess.Run).DefineDynamicModule(AssemblyName.Name);
+        }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="RuntimeTypeProvider"/> class.
@@ -88,7 +86,7 @@ namespace Linq2Rest
 						CreateProperty(typeBuilder, field);
 					}
 
-					return typeBuilder.CreateType();
+					return typeBuilder.CreateTypeInfo();
 				});
 		}
 

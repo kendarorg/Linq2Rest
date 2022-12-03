@@ -21,7 +21,7 @@ namespace Linq2Rest.Tests
 		private SelectExpressionFactory<FakeItem> _factory;
 		private FakeItem[] _items;
 
-		[TestFixtureSetUp]
+		[OneTimeSetUp]
 		public void FixtureSetup()
 		{
 			var memberNameResolver = new MemberNameResolver();

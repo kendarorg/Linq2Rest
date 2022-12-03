@@ -20,7 +20,7 @@ namespace Linq2Rest.Tests
 	using System.Linq;
 	using System.Linq.Expressions;
 	using System.Reflection;
-	using System.Web.Script.Serialization;
+	using System.Text.Json;
 	using Linq2Rest.Provider;
 
 	/// <summary>
@@ -34,7 +34,10 @@ namespace Linq2Rest.Tests
 		private readonly Type _sourceType = typeof(TSource);
 		private readonly Type _elementType = typeof(T);
 		private readonly Type _deserializedType = typeof(Dictionary<string, object>);
-		private readonly JavaScriptSerializer _innerSerializer = new JavaScriptSerializer();
+		private readonly JsonSerializerOptions _innerSerializerOptions = new()
+		{
+			PropertyNameCaseInsensitive = true,
+		};
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="RuntimeAnonymousTypeSerializer{T,TSource}"/> class. 
@@ -56,7 +59,7 @@ namespace Linq2Rest.Tests
 		{
 			var content = new StreamReader(input).ReadToEnd();
 
-			var dictionary = (Dictionary<string, object>)_innerSerializer.DeserializeObject(content);
+			var dictionary = JsonSerializer.Deserialize<Dictionary<string, object>>(content, _innerSerializerOptions);
 			var selectorFunction = CreateSelector(dictionary);
 			return selectorFunction(dictionary);
 		}
@@ -81,7 +84,7 @@ namespace Linq2Rest.Tests
 		{
 			var ms = new MemoryStream();
 			var writer = new StreamWriter(ms);
-			writer.Write(_innerSerializer.Serialize(item));
+			writer.Write(JsonSerializer.Serialize(item, _innerSerializerOptions));
 			writer.Flush();
 			ms.Position = 0;
 			return ms;
@@ -104,7 +107,7 @@ namespace Linq2Rest.Tests
 
 		private IEnumerable<T> ReadToAnonymousType(string response)
 		{
-			var deserializeObject = _innerSerializer.DeserializeObject(response);
+			var deserializeObject = JsonSerializer.Deserialize<IEnumerable>(response);
 			var enumerable = deserializeObject as IEnumerable;
 
 			if (enumerable == null)
@@ -166,8 +169,8 @@ namespace Linq2Rest.Tests
 		[ContractInvariantMethod]
 		private void Invariants()
 		{
-			Contract.Invariant(_innerSerializer != null);
-			Contract.Invariant(_elementType != null);
+			Contract.Invariant(_innerSerializerOptions is not null);
+			Contract.Invariant(_elementType is not null);
 		}
 	}
 }

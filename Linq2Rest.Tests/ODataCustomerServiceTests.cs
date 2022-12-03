@@ -24,7 +24,7 @@ namespace Linq2Rest.Tests
 	{
 		private RestContext<NorthwindCustomer> _customerContext;
 
-		[TestFixtureSetUp]
+		[OneTimeSetUp]
 		public void FixtureSetup()
 		{
 			// Tests against the sample OData service.

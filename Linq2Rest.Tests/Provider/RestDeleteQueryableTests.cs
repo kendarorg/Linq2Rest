@@ -28,7 +28,7 @@ namespace Linq2Rest.Tests.Provider
 		private RestDeleteQueryable<FakeItem> _deleteQueryable;
 		private Mock<IRestClient> _mockClient;
 
-		[TestFixtureSetUp]
+		[OneTimeSetUp]
 		public void FixtureSetup()
 		{
 			var mockResolver = new MemberNameResolver();

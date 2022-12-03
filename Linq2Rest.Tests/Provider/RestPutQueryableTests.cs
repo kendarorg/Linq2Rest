@@ -27,7 +27,7 @@ namespace Linq2Rest.Tests.Provider
 		private RestPutQueryable<FakeItem> _putQueryable;
 		private Mock<IRestClient> _mockClient;
 
-		[TestFixtureSetUp]
+		[OneTimeSetUp]
 		public void FixtureSetup()
 		{
 			var mockResolver = new Mock<IMemberNameResolver>();
