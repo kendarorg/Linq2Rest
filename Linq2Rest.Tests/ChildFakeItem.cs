@@ -10,7 +10,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Tests
+namespace LinqCovertTools.Tests
 {
     using System.Collections.Generic;
 

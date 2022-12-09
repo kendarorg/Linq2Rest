@@ -10,16 +10,16 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Tests.Parser.Readers
+namespace LinqCovertTools.Tests.Parser.Readers
 {
-    using Linq2Rest.Parser.Readers;
+    using LinqCovertTools.Parser.Readers;
     using NUnit.Framework;
     using System;
 
     [TestFixture]
     public class EnumExpressionFactoryTests
     {
-        private const string EnumString = "Linq2Rest.Tests.Choice'That'";
+        private const string EnumString = "LinqCovertTools.Tests.Choice'That'";
         private EnumExpressionFactory _factory;
 
         [SetUp]

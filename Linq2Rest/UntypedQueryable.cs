@@ -10,7 +10,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest
+namespace LinqCovertTools
 {
     using System;
     using System.Collections;

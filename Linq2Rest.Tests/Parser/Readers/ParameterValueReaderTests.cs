@@ -10,9 +10,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Tests.Parser.Readers
+namespace LinqCovertTools.Tests.Parser.Readers
 {
-    using Linq2Rest.Parser.Readers;
+    using LinqCovertTools.Parser.Readers;
     using NUnit.Framework;
     using System;
     using System.Globalization;
@@ -83,7 +83,7 @@ namespace Linq2Rest.Tests.Parser.Readers
         [TestCase("1", typeof(bool?))]
         [TestCase("0", typeof(bool?))]
         [TestCase("null", typeof(bool?))]
-        [TestCase("Linq2Rest.Tests.Choice'That'", typeof(Choice))]
+        [TestCase("LinqCovertTools.Tests.Choice'That'", typeof(Choice))]
         [TestCase("X'ZWFzdXJlLg=='", typeof(byte[]))]
         [TestCase("binary'ZWFzdXJlLg=='", typeof(byte[]))]
         [TestCase("X'ZWFzdXJlLg=='", typeof(Stream))]

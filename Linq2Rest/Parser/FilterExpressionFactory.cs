@@ -10,9 +10,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Parser
+namespace LinqCovertTools.Parser
 {
-    using Linq2Rest.Parser.Readers;
+    using LinqCovertTools.Parser.Readers;
     using System;
     using System.Collections.Generic;
     using System.Globalization;

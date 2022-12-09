@@ -9,7 +9,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Implementations
+namespace LinqCovertTools.Implementations
 {
     using Provider;
     using System;

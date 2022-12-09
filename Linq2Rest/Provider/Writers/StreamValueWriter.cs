@@ -10,7 +10,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Provider.Writers
+namespace LinqCovertTools.Provider.Writers
 {
     using System;
     using System.IO;

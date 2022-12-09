@@ -10,7 +10,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Tests.Fakes
+namespace LinqCovertTools.Tests.Fakes
 {
     using System.Collections.Generic;
     using System.Runtime.Serialization;

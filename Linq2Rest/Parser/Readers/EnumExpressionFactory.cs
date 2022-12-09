@@ -10,7 +10,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Parser.Readers
+namespace LinqCovertTools.Parser.Readers
 {
     using System;
     using System.Collections.Concurrent;

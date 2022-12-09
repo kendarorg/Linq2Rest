@@ -10,9 +10,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Tests
+namespace LinqCovertTools.Tests
 {
-    using Linq2Rest.Tests.Provider;
+    using LinqCovertTools.Tests.Provider;
     using NUnit.Framework;
     using System;
     using System.Linq;

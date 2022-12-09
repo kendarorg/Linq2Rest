@@ -10,9 +10,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Tests.Parser
+namespace LinqCovertTools.Tests.Parser
 {
-    using Linq2Rest.Parser;
+    using LinqCovertTools.Parser;
     using NUnit.Framework;
     using System.Linq;
 

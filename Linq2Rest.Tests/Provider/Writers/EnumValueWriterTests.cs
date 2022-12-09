@@ -10,9 +10,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Tests.Provider.Writers
+namespace LinqCovertTools.Tests.Provider.Writers
 {
-    using Linq2Rest.Provider.Writers;
+    using LinqCovertTools.Provider.Writers;
     using NUnit.Framework;
 
     [TestFixture]
@@ -32,7 +32,7 @@ namespace Linq2Rest.Tests.Provider.Writers
             const Choice Value = Choice.That;
             var result = _writer.Write(Value);
 
-            Assert.AreEqual("Linq2Rest.Tests.Choice'That'", result);
+            Assert.AreEqual("LinqCovertTools.Tests.Choice'That'", result);
         }
     }
 }

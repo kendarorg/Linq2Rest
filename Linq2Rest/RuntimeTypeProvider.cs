@@ -10,7 +10,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest
+namespace LinqCovertTools
 {
     using System;
     using System.Collections.Concurrent;
@@ -196,7 +196,7 @@ namespace Linq2Rest
 
 
 
-            return fields.Aggregate("Linq2Rest<>" + sourceType.Name, (current, field) => current + (field.Key + field.Value.MemberType));
+            return fields.Aggregate("LinqCovertTools<>" + sourceType.Name, (current, field) => current + (field.Key + field.Value.MemberType));
         }
     }
 }

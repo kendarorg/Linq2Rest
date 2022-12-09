@@ -10,7 +10,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Provider
+namespace LinqCovertTools.Provider
 {
     using System.IO;
 

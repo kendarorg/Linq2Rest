@@ -10,9 +10,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Implementations
+namespace LinqCovertTools.Implementations
 {
-    using Linq2Rest.Provider;
+    using LinqCovertTools.Provider;
     using System;
 
     /// <summary>

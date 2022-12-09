@@ -10,7 +10,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Parser
+namespace LinqCovertTools.Parser
 {
     using System;
     using System.Diagnostics.Contracts;

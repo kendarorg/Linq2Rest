@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<LangVersion>latest</LangVersion>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<RootNamespace>LinqConvertTools</RootNamespace>
+		<ProjectGuid>{FEF6620A-87C8-43B4-92BD-5FAAD183CBC7}</ProjectGuid>
+		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+		<EnableNETAnalyzers>True</EnableNETAnalyzers>
+		<AnalysisLevel>latest-all</AnalysisLevel>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<Company>Reimers.dk</Company>
+		<PackageId>LinqConvertTools</PackageId>
+		<Version>8.0.30703</Version>
+		<AssemblyName>LinqConvertTools</AssemblyName>
+		<AssemblyVersion>4.1.0.0</AssemblyVersion>
+		<AssemblyDescription>Generates OData style URL queries from LINQ queries and parses the queries to LINQ serverside.</AssemblyDescription>
+		<AssemblyProduct>LinqConvertTools</AssemblyProduct>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.4.0" />
+	  <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+	  <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
+	</ItemGroup>
+
+</Project>

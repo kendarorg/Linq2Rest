@@ -10,10 +10,10 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Tests.Parser
+namespace LinqCovertTools.Tests.Parser
 {
-    using Linq2Rest.Parser;
-    using Linq2Rest.Parser.Readers;
+    using LinqCovertTools.Parser;
+    using LinqCovertTools.Parser.Readers;
     using NUnit.Framework;
     using System;
     using System.Globalization;
@@ -97,7 +97,7 @@ namespace Linq2Rest.Tests.Parser
             [TestCase("StringValue eq 'a \"quote\" within the text'", "x => (x.StringValue == \"a \"quote\" within the text\")")]
             [TestCase("StringValue eq 'a 'single quote' within the text'", "x => (x.StringValue == \"a 'single quote' within the text\")")]
             [TestCase("true", "x => True")]
-            [TestCase("ChoiceValue eq Linq2Rest.Tests.Choice'This'", "x => ((Convert(x.ChoiceValue) & Convert(This)) == Convert(This))")]
+            [TestCase("ChoiceValue eq LinqCovertTools.Tests.Choice'This'", "x => ((Convert(x.ChoiceValue) & Convert(This)) == Convert(This))")]
             [TestCase("IntValue eq 1", "x => (x.IntValue == 1)")]
             [TestCase("(IntValue eq 1) and DoubleValue lt 2", "x => ((x.IntValue == 1) AndAlso (x.DoubleValue < 2))")]
             [TestCase("IntValue eq (10 mod 2)", "x => (x.IntValue == (10 % 2))")]
@@ -324,7 +324,7 @@ namespace Linq2Rest.Tests.Parser
             [TestCase("Text eq 'a \"quote\" within the text'", "x => (x.StringValue == \"a \"quote\" within the text\")")]
             [TestCase("Text eq 'a 'single quote' within the text'", "x => (x.StringValue == \"a 'single quote' within the text\")")]
             [TestCase("true", "x => True")]
-            [TestCase("ChoiceValue eq Linq2Rest.Tests.Choice'This'", "x => ((Convert(x.ChoiceValue) & Convert(This)) == Convert(This))")]
+            [TestCase("ChoiceValue eq LinqCovertTools.Tests.Choice'This'", "x => ((Convert(x.ChoiceValue) & Convert(This)) == Convert(This))")]
             [TestCase("IntValue eq 1", "x => (x.AliasIntValue == 1)")]
             [TestCase("(IntValue eq 1) and DoubleValue lt 2", "x => ((x.AliasIntValue == 1) AndAlso (x.AliasDoubleValue < 2))")]
             [TestCase("IntValue eq (10 mod 2)", "x => (x.AliasIntValue == (10 % 2))")]

@@ -10,7 +10,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Tests.Parser
+namespace LinqCovertTools.Tests.Parser
 {
     public class ParseParent
     {

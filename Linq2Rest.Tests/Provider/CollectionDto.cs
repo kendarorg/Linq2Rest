@@ -10,7 +10,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Tests.Provider
+namespace LinqCovertTools.Tests.Provider
 {
     using System;
     using System.Collections.Generic;

@@ -10,11 +10,11 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Tests
+namespace LinqCovertTools.Tests
 {
-    using Linq2Rest.Parser;
-    using Linq2Rest.Parser.Readers;
-    using Linq2Rest.Tests.Fakes.ComplexDomain;
+    using LinqCovertTools.Parser;
+    using LinqCovertTools.Parser.Readers;
+    using LinqCovertTools.Tests.Fakes.ComplexDomain;
     using NUnit.Framework;
     using System.Collections.Specialized;
     using System.Linq;

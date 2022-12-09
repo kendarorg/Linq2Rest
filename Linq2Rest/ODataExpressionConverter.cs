@@ -10,12 +10,12 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest
+namespace LinqCovertTools
 {
-    using Linq2Rest.Parser;
-    using Linq2Rest.Parser.Readers;
-    using Linq2Rest.Provider;
-    using Linq2Rest.Provider.Writers;
+    using LinqCovertTools.Parser;
+    using LinqCovertTools.Parser.Readers;
+    using LinqCovertTools.Provider;
+    using LinqCovertTools.Provider.Writers;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;

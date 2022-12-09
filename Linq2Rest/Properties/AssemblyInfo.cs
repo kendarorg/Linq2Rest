@@ -35,6 +35,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: InternalsVisibleTo("Linq2Rest.Tests")]
-[assembly: InternalsVisibleTo("Linq2Rest.Reactive")]
-[assembly: InternalsVisibleTo("Linq2Rest.Reactive.Tests")]
+[assembly: InternalsVisibleTo("LinqCovertTools.Tests")]
+[assembly: InternalsVisibleTo("LinqCovertTools.Reactive")]
+[assembly: InternalsVisibleTo("LinqCovertTools.Reactive.Tests")]

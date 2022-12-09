@@ -36,7 +36,7 @@
  * - Gonzalo Paniagua Javier <gonzalo@ximian.com>
  */
 
-namespace Linq2Rest
+namespace LinqCovertTools
 {
     using System.IO;
     using System.Linq;
