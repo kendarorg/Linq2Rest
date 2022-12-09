@@ -6,9 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{B5D21EFA-44E8-4766-99B4-A4292F71CBCD}"
 	ProjectSection(SolutionItems) = preProject
 		Build.ps1 = Build.ps1
-		Linq2Rest.Mvc.nuspec = Linq2Rest.Mvc.nuspec
-		Linq2Rest.nuspec = Linq2Rest.nuspec
-		Linq2Rest.Reactive.nuspec = Linq2Rest.Reactive.nuspec
 		RestorePackages.ps1 = RestorePackages.ps1
 		tasks.ps1 = tasks.ps1
 	EndProjectSection

@@ -13,13 +13,16 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<Company>Reimers.dk</Company>
+		<Company></Company>
 		<PackageId>LinqConvertTools</PackageId>
 		<Version>8.0.30703</Version>
 		<AssemblyName>LinqConvertTools</AssemblyName>
 		<AssemblyVersion>4.1.0.0</AssemblyVersion>
 		<AssemblyDescription>Generates OData style URL queries from LINQ queries and parses the queries to LINQ serverside.</AssemblyDescription>
 		<AssemblyProduct>LinqConvertTools</AssemblyProduct>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<IncludeSymbols>True</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	</PropertyGroup>
 
 	<ItemGroup>
