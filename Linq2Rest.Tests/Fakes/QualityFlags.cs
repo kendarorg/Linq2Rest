@@ -12,21 +12,21 @@
 
 namespace Linq2Rest.Tests.Fakes
 {
-	public struct QualityFlags
-	{
-		private readonly int _value;
+    public struct QualityFlags
+    {
+        private readonly int _value;
 
-		public QualityFlags(int value)
-		{
-			_value = value;
-		}
+        public QualityFlags(int value)
+        {
+            _value = value;
+        }
 
-		public int Value
-		{
-			get
-			{
-				return _value;
-			}
-		}
-	}
+        public int Value
+        {
+            get
+            {
+                return _value;
+            }
+        }
+    }
 }

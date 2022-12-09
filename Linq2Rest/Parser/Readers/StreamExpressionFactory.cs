@@ -12,24 +12,24 @@
 
 namespace Linq2Rest.Parser.Readers
 {
-	using System.Diagnostics.CodeAnalysis;
-	using System.IO;
-	using System.Linq.Expressions;
+    using System.Diagnostics.CodeAnalysis;
+    using System.IO;
+    using System.Linq.Expressions;
 
-	internal class StreamExpressionFactory : ByteArrayExpressionFactoryBase<Stream>
-	{
-		[SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Cannot dispose here.")]
-		public override ConstantExpression Convert(string token)
-		{
-			var baseResult = base.Convert(token);
-			if (baseResult.Value != null)
-			{
-				var stream = new MemoryStream((byte[])baseResult.Value);
+    internal class StreamExpressionFactory : ByteArrayExpressionFactoryBase<Stream>
+    {
+        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Cannot dispose here.")]
+        public override ConstantExpression Convert(string token)
+        {
+            var baseResult = base.Convert(token);
+            if (baseResult.Value != null)
+            {
+                var stream = new MemoryStream((byte[])baseResult.Value);
 
-				return Expression.Constant(stream);
-			}
+                return Expression.Constant(stream);
+            }
 
-			return baseResult;
-		}
-	}
+            return baseResult;
+        }
+    }
 }

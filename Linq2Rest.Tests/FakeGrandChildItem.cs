@@ -12,11 +12,11 @@
 
 namespace Linq2Rest.Tests
 {
-	using System.Runtime.Serialization;
+    using System.Runtime.Serialization;
 
-	[DataContract]
-	public class FakeGrandChildItem
-	{
-		public string GrandChildStringValue { get; set; }
-	}
+    [DataContract]
+    public class FakeGrandChildItem
+    {
+        public string GrandChildStringValue { get; set; }
+    }
 }

@@ -12,7 +12,7 @@
 
 namespace Linq2Rest.Provider.Writers
 {
-	internal class UnsignedIntValueWriter : IntegerValueWriter<uint>
-	{
-	}
+    internal class UnsignedIntValueWriter : IntegerValueWriter<uint>
+    {
+    }
 }

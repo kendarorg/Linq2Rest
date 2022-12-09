@@ -12,45 +12,44 @@
 
 namespace Linq2Rest.Provider.Writers
 {
-	using System;
-	using System.Diagnostics.Contracts;
-	using System.Linq.Expressions;
+    using System;
+    using System.Linq.Expressions;
 
-	internal class StringContainsMethodWriter : IMethodCallWriter
-	{
-		public bool CanHandle(MethodCallExpression expression)
-		{
-			
+    internal class StringContainsMethodWriter : IMethodCallWriter
+    {
+        public bool CanHandle(MethodCallExpression expression)
+        {
 
-			return expression.Method.DeclaringType == typeof(string)
-				   && expression.Method.Name == "Contains";
-		}
 
-		public string Handle(MethodCallExpression expression, Func<Expression, string> expressionWriter)
-		{
-			
-			
+            return expression.Method.DeclaringType == typeof(string)
+                   && expression.Method.Name == "Contains";
+        }
 
-			var argumentExpression = expression.Arguments[0];
-			var obj = expression.Object;
+        public string Handle(MethodCallExpression expression, Func<Expression, string> expressionWriter)
+        {
 
-			
-			
 
-		    if (Linq2RestSettings.UseContainsInsteadOfSubstring)
-		    {
-		        return string.Format(
-		            "contains({1}, {0})",
-		            expressionWriter(argumentExpression),
-		            expressionWriter(obj));
-		    }
-		    else
-		    {
+
+            var argumentExpression = expression.Arguments[0];
+            var obj = expression.Object;
+
+
+
+
+            if (Linq2RestSettings.UseContainsInsteadOfSubstring)
+            {
+                return string.Format(
+                    "contains({1}, {0})",
+                    expressionWriter(argumentExpression),
+                    expressionWriter(obj));
+            }
+            else
+            {
                 return string.Format(
                 "substringof({0}, {1})",
                 expressionWriter(argumentExpression),
                 expressionWriter(obj));
-		    }
-		}
-	}
+            }
+        }
+    }
 }

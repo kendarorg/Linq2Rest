@@ -12,27 +12,27 @@
 
 namespace Linq2Rest.Tests.Provider.Writers
 {
-	using Linq2Rest.Provider.Writers;
-	using NUnit.Framework;
+    using Linq2Rest.Provider.Writers;
+    using NUnit.Framework;
 
-	[TestFixture]
-	public class EnumValueWriterTests
-	{
-		private EnumValueWriter _writer;
+    [TestFixture]
+    public class EnumValueWriterTests
+    {
+        private EnumValueWriter _writer;
 
-		[SetUp]
-		public void Setup()
-		{
-			_writer = new EnumValueWriter();
-		}
+        [SetUp]
+        public void Setup()
+        {
+            _writer = new EnumValueWriter();
+        }
 
-		[Test]
-		public void WhenWritingByteValueThenWritesString()
-		{
-			const Choice Value = Choice.That;
-			var result = _writer.Write(Value);
+        [Test]
+        public void WhenWritingByteValueThenWritesString()
+        {
+            const Choice Value = Choice.That;
+            var result = _writer.Write(Value);
 
-			Assert.AreEqual("Linq2Rest.Tests.Choice'That'", result);
-		}
-	}
+            Assert.AreEqual("Linq2Rest.Tests.Choice'That'", result);
+        }
+    }
 }

@@ -12,50 +12,50 @@
 
 namespace Linq2Rest
 {
-	using System;
-	using System.Diagnostics.Contracts;
-	using System.Reflection;
+    using System;
+    using System.Diagnostics.Contracts;
+    using System.Reflection;
 
-	/// <summary>
-	/// Defines the public interface for a resolver of <see cref="MemberInfo"/> name.
-	/// </summary>
-	[ContractClass(typeof(MemberNameResolverContracts))]
-	public interface IMemberNameResolver
-	{
-		/// <summary>
-		/// Returns the resolved name for the <see cref="MemberInfo"/>.
-		/// </summary>
-		/// <param name="member">The <see cref="MemberInfo"/> to resolve the name of.</param>
-		/// <returns>The resolved name.</returns>
-		string ResolveName(MemberInfo member);
+    /// <summary>
+    /// Defines the public interface for a resolver of <see cref="MemberInfo"/> name.
+    /// </summary>
+    [ContractClass(typeof(MemberNameResolverContracts))]
+    public interface IMemberNameResolver
+    {
+        /// <summary>
+        /// Returns the resolved name for the <see cref="MemberInfo"/>.
+        /// </summary>
+        /// <param name="member">The <see cref="MemberInfo"/> to resolve the name of.</param>
+        /// <returns>The resolved name.</returns>
+        string ResolveName(MemberInfo member);
 
-		/// <summary>
-		/// Returns the resolved <see cref="MemberInfo"/> for an alias.
-		/// </summary>
-		/// <param name="type">The <see cref="Type"/> the alias relates to.</param>
-		/// <param name="alias">The name of the alias.</param>
-		/// <returns>The <see cref="MemberInfo"/> which is aliased.</returns>
-		MemberInfo ResolveAlias(Type type, string alias);
-	}
+        /// <summary>
+        /// Returns the resolved <see cref="MemberInfo"/> for an alias.
+        /// </summary>
+        /// <param name="type">The <see cref="Type"/> the alias relates to.</param>
+        /// <param name="alias">The name of the alias.</param>
+        /// <returns>The <see cref="MemberInfo"/> which is aliased.</returns>
+        MemberInfo ResolveAlias(Type type, string alias);
+    }
 
-	[ContractClassFor(typeof(IMemberNameResolver))]
-	internal abstract class MemberNameResolverContracts : IMemberNameResolver
-	{
-		[Pure]
-		public string ResolveName(MemberInfo member)
-		{
-			
-			
+    [ContractClassFor(typeof(IMemberNameResolver))]
+    internal abstract class MemberNameResolverContracts : IMemberNameResolver
+    {
+        [Pure]
+        public string ResolveName(MemberInfo member)
+        {
 
-			throw new NotImplementedException();
-		}
 
-		[Pure]
-		public MemberInfo ResolveAlias(Type type, string alias)
-		{
-			
-			
-			throw new NotImplementedException();
-		}
-	}
+
+            throw new NotImplementedException();
+        }
+
+        [Pure]
+        public MemberInfo ResolveAlias(Type type, string alias)
+        {
+
+
+            throw new NotImplementedException();
+        }
+    }
 }

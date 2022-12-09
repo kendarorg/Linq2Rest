@@ -12,34 +12,33 @@
 
 namespace Linq2Rest.Provider.Writers
 {
-	using System;
-	using System.Diagnostics.Contracts;
-	using System.Linq.Expressions;
+    using System;
+    using System.Linq.Expressions;
 
-	internal class StringStartsWithMethodWriter : IMethodCallWriter
-	{
-		public bool CanHandle(MethodCallExpression expression)
-		{
-			
+    internal class StringStartsWithMethodWriter : IMethodCallWriter
+    {
+        public bool CanHandle(MethodCallExpression expression)
+        {
 
-			return expression.Method.DeclaringType == typeof(string)
-				   && expression.Method.Name == "StartsWith";
-		}
 
-		public string Handle(MethodCallExpression expression, Func<Expression, string> expressionWriter)
-		{
-			
+            return expression.Method.DeclaringType == typeof(string)
+                   && expression.Method.Name == "StartsWith";
+        }
 
-			var argumentExpression = expression.Arguments[0];
-			var obj = expression.Object;
+        public string Handle(MethodCallExpression expression, Func<Expression, string> expressionWriter)
+        {
 
-			
-			
 
-			return string.Format(
-				"startswith({0}, {1})", 
-				expressionWriter(obj), 
-				expressionWriter(argumentExpression));
-		}
-	}
+            var argumentExpression = expression.Arguments[0];
+            var obj = expression.Object;
+
+
+
+
+            return string.Format(
+                "startswith({0}, {1})",
+                expressionWriter(obj),
+                expressionWriter(argumentExpression));
+        }
+    }
 }

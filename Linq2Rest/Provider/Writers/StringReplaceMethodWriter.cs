@@ -12,38 +12,37 @@
 
 namespace Linq2Rest.Provider.Writers
 {
-	using System;
-	using System.Diagnostics.Contracts;
-	using System.Linq.Expressions;
+    using System;
+    using System.Linq.Expressions;
 
-	internal class StringReplaceMethodWriter : IMethodCallWriter
-	{
-		public bool CanHandle(MethodCallExpression expression)
-		{
-			
+    internal class StringReplaceMethodWriter : IMethodCallWriter
+    {
+        public bool CanHandle(MethodCallExpression expression)
+        {
 
-			return expression.Method.DeclaringType == typeof(string)
-				   && expression.Method.Name == "Replace";
-		}
 
-		public string Handle(MethodCallExpression expression, Func<Expression, string> expressionWriter)
-		{
-			
-			
+            return expression.Method.DeclaringType == typeof(string)
+                   && expression.Method.Name == "Replace";
+        }
 
-			var firstArgument = expression.Arguments[0];
-			var secondArgument = expression.Arguments[1];
-			var obj = expression.Object;
+        public string Handle(MethodCallExpression expression, Func<Expression, string> expressionWriter)
+        {
 
-			
-			
-			
 
-			return string.Format(
-				"replace({0}, {1}, {2})", 
-				expressionWriter(obj), 
-				expressionWriter(firstArgument), 
-				expressionWriter(secondArgument));
-		}
-	}
+
+            var firstArgument = expression.Arguments[0];
+            var secondArgument = expression.Arguments[1];
+            var obj = expression.Object;
+
+
+
+
+
+            return string.Format(
+                "replace({0}, {1}, {2})",
+                expressionWriter(obj),
+                expressionWriter(firstArgument),
+                expressionWriter(secondArgument));
+        }
+    }
 }

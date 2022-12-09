@@ -12,7 +12,7 @@
 
 namespace Linq2Rest.Parser.Readers
 {
-	internal class ByteArrayExpressionFactory : ByteArrayExpressionFactoryBase<byte[]>
-	{
-	}
+    internal class ByteArrayExpressionFactory : ByteArrayExpressionFactoryBase<byte[]>
+    {
+    }
 }

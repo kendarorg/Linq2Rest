@@ -12,35 +12,35 @@
 
 namespace Linq2Rest
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Diagnostics.Contracts;
-	using System.Reflection;
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
+    using System.Reflection;
 
-	/// <summary>
-	/// Provides a type matching the provided members.
-	/// </summary>
-	[ContractClass(typeof(RuntimeTypeProviderContracts))]
-	public interface IRuntimeTypeProvider
-	{
-		/// <summary>
-		/// Gets the <see cref="Type"/> matching the provided members.
-		/// </summary>
-		/// <param name="sourceType">The <see cref="Type"/> to generate the runtime type from.</param>
-		/// <param name="properties">The <see cref="MemberInfo"/> to use to generate properties.</param>
-		/// <returns>A <see cref="Type"/> mathing the provided properties.</returns>
-		Type Get(Type sourceType, IEnumerable<MemberInfo> properties);
-	}
+    /// <summary>
+    /// Provides a type matching the provided members.
+    /// </summary>
+    [ContractClass(typeof(RuntimeTypeProviderContracts))]
+    public interface IRuntimeTypeProvider
+    {
+        /// <summary>
+        /// Gets the <see cref="Type"/> matching the provided members.
+        /// </summary>
+        /// <param name="sourceType">The <see cref="Type"/> to generate the runtime type from.</param>
+        /// <param name="properties">The <see cref="MemberInfo"/> to use to generate properties.</param>
+        /// <returns>A <see cref="Type"/> mathing the provided properties.</returns>
+        Type Get(Type sourceType, IEnumerable<MemberInfo> properties);
+    }
 
-	[ContractClassFor(typeof(IRuntimeTypeProvider))]
-	internal abstract class RuntimeTypeProviderContracts : IRuntimeTypeProvider
-	{
-		public Type Get(Type sourceType, IEnumerable<MemberInfo> properties)
-		{
-			
-			
+    [ContractClassFor(typeof(IRuntimeTypeProvider))]
+    internal abstract class RuntimeTypeProviderContracts : IRuntimeTypeProvider
+    {
+        public Type Get(Type sourceType, IEnumerable<MemberInfo> properties)
+        {
 
-			throw new NotImplementedException();
-		}
-	}
+
+
+            throw new NotImplementedException();
+        }
+    }
 }

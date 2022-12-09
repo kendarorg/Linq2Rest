@@ -12,32 +12,32 @@
 
 namespace Linq2Rest.Tests.Fakes
 {
-	using System;
-	using System.Collections.Generic;
-	using System.IO;
-	using System.Linq;
-	using System.Runtime.Serialization.Json;
-	using Linq2Rest.Provider;
+    using Linq2Rest.Provider;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Runtime.Serialization.Json;
 
-	public class TestODataSerializer<T> : ISerializer<T>
-	{
-		private readonly DataContractJsonSerializer _innerSerializer = new DataContractJsonSerializer(typeof(ODataResponse<T>));
+    public class TestODataSerializer<T> : ISerializer<T>
+    {
+        private readonly DataContractJsonSerializer _innerSerializer = new DataContractJsonSerializer(typeof(ODataResponse<T>));
 
-		public T Deserialize(Stream input)
-		{
-			var response = (ODataResponse<T>)_innerSerializer.ReadObject(input);
-			return response.Results.FirstOrDefault();
-		}
+        public T Deserialize(Stream input)
+        {
+            var response = (ODataResponse<T>)_innerSerializer.ReadObject(input);
+            return response.Results.FirstOrDefault();
+        }
 
-		public IEnumerable<T> DeserializeList(Stream input)
-		{
-			var response = (ODataResponse<T>)_innerSerializer.ReadObject(input);
-			return response.Results;
-		}
+        public IEnumerable<T> DeserializeList(Stream input)
+        {
+            var response = (ODataResponse<T>)_innerSerializer.ReadObject(input);
+            return response.Results;
+        }
 
-		public Stream Serialize(T item)
-		{
-			throw new NotImplementedException();
-		}
-	}
+        public Stream Serialize(T item)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

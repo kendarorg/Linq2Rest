@@ -12,13 +12,12 @@
 
 namespace Linq2Rest.Provider
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Diagnostics.Contracts;
-	using System.Linq;
-	using System.Linq.Expressions;
-	using System.Reflection;
-	using Linq2Rest.Provider.Writers;
+    using Linq2Rest.Provider.Writers;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Reflection;
 #if NETFX_CORE
 	using Linq2Rest.Reactive.Provider;
 #endif
@@ -26,507 +25,507 @@ namespace Linq2Rest.Provider
 	using Linq2Rest.Reactive.Provider;
 #endif
 
-	internal class ExpressionWriter : IExpressionWriter
-	{
-		private static readonly ExpressionType[] CompositeExpressionTypes = { ExpressionType.Or, ExpressionType.OrElse, ExpressionType.And, ExpressionType.AndAlso };
-		private readonly ParameterValueWriter _valueWriter;
-		private readonly IMethodCallWriter[] _methodCallWriters;
+    internal class ExpressionWriter : IExpressionWriter
+    {
+        private static readonly ExpressionType[] CompositeExpressionTypes = { ExpressionType.Or, ExpressionType.OrElse, ExpressionType.And, ExpressionType.AndAlso };
+        private readonly ParameterValueWriter _valueWriter;
+        private readonly IMethodCallWriter[] _methodCallWriters;
 
-		private readonly IMemberNameResolver _memberNameResolver;
+        private readonly IMemberNameResolver _memberNameResolver;
 
-		public ExpressionWriter(IMemberNameResolver memberNameResolver, IEnumerable<IValueWriter> valueWriters)
-		{
-			
+        public ExpressionWriter(IMemberNameResolver memberNameResolver, IEnumerable<IValueWriter> valueWriters)
+        {
 
-			_valueWriter = new ParameterValueWriter(valueWriters ?? new IntValueWriter[0]);
-			_memberNameResolver = memberNameResolver;
-			_methodCallWriters = new IMethodCallWriter[]
-								 {
-									 new EqualsMethodWriter(),
-									 new StringReplaceMethodWriter(),
-									 new StringTrimMethodWriter(),
-									 new StringToLowerMethodWriter(),
-									 new StringToUpperMethodWriter(),
-									 new StringSubstringMethodWriter(),
-									 new StringContainsMethodWriter(),
-									 new StringIndexOfMethodWriter(),
-									 new StringEndsWithMethodWriter(),
-									 new StringStartsWithMethodWriter(),
-									 new MathRoundMethodWriter(),
-									 new MathFloorMethodWriter(),
-									 new MathCeilingMethodWriter(),
-									 new EmptyAnyMethodWriter(),
-									 new AnyAllMethodWriter(),
-									 new DefaultMethodWriter(_valueWriter)
-								 };
-		}
 
-		public string Write(Expression expression, Type sourceType)
-		{
-			return expression == null ? null : Write(expression, expression.Type, GetRootParameterName(expression), sourceType);
-		}
+            _valueWriter = new ParameterValueWriter(valueWriters ?? new IntValueWriter[0]);
+            _memberNameResolver = memberNameResolver;
+            _methodCallWriters = new IMethodCallWriter[]
+                                 {
+                                     new EqualsMethodWriter(),
+                                     new StringReplaceMethodWriter(),
+                                     new StringTrimMethodWriter(),
+                                     new StringToLowerMethodWriter(),
+                                     new StringToUpperMethodWriter(),
+                                     new StringSubstringMethodWriter(),
+                                     new StringContainsMethodWriter(),
+                                     new StringIndexOfMethodWriter(),
+                                     new StringEndsWithMethodWriter(),
+                                     new StringStartsWithMethodWriter(),
+                                     new MathRoundMethodWriter(),
+                                     new MathFloorMethodWriter(),
+                                     new MathCeilingMethodWriter(),
+                                     new EmptyAnyMethodWriter(),
+                                     new AnyAllMethodWriter(),
+                                     new DefaultMethodWriter(_valueWriter)
+                                 };
+        }
 
-		private static Type GetUnconvertedType(Expression expression)
-		{
-			
+        public string Write(Expression expression, Type sourceType)
+        {
+            return expression == null ? null : Write(expression, expression.Type, GetRootParameterName(expression), sourceType);
+        }
 
-			switch (expression.NodeType)
-			{
-				case ExpressionType.Convert:
-					var unaryExpression = expression as UnaryExpression;
+        private static Type GetUnconvertedType(Expression expression)
+        {
 
-					
 
-					return unaryExpression.Operand.Type;
-				default:
-					return expression.Type;
-			}
-		}
+            switch (expression.NodeType)
+            {
+                case ExpressionType.Convert:
+                    var unaryExpression = expression as UnaryExpression;
 
-		private static string GetMemberCall(MemberExpression memberExpression)
-		{
-			
-			
 
-			var declaringType = memberExpression.Member.DeclaringType;
-			var name = memberExpression.Member.Name;
 
-			if (declaringType == typeof(string) && string.Equals(name, "Length"))
-			{
-				return name.ToLowerInvariant();
-			}
+                    return unaryExpression.Operand.Type;
+                default:
+                    return expression.Type;
+            }
+        }
 
-			if (declaringType == typeof(DateTime))
-			{
-				switch (name)
-				{
-					case "Hour":
-					case "Minute":
-					case "Second":
-					case "Day":
-					case "Month":
-					case "Year":
-						return name.ToLowerInvariant();
-				}
-			}
+        private static string GetMemberCall(MemberExpression memberExpression)
+        {
 
-			return string.Empty;
-		}
 
-		private static Expression CollapseCapturedOuterVariables(MemberExpression input)
-		{
-			if (input == null || input.NodeType != ExpressionType.MemberAccess)
-			{
-				return input;
-			}
 
-			switch (input.Expression.NodeType)
-			{
-				case ExpressionType.New:
-				case ExpressionType.MemberAccess:
-					var value = GetValue(input);
-					return Expression.Constant(value);
-				case ExpressionType.Constant:
-					var obj = ((ConstantExpression)input.Expression).Value;
-					if (obj == null)
-					{
-						return input;
-					}
+            var declaringType = memberExpression.Member.DeclaringType;
+            var name = memberExpression.Member.Name;
 
-					var fieldInfo = input.Member as FieldInfo;
-					if (fieldInfo != null)
-					{
-						var result = fieldInfo.GetValue(obj);
-						return result is Expression ? (Expression)result : Expression.Constant(result);
-					}
+            if (declaringType == typeof(string) && string.Equals(name, "Length"))
+            {
+                return name.ToLowerInvariant();
+            }
 
-					var propertyInfo = input.Member as PropertyInfo;
-					if (propertyInfo != null)
-					{
-						var result = propertyInfo.GetValue(obj, null);
-						return result is Expression ? (Expression)result : Expression.Constant(result);
-					}
+            if (declaringType == typeof(DateTime))
+            {
+                switch (name)
+                {
+                    case "Hour":
+                    case "Minute":
+                    case "Second":
+                    case "Day":
+                    case "Month":
+                    case "Year":
+                        return name.ToLowerInvariant();
+                }
+            }
 
-					break;
-				case ExpressionType.TypeAs:
-				case ExpressionType.Convert:
-				case ExpressionType.ConvertChecked:
-					return Expression.Constant(GetValue(input));
-			}
+            return string.Empty;
+        }
 
-			return input;
-		}
+        private static Expression CollapseCapturedOuterVariables(MemberExpression input)
+        {
+            if (input == null || input.NodeType != ExpressionType.MemberAccess)
+            {
+                return input;
+            }
 
-		private static object GetValue(Expression input)
-		{
-			
+            switch (input.Expression.NodeType)
+            {
+                case ExpressionType.New:
+                case ExpressionType.MemberAccess:
+                    var value = GetValue(input);
+                    return Expression.Constant(value);
+                case ExpressionType.Constant:
+                    var obj = ((ConstantExpression)input.Expression).Value;
+                    if (obj == null)
+                    {
+                        return input;
+                    }
 
-			var objectMember = Expression.Convert(input, typeof(object));
-			var getterLambda = Expression.Lambda<Func<object>>(objectMember).Compile();
+                    var fieldInfo = input.Member as FieldInfo;
+                    if (fieldInfo != null)
+                    {
+                        var result = fieldInfo.GetValue(obj);
+                        return result is Expression ? (Expression)result : Expression.Constant(result);
+                    }
 
-			return getterLambda();
-		}
+                    var propertyInfo = input.Member as PropertyInfo;
+                    if (propertyInfo != null)
+                    {
+                        var result = propertyInfo.GetValue(obj, null);
+                        return result is Expression ? (Expression)result : Expression.Constant(result);
+                    }
 
-		private static bool IsMemberOfParameter(MemberExpression input)
-		{
-			if (input == null || input.Expression == null)
-			{
-				return false;
-			}
+                    break;
+                case ExpressionType.TypeAs:
+                case ExpressionType.Convert:
+                case ExpressionType.ConvertChecked:
+                    return Expression.Constant(GetValue(input));
+            }
 
-			var nodeType = input.Expression.NodeType;
-			var tempExpression = input.Expression as MemberExpression;
-			while (nodeType == ExpressionType.MemberAccess)
-			{
-				if (tempExpression == null || tempExpression.Expression == null)
-				{
-					return false;
-				}
+            return input;
+        }
 
-				nodeType = tempExpression.Expression.NodeType;
-				tempExpression = tempExpression.Expression as MemberExpression;
-			}
+        private static object GetValue(Expression input)
+        {
 
-			return nodeType == ExpressionType.Parameter;
-		}
 
-		private static string GetOperation(Expression expression)
-		{
-			
+            var objectMember = Expression.Convert(input, typeof(object));
+            var getterLambda = Expression.Lambda<Func<object>>(objectMember).Compile();
 
-			switch (expression.NodeType)
-			{
-				case ExpressionType.Add:
-					return "add";
-				case ExpressionType.AddChecked:
-					break;
-				case ExpressionType.And:
-				case ExpressionType.AndAlso:
-					return "and";
-				case ExpressionType.Divide:
-					return "div";
-				case ExpressionType.Equal:
-					return "eq";
-				case ExpressionType.GreaterThan:
-					return "gt";
-				case ExpressionType.GreaterThanOrEqual:
-					return "ge";
-				case ExpressionType.LessThan:
-					return "lt";
-				case ExpressionType.LessThanOrEqual:
-					return "le";
-				case ExpressionType.Modulo:
-					return "mod";
-				case ExpressionType.Multiply:
-					return "mul";
-				case ExpressionType.Not:
-					return "not";
-				case ExpressionType.NotEqual:
-					return "ne";
-				case ExpressionType.Or:
-				case ExpressionType.OrElse:
-					return "or";
-				case ExpressionType.Subtract:
-					return "sub";
-			}
+            return getterLambda();
+        }
 
-			return string.Empty;
-		}
+        private static bool IsMemberOfParameter(MemberExpression input)
+        {
+            if (input == null || input.Expression == null)
+            {
+                return false;
+            }
 
-		private static ParameterExpression GetRootParameterName(Expression expression)
-		{
-			if (expression is UnaryExpression)
-			{
-				expression = ((UnaryExpression)expression).Operand;
-			}
+            var nodeType = input.Expression.NodeType;
+            var tempExpression = input.Expression as MemberExpression;
+            while (nodeType == ExpressionType.MemberAccess)
+            {
+                if (tempExpression == null || tempExpression.Expression == null)
+                {
+                    return false;
+                }
 
-			if (expression is LambdaExpression && ((LambdaExpression)expression).Parameters.Any())
-			{
-				return ((LambdaExpression)expression).Parameters.First();
-			}
+                nodeType = tempExpression.Expression.NodeType;
+                tempExpression = tempExpression.Expression as MemberExpression;
+            }
 
-			return null;
-		}
+            return nodeType == ExpressionType.Parameter;
+        }
 
-		private string Write(Expression expression, ParameterExpression rootParameterName, Type sourceType)
-		{
-			return expression == null ? null : Write(expression, expression.Type, rootParameterName, sourceType);
-		}
+        private static string GetOperation(Expression expression)
+        {
 
-		private string Write(Expression expression, Type type, ParameterExpression rootParameter, Type sourceType)
-		{
-			
-			
 
-			switch (expression.NodeType)
-			{
-				case ExpressionType.Parameter:
-					var parameterExpression = expression as ParameterExpression;
+            switch (expression.NodeType)
+            {
+                case ExpressionType.Add:
+                    return "add";
+                case ExpressionType.AddChecked:
+                    break;
+                case ExpressionType.And:
+                case ExpressionType.AndAlso:
+                    return "and";
+                case ExpressionType.Divide:
+                    return "div";
+                case ExpressionType.Equal:
+                    return "eq";
+                case ExpressionType.GreaterThan:
+                    return "gt";
+                case ExpressionType.GreaterThanOrEqual:
+                    return "ge";
+                case ExpressionType.LessThan:
+                    return "lt";
+                case ExpressionType.LessThanOrEqual:
+                    return "le";
+                case ExpressionType.Modulo:
+                    return "mod";
+                case ExpressionType.Multiply:
+                    return "mul";
+                case ExpressionType.Not:
+                    return "not";
+                case ExpressionType.NotEqual:
+                    return "ne";
+                case ExpressionType.Or:
+                case ExpressionType.OrElse:
+                    return "or";
+                case ExpressionType.Subtract:
+                    return "sub";
+            }
 
-					
+            return string.Empty;
+        }
 
-					return parameterExpression.Name;
-				case ExpressionType.Constant:
-					{
-						var value = GetValue(Expression.Convert(expression, type));
-						return _valueWriter.Write(value);
-					}
+        private static ParameterExpression GetRootParameterName(Expression expression)
+        {
+            if (expression is UnaryExpression)
+            {
+                expression = ((UnaryExpression)expression).Operand;
+            }
 
-				case ExpressionType.Add:
-				case ExpressionType.And:
-				case ExpressionType.AndAlso:
-				case ExpressionType.Divide:
-				case ExpressionType.Equal:
-				case ExpressionType.GreaterThan:
-				case ExpressionType.GreaterThanOrEqual:
-				case ExpressionType.LessThan:
-				case ExpressionType.LessThanOrEqual:
-				case ExpressionType.Modulo:
-				case ExpressionType.Multiply:
-				case ExpressionType.NotEqual:
-				case ExpressionType.Or:
-				case ExpressionType.OrElse:
-				case ExpressionType.Subtract:
-					return WriteBinaryExpression(expression, rootParameter, sourceType);
-				case ExpressionType.Negate:
-					return WriteNegate(expression, rootParameter, sourceType);
-				case ExpressionType.Not:
+            if (expression is LambdaExpression && ((LambdaExpression)expression).Parameters.Any())
+            {
+                return ((LambdaExpression)expression).Parameters.First();
+            }
+
+            return null;
+        }
+
+        private string Write(Expression expression, ParameterExpression rootParameterName, Type sourceType)
+        {
+            return expression == null ? null : Write(expression, expression.Type, rootParameterName, sourceType);
+        }
+
+        private string Write(Expression expression, Type type, ParameterExpression rootParameter, Type sourceType)
+        {
+
+
+
+            switch (expression.NodeType)
+            {
+                case ExpressionType.Parameter:
+                    var parameterExpression = expression as ParameterExpression;
+
+
+
+                    return parameterExpression.Name;
+                case ExpressionType.Constant:
+                    {
+                        var value = GetValue(Expression.Convert(expression, type));
+                        return _valueWriter.Write(value);
+                    }
+
+                case ExpressionType.Add:
+                case ExpressionType.And:
+                case ExpressionType.AndAlso:
+                case ExpressionType.Divide:
+                case ExpressionType.Equal:
+                case ExpressionType.GreaterThan:
+                case ExpressionType.GreaterThanOrEqual:
+                case ExpressionType.LessThan:
+                case ExpressionType.LessThanOrEqual:
+                case ExpressionType.Modulo:
+                case ExpressionType.Multiply:
+                case ExpressionType.NotEqual:
+                case ExpressionType.Or:
+                case ExpressionType.OrElse:
+                case ExpressionType.Subtract:
+                    return WriteBinaryExpression(expression, rootParameter, sourceType);
+                case ExpressionType.Negate:
+                    return WriteNegate(expression, rootParameter, sourceType);
+                case ExpressionType.Not:
 #if !SILVERLIGHT
-				case ExpressionType.IsFalse:
+                case ExpressionType.IsFalse:
 #endif
-					return WriteFalse(expression, rootParameter, sourceType);
+                    return WriteFalse(expression, rootParameter, sourceType);
 #if !SILVERLIGHT
-				case ExpressionType.IsTrue:
-					return WriteTrue(expression, rootParameter, sourceType);
+                case ExpressionType.IsTrue:
+                    return WriteTrue(expression, rootParameter, sourceType);
 #endif
-				case ExpressionType.Convert:
-				case ExpressionType.Quote:
-					return WriteConversion(expression, rootParameter, sourceType);
-				case ExpressionType.MemberAccess:
-					return WriteMemberAccess(expression, rootParameter, sourceType);
-				case ExpressionType.Call:
-					return WriteCall(expression, rootParameter, sourceType);
-				case ExpressionType.New:
-				case ExpressionType.ArrayIndex:
-				case ExpressionType.ArrayLength:
-				case ExpressionType.Conditional:
-				case ExpressionType.Coalesce:
-					var newValue = GetValue(expression);
-					return _valueWriter.Write(newValue);
-				case ExpressionType.Lambda:
-					return WriteLambda(expression, rootParameter, sourceType);
-				default:
-					throw new InvalidOperationException("Expression is not recognized or supported");
-			}
-		}
+                case ExpressionType.Convert:
+                case ExpressionType.Quote:
+                    return WriteConversion(expression, rootParameter, sourceType);
+                case ExpressionType.MemberAccess:
+                    return WriteMemberAccess(expression, rootParameter, sourceType);
+                case ExpressionType.Call:
+                    return WriteCall(expression, rootParameter, sourceType);
+                case ExpressionType.New:
+                case ExpressionType.ArrayIndex:
+                case ExpressionType.ArrayLength:
+                case ExpressionType.Conditional:
+                case ExpressionType.Coalesce:
+                    var newValue = GetValue(expression);
+                    return _valueWriter.Write(newValue);
+                case ExpressionType.Lambda:
+                    return WriteLambda(expression, rootParameter, sourceType);
+                default:
+                    throw new InvalidOperationException("Expression is not recognized or supported");
+            }
+        }
 
-		private string WriteLambda(Expression expression, ParameterExpression rootParameter, Type sourceType)
-		{
-			var lambdaExpression = expression as LambdaExpression;
+        private string WriteLambda(Expression expression, ParameterExpression rootParameter, Type sourceType)
+        {
+            var lambdaExpression = expression as LambdaExpression;
 
-			
 
-			var body = lambdaExpression.Body;
-			return Write(body, rootParameter, sourceType);
-		}
 
-		private string WriteFalse(Expression expression, ParameterExpression rootParameterName, Type sourceType)
-		{
-			var unaryExpression = expression as UnaryExpression;
+            var body = lambdaExpression.Body;
+            return Write(body, rootParameter, sourceType);
+        }
 
-			
+        private string WriteFalse(Expression expression, ParameterExpression rootParameterName, Type sourceType)
+        {
+            var unaryExpression = expression as UnaryExpression;
 
-			var operand = unaryExpression.Operand;
 
-			return string.Format("not({0})", Write(operand, rootParameterName, sourceType));
-		}
 
-		private string WriteTrue(Expression expression, ParameterExpression rootParameterName, Type sourceType)
-		{
-			var unaryExpression = expression as UnaryExpression;
+            var operand = unaryExpression.Operand;
 
-			
+            return string.Format("not({0})", Write(operand, rootParameterName, sourceType));
+        }
 
-			var operand = unaryExpression.Operand;
+        private string WriteTrue(Expression expression, ParameterExpression rootParameterName, Type sourceType)
+        {
+            var unaryExpression = expression as UnaryExpression;
 
-			return Write(operand, rootParameterName, sourceType);
-		}
 
-		private string WriteConversion(Expression expression, ParameterExpression rootParameterName, Type sourceType)
-		{
-			var unaryExpression = expression as UnaryExpression;
 
-			
+            var operand = unaryExpression.Operand;
 
-			var operand = unaryExpression.Operand;
-			return Write(operand, rootParameterName, sourceType);
-		}
+            return Write(operand, rootParameterName, sourceType);
+        }
 
-		private string WriteCall(Expression expression, ParameterExpression rootParameterName, Type sourceType)
-		{
-			var methodCallExpression = expression as MethodCallExpression;
+        private string WriteConversion(Expression expression, ParameterExpression rootParameterName, Type sourceType)
+        {
+            var unaryExpression = expression as UnaryExpression;
 
-			
 
-			return GetMethodCall(methodCallExpression, rootParameterName, sourceType);
-		}
 
-		private string WriteMemberAccess(Expression expression, ParameterExpression rootParameterName, Type sourceType)
-		{
-			var memberExpression = expression as MemberExpression;
+            var operand = unaryExpression.Operand;
+            return Write(operand, rootParameterName, sourceType);
+        }
 
-			
+        private string WriteCall(Expression expression, ParameterExpression rootParameterName, Type sourceType)
+        {
+            var methodCallExpression = expression as MethodCallExpression;
 
-			if (memberExpression.Expression == null)
-			{
-				var memberValue = GetValue(memberExpression);
-				return _valueWriter.Write(memberValue);
-			}
 
-			var pathPrefixes = new List<MemberInfo>();
 
-			var currentMemberExpression = memberExpression;
-			while (true)
-			{
-				pathPrefixes.Add(currentMemberExpression.Member);
+            return GetMethodCall(methodCallExpression, rootParameterName, sourceType);
+        }
 
-				var currentMember = currentMemberExpression.Expression as MemberExpression;
-				if (currentMember == null)
-				{
-					break;
-				}
+        private string WriteMemberAccess(Expression expression, ParameterExpression rootParameterName, Type sourceType)
+        {
+            var memberExpression = expression as MemberExpression;
 
-				currentMemberExpression = currentMember;
-			}
 
-			pathPrefixes.Reverse();
-			var prefix = string.Join("/", pathPrefixes.Select(x => _memberNameResolver.GetNameFromAlias(x, sourceType)).Select(x => x.Item2));
-			if (rootParameterName != null
-				&& currentMemberExpression.Expression is ParameterExpression
-				&& ((ParameterExpression)currentMemberExpression.Expression).Name != rootParameterName.Name)
-			{
-				prefix = string.Format("{0}/{1}", ((ParameterExpression)currentMemberExpression.Expression).Name, prefix);
-			}
 
-			if (!IsMemberOfParameter(memberExpression))
-			{
-				var collapsedExpression = CollapseCapturedOuterVariables(memberExpression);
-				if (!(collapsedExpression is MemberExpression))
-				{
-					
+            if (memberExpression.Expression == null)
+            {
+                var memberValue = GetValue(memberExpression);
+                return _valueWriter.Write(memberValue);
+            }
 
-					return Write(collapsedExpression, rootParameterName, sourceType);
-				}
+            var pathPrefixes = new List<MemberInfo>();
 
-				memberExpression = (MemberExpression)collapsedExpression;
-			}
+            var currentMemberExpression = memberExpression;
+            while (true)
+            {
+                pathPrefixes.Add(currentMemberExpression.Member);
 
-			var memberCall = GetMemberCall(memberExpression);
+                var currentMember = currentMemberExpression.Expression as MemberExpression;
+                if (currentMember == null)
+                {
+                    break;
+                }
 
-			var innerExpression = memberExpression.Expression;
+                currentMemberExpression = currentMember;
+            }
 
-			
+            pathPrefixes.Reverse();
+            var prefix = string.Join("/", pathPrefixes.Select(x => _memberNameResolver.GetNameFromAlias(x, sourceType)).Select(x => x.Item2));
+            if (rootParameterName != null
+                && currentMemberExpression.Expression is ParameterExpression
+                && ((ParameterExpression)currentMemberExpression.Expression).Name != rootParameterName.Name)
+            {
+                prefix = string.Format("{0}/{1}", ((ParameterExpression)currentMemberExpression.Expression).Name, prefix);
+            }
 
-			return string.IsNullOrWhiteSpace(memberCall)
-					   ? prefix
-					   : string.Format("{0}({1})", memberCall, Write(innerExpression, rootParameterName, sourceType));
-		}
+            if (!IsMemberOfParameter(memberExpression))
+            {
+                var collapsedExpression = CollapseCapturedOuterVariables(memberExpression);
+                if (!(collapsedExpression is MemberExpression))
+                {
 
-		private string WriteNegate(Expression expression, ParameterExpression rootParameterName, Type sourceType)
-		{
-			var unaryExpression = expression as UnaryExpression;
 
-			
+                    return Write(collapsedExpression, rootParameterName, sourceType);
+                }
 
-			var operand = unaryExpression.Operand;
+                memberExpression = (MemberExpression)collapsedExpression;
+            }
 
-			return string.Format("-{0}", Write(operand, rootParameterName, sourceType));
-		}
+            var memberCall = GetMemberCall(memberExpression);
 
-		private string WriteBinaryExpression(Expression expression, ParameterExpression rootParameterName, Type sourceType)
-		{
-			var binaryExpression = expression as BinaryExpression;
+            var innerExpression = memberExpression.Expression;
 
-			
 
-			var operation = GetOperation(binaryExpression);
 
-			if (binaryExpression.Left.NodeType == ExpressionType.Call)
-			{
-				var compareResult = ResolveCompareToOperation(
-					rootParameterName,
-					(MethodCallExpression)binaryExpression.Left,
-					operation,
-					binaryExpression.Right as ConstantExpression,
-					sourceType);
-				if (compareResult != null)
-				{
-					return compareResult;
-				}
-			}
+            return string.IsNullOrWhiteSpace(memberCall)
+                       ? prefix
+                       : string.Format("{0}({1})", memberCall, Write(innerExpression, rootParameterName, sourceType));
+        }
 
-			if (binaryExpression.Right.NodeType == ExpressionType.Call)
-			{
-				var compareResult = ResolveCompareToOperation(
-					rootParameterName,
-					(MethodCallExpression)binaryExpression.Right,
-					operation,
-					binaryExpression.Left as ConstantExpression,
-					sourceType);
-				if (compareResult != null)
-				{
-					return compareResult;
-				}
-			}
+        private string WriteNegate(Expression expression, ParameterExpression rootParameterName, Type sourceType)
+        {
+            var unaryExpression = expression as UnaryExpression;
 
-			var isLeftComposite = CompositeExpressionTypes.Any(x => x == binaryExpression.Left.NodeType);
-			var isRightComposite = CompositeExpressionTypes.Any(x => x == binaryExpression.Right.NodeType);
 
-			var leftType = GetUnconvertedType(binaryExpression.Left);
-			var leftString = Write(binaryExpression.Left, rootParameterName, sourceType);
-			var rightString = Write(binaryExpression.Right, leftType, rootParameterName, sourceType);
 
-			return string.Format(
-				"{0} {1} {2}",
-				string.Format(isLeftComposite ? "({0})" : "{0}", leftString),
-				operation,
-				string.Format(isRightComposite ? "({0})" : "{0}", rightString));
-		}
+            var operand = unaryExpression.Operand;
 
-		private string ResolveCompareToOperation(
-			ParameterExpression rootParameterName,
-			MethodCallExpression methodCallExpression,
-			string operation,
-			ConstantExpression comparisonExpression,
-			Type sourceType)
-		{
-			if (methodCallExpression != null
-				&& methodCallExpression.Method.Name == "CompareTo"
-				&& methodCallExpression.Method.ReturnType == typeof(int)
-				&& comparisonExpression != null
-				&& Equals(comparisonExpression.Value, 0))
-			{
-				return string.Format(
-					"{0} {1} {2}",
-					Write(methodCallExpression.Object, rootParameterName, sourceType),
-					operation,
-					Write(methodCallExpression.Arguments[0], rootParameterName, sourceType));
-			}
+            return string.Format("-{0}", Write(operand, rootParameterName, sourceType));
+        }
 
-			return null;
-		}
+        private string WriteBinaryExpression(Expression expression, ParameterExpression rootParameterName, Type sourceType)
+        {
+            var binaryExpression = expression as BinaryExpression;
 
-		private string GetMethodCall(MethodCallExpression expression, ParameterExpression rootParameterName, Type sourceType)
-		{
-			
 
-			var methodCallWriter = _methodCallWriters.FirstOrDefault(w => w.CanHandle(expression));
-			if (methodCallWriter == null)
-			{
-				throw new NotSupportedException(expression + " is not supported");
-			}
 
-			return methodCallWriter.Handle(expression, e => Write(e, rootParameterName, sourceType));
-		}
-	}
+            var operation = GetOperation(binaryExpression);
+
+            if (binaryExpression.Left.NodeType == ExpressionType.Call)
+            {
+                var compareResult = ResolveCompareToOperation(
+                    rootParameterName,
+                    (MethodCallExpression)binaryExpression.Left,
+                    operation,
+                    binaryExpression.Right as ConstantExpression,
+                    sourceType);
+                if (compareResult != null)
+                {
+                    return compareResult;
+                }
+            }
+
+            if (binaryExpression.Right.NodeType == ExpressionType.Call)
+            {
+                var compareResult = ResolveCompareToOperation(
+                    rootParameterName,
+                    (MethodCallExpression)binaryExpression.Right,
+                    operation,
+                    binaryExpression.Left as ConstantExpression,
+                    sourceType);
+                if (compareResult != null)
+                {
+                    return compareResult;
+                }
+            }
+
+            var isLeftComposite = CompositeExpressionTypes.Any(x => x == binaryExpression.Left.NodeType);
+            var isRightComposite = CompositeExpressionTypes.Any(x => x == binaryExpression.Right.NodeType);
+
+            var leftType = GetUnconvertedType(binaryExpression.Left);
+            var leftString = Write(binaryExpression.Left, rootParameterName, sourceType);
+            var rightString = Write(binaryExpression.Right, leftType, rootParameterName, sourceType);
+
+            return string.Format(
+                "{0} {1} {2}",
+                string.Format(isLeftComposite ? "({0})" : "{0}", leftString),
+                operation,
+                string.Format(isRightComposite ? "({0})" : "{0}", rightString));
+        }
+
+        private string ResolveCompareToOperation(
+            ParameterExpression rootParameterName,
+            MethodCallExpression methodCallExpression,
+            string operation,
+            ConstantExpression comparisonExpression,
+            Type sourceType)
+        {
+            if (methodCallExpression != null
+                && methodCallExpression.Method.Name == "CompareTo"
+                && methodCallExpression.Method.ReturnType == typeof(int)
+                && comparisonExpression != null
+                && Equals(comparisonExpression.Value, 0))
+            {
+                return string.Format(
+                    "{0} {1} {2}",
+                    Write(methodCallExpression.Object, rootParameterName, sourceType),
+                    operation,
+                    Write(methodCallExpression.Arguments[0], rootParameterName, sourceType));
+            }
+
+            return null;
+        }
+
+        private string GetMethodCall(MethodCallExpression expression, ParameterExpression rootParameterName, Type sourceType)
+        {
+
+
+            var methodCallWriter = _methodCallWriters.FirstOrDefault(w => w.CanHandle(expression));
+            if (methodCallWriter == null)
+            {
+                throw new NotSupportedException(expression + " is not supported");
+            }
+
+            return methodCallWriter.Handle(expression, e => Write(e, rootParameterName, sourceType));
+        }
+    }
 }

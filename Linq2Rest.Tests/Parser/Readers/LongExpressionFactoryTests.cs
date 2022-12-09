@@ -12,35 +12,35 @@
 
 namespace Linq2Rest.Tests.Parser.Readers
 {
-	using System;
-	using Linq2Rest.Parser.Readers;
-	using NUnit.Framework;
+    using Linq2Rest.Parser.Readers;
+    using NUnit.Framework;
+    using System;
 
-	[TestFixture]
-	public class LongExpressionFactoryTests
-	{
-		private LongExpressionFactory _factory;
+    [TestFixture]
+    public class LongExpressionFactoryTests
+    {
+        private LongExpressionFactory _factory;
 
-		[SetUp]
-		public void Setup()
-		{
-			_factory = new LongExpressionFactory();
-		}
+        [SetUp]
+        public void Setup()
+        {
+            _factory = new LongExpressionFactory();
+        }
 
-		[Test]
-		public void WhenFilterIncludesLongParameterThenReturnedExpressionContainsLong()
-		{
-			var expression = _factory.Convert("123");
+        [Test]
+        public void WhenFilterIncludesLongParameterThenReturnedExpressionContainsLong()
+        {
+            var expression = _factory.Convert("123");
 
-			Assert.IsAssignableFrom<long>(expression.Value);
-		}
+            Assert.IsAssignableFrom<long>(expression.Value);
+        }
 
-		[Test]
-		public void WhenFilterIsIncorrectFormatThenReturnsThrows()
-		{
-			const string Parameter = "blah";
+        [Test]
+        public void WhenFilterIsIncorrectFormatThenReturnsThrows()
+        {
+            const string Parameter = "blah";
 
-			Assert.Throws<FormatException>(() => _factory.Convert(Parameter));
-		}
-	}
+            Assert.Throws<FormatException>(() => _factory.Convert(Parameter));
+        }
+    }
 }

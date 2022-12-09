@@ -12,30 +12,29 @@
 
 namespace Linq2Rest.Tests.Fakes
 {
-	using System.Collections.Generic;
-	using System.IO;
-	using System.Reflection;
-	using System.Runtime.Serialization.Json;
-	using Linq2Rest.Provider;
+    using Linq2Rest.Provider;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Runtime.Serialization.Json;
 
-	public class TestSerializer<T> : ISerializer<T>
-	{
-		private readonly DataContractJsonSerializer _innerListSerializer = new DataContractJsonSerializer(typeof(List<T>));
-		private readonly DataContractJsonSerializer _innerSerializer = new DataContractJsonSerializer(typeof(T));
+    public class TestSerializer<T> : ISerializer<T>
+    {
+        private readonly DataContractJsonSerializer _innerListSerializer = new DataContractJsonSerializer(typeof(List<T>));
+        private readonly DataContractJsonSerializer _innerSerializer = new DataContractJsonSerializer(typeof(T));
 
-		public T Deserialize(Stream input)
-		{
-			return (T)_innerSerializer.ReadObject(input);
-		}
+        public T Deserialize(Stream input)
+        {
+            return (T)_innerSerializer.ReadObject(input);
+        }
 
-		public IEnumerable<T> DeserializeList(Stream input)
-		{
-			return (IEnumerable<T>)_innerListSerializer.ReadObject(input);
-		}
+        public IEnumerable<T> DeserializeList(Stream input)
+        {
+            return (IEnumerable<T>)_innerListSerializer.ReadObject(input);
+        }
 
-		public Stream Serialize(T item)
-		{
-			return "[]".ToStream();
-		}
-	}
+        public Stream Serialize(T item)
+        {
+            return "[]".ToStream();
+        }
+    }
 }

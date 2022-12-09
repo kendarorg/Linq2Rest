@@ -12,45 +12,45 @@
 
 namespace Linq2Rest.Parser.Readers
 {
-	using System;
-	using System.Diagnostics.Contracts;
-	using System.Linq.Expressions;
+    using System;
+    using System.Diagnostics.Contracts;
+    using System.Linq.Expressions;
 
-	/// <summary>
-	/// Custom value expression factory.
-	/// </summary>
-	[ContractClass(typeof(ValueExpressionFactoryContracts))]
-	public interface IValueExpressionFactory
-	{
-		/// <summary>
-		/// Returns a value indicating whether the factory can handle a give <see cref="Type"/>.
-		/// </summary>
-		/// <param name="type">The <see cref="Type"/> to check.</param>
-		/// <returns><code>true</code> if the <see cref="Type"/> can be handled, otherwise <code>false</code>.</returns>
-		bool Handles(Type type);
+    /// <summary>
+    /// Custom value expression factory.
+    /// </summary>
+    [ContractClass(typeof(ValueExpressionFactoryContracts))]
+    public interface IValueExpressionFactory
+    {
+        /// <summary>
+        /// Returns a value indicating whether the factory can handle a give <see cref="Type"/>.
+        /// </summary>
+        /// <param name="type">The <see cref="Type"/> to check.</param>
+        /// <returns><code>true</code> if the <see cref="Type"/> can be handled, otherwise <code>false</code>.</returns>
+        bool Handles(Type type);
 
-		/// <summary>
-		/// Converts the passed OData style value to an <see cref="Expression"/>.
-		/// </summary>
-		/// <param name="token">The value token to convert.</param>
-		/// <returns>The value as a <see cref="ConstantExpression"/>.</returns>
-		ConstantExpression Convert(string token);
-	}
+        /// <summary>
+        /// Converts the passed OData style value to an <see cref="Expression"/>.
+        /// </summary>
+        /// <param name="token">The value token to convert.</param>
+        /// <returns>The value as a <see cref="ConstantExpression"/>.</returns>
+        ConstantExpression Convert(string token);
+    }
 
-	[ContractClassFor(typeof(IValueExpressionFactory))]
-	internal abstract class ValueExpressionFactoryContracts : IValueExpressionFactory
-	{
-		public bool Handles(Type type)
-		{
-			
-			throw new NotImplementedException();
-		}
+    [ContractClassFor(typeof(IValueExpressionFactory))]
+    internal abstract class ValueExpressionFactoryContracts : IValueExpressionFactory
+    {
+        public bool Handles(Type type)
+        {
 
-		public ConstantExpression Convert(string token)
-		{
-			
-			
-			throw new NotImplementedException();
-		}
-	}
+            throw new NotImplementedException();
+        }
+
+        public ConstantExpression Convert(string token)
+        {
+
+
+            throw new NotImplementedException();
+        }
+    }
 }

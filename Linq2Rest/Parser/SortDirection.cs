@@ -12,19 +12,19 @@
 
 namespace Linq2Rest.Parser
 {
-	/// <summary>
-	/// Defines the sort direction options.
-	/// </summary>
-	public enum SortDirection
-	{
-		/// <summary>
-		/// Sort in ascending order.
-		/// </summary>
-		Ascending,
+    /// <summary>
+    /// Defines the sort direction options.
+    /// </summary>
+    public enum SortDirection
+    {
+        /// <summary>
+        /// Sort in ascending order.
+        /// </summary>
+        Ascending,
 
-		/// <summary>
-		/// Sort in descending order.
-		/// </summary>
-		Descending
-	}
+        /// <summary>
+        /// Sort in descending order.
+        /// </summary>
+        Descending
+    }
 }

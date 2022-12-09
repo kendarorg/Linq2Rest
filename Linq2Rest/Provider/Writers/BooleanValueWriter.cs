@@ -12,13 +12,13 @@
 
 namespace Linq2Rest.Provider.Writers
 {
-	internal class BooleanValueWriter : ValueWriterBase<bool>
-	{
-		public override string Write(object value)
-		{
-			var boolean = (bool)value;
+    internal class BooleanValueWriter : ValueWriterBase<bool>
+    {
+        public override string Write(object value)
+        {
+            var boolean = (bool)value;
 
-			return boolean ? "true" : "false";
-		}
-	}
+            return boolean ? "true" : "false";
+        }
+    }
 }

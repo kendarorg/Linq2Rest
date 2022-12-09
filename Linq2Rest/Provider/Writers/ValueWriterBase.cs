@@ -12,20 +12,19 @@
 
 namespace Linq2Rest.Provider.Writers
 {
-	using System;
-	using System.Reflection;
+    using System;
 
-	internal abstract class ValueWriterBase<T> : IValueWriter
-	{
-		public bool Handles(Type type)
-		{
+    internal abstract class ValueWriterBase<T> : IValueWriter
+    {
+        public bool Handles(Type type)
+        {
 #if !NETFX_CORE
-			return typeof(T) == type;
+            return typeof(T) == type;
 #else
 			return typeof(T).GetTypeInfo().Equals(type.GetTypeInfo());
 #endif
-		}
+        }
 
-		public abstract string Write(object value);
-	}
+        public abstract string Write(object value);
+    }
 }

@@ -12,51 +12,51 @@
 
 namespace Linq2Rest.Tests.Parser.Readers
 {
-	using System;
-	using Linq2Rest.Parser.Readers;
-	using NUnit.Framework;
+    using Linq2Rest.Parser.Readers;
+    using NUnit.Framework;
+    using System;
 
-	[TestFixture]
-	public class DoubleExpressionFactoryTests
-	{
-		private DoubleExpressionFactory _factory;
+    [TestFixture]
+    public class DoubleExpressionFactoryTests
+    {
+        private DoubleExpressionFactory _factory;
 
-		[SetUp]
-		public void Setup()
-		{
-			_factory = new DoubleExpressionFactory();
-		}
+        [SetUp]
+        public void Setup()
+        {
+            _factory = new DoubleExpressionFactory();
+        }
 
-		[Test]
-		public void WhenFilterIncludesDoubleParameterThenReturnedExpressionContainsDouble()
-		{
-			var expression = _factory.Convert("1.23");
+        [Test]
+        public void WhenFilterIncludesDoubleParameterThenReturnedExpressionContainsDouble()
+        {
+            var expression = _factory.Convert("1.23");
 
-			Assert.IsAssignableFrom<double>(expression.Value);
-		}
+            Assert.IsAssignableFrom<double>(expression.Value);
+        }
 
-		[Test]
-		public void WhenFilterIncludesDoubleParameterWithTrailingLowerCaseMThenReturnedExpressionContainsDouble()
-		{
-			var expression = _factory.Convert("1.23d");
+        [Test]
+        public void WhenFilterIncludesDoubleParameterWithTrailingLowerCaseMThenReturnedExpressionContainsDouble()
+        {
+            var expression = _factory.Convert("1.23d");
 
-			Assert.IsAssignableFrom<double>(expression.Value);
-		}
+            Assert.IsAssignableFrom<double>(expression.Value);
+        }
 
-		[Test]
-		public void WhenFilterIncludesDoubleParameterWithTrailingUpperCaseMThenReturnedExpressionContainsDouble()
-		{
-			var expression = _factory.Convert("1.23D");
+        [Test]
+        public void WhenFilterIncludesDoubleParameterWithTrailingUpperCaseMThenReturnedExpressionContainsDouble()
+        {
+            var expression = _factory.Convert("1.23D");
 
-			Assert.IsAssignableFrom<double>(expression.Value);
-		}
+            Assert.IsAssignableFrom<double>(expression.Value);
+        }
 
-		[Test]
-		public void WhenFilterIsIncorrectFormatThenThrows()
-		{
-			const string Parameter = "blah";
+        [Test]
+        public void WhenFilterIsIncorrectFormatThenThrows()
+        {
+            const string Parameter = "blah";
 
-			Assert.Throws<FormatException>(() => _factory.Convert(Parameter));
-		}
-	}
+            Assert.Throws<FormatException>(() => _factory.Convert(Parameter));
+        }
+    }
 }

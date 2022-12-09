@@ -12,12 +12,12 @@
 
 namespace Linq2Rest.Tests.Fakes
 {
-	public class DataPoint : IDataPoint
-	{
-		public QualityFlags Flags { get; set; }
+    public class DataPoint : IDataPoint
+    {
+        public QualityFlags Flags { get; set; }
 
-		public object Value { get; set; }
+        public object Value { get; set; }
 
-		public object Extras { get; set; }
-	}
+        public object Extras { get; set; }
+    }
 }

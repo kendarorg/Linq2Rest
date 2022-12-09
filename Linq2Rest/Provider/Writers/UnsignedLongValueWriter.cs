@@ -12,7 +12,7 @@
 
 namespace Linq2Rest.Provider.Writers
 {
-	internal class UnsignedLongValueWriter : IntegerValueWriter<ulong>
-	{
-	}
+    internal class UnsignedLongValueWriter : IntegerValueWriter<ulong>
+    {
+    }
 }

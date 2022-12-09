@@ -12,22 +12,22 @@
 
 namespace Linq2Rest.Tests.Parser.Readers
 {
-	using System;
-	using Linq2Rest.Parser.Readers;
-	using NUnit.Framework;
+    using Linq2Rest.Parser.Readers;
+    using NUnit.Framework;
+    using System;
 
-	[TestFixture]
+    [TestFixture]
     public class ByteExpressionFactoryTests
     {
-		private ByteExpressionFactory _factory;
+        private ByteExpressionFactory _factory;
 
-		[SetUp]
+        [SetUp]
         public void Setup()
         {
             _factory = new ByteExpressionFactory();
         }
 
-		[Test]
+        [Test]
         public void WhenFilterIncludesByteParameterInHexFormatThenReturnedExpressionContainsByte()
         {
             var expression = _factory.Convert("f2");
@@ -35,20 +35,20 @@ namespace Linq2Rest.Tests.Parser.Readers
             Assert.IsAssignableFrom<byte>(expression.Value);
         }
 
-		[Test]
-		public void WhenFilterIncludesByteParameterThenReturnedExpressionContainsByte()
-		{
-			var expression = _factory.Convert("12");
+        [Test]
+        public void WhenFilterIncludesByteParameterThenReturnedExpressionContainsByte()
+        {
+            var expression = _factory.Convert("12");
 
-			Assert.IsAssignableFrom<byte>(expression.Value);
-		}
+            Assert.IsAssignableFrom<byte>(expression.Value);
+        }
 
-		[Test]
-		public void WhenFilterIsIncorrectFormatThenReturnsDefaultValue()
-		{
-			const string Parameter = "blah";
+        [Test]
+        public void WhenFilterIsIncorrectFormatThenReturnsDefaultValue()
+        {
+            const string Parameter = "blah";
 
-			Assert.Throws<FormatException>(() => _factory.Convert(Parameter));
-		}
+            Assert.Throws<FormatException>(() => _factory.Convert(Parameter));
+        }
     }
 }

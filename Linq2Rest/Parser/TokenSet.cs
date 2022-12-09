@@ -12,78 +12,77 @@
 
 namespace Linq2Rest.Parser
 {
-	using System;
-	using System.Diagnostics.Contracts;
+    using System.Diagnostics.Contracts;
 
-	internal class TokenSet
-	{
-		private string _left;
-		private string _operation;
-		private string _right;
+    internal class TokenSet
+    {
+        private string _left;
+        private string _operation;
+        private string _right;
 
-		public TokenSet()
-		{
-			_left = string.Empty;
-			_right = string.Empty;
-			_operation = string.Empty;
-		}
+        public TokenSet()
+        {
+            _left = string.Empty;
+            _right = string.Empty;
+            _operation = string.Empty;
+        }
 
-		public string Left
-		{
-			get
-			{
-				
-				return _left;
-			}
+        public string Left
+        {
+            get
+            {
 
-			set
-			{
-				
-				_left = value;
-			}
-		}
+                return _left;
+            }
 
-		public string Operation
-		{
-			get
-			{
-				
-				return _operation;
-			}
+            set
+            {
 
-			set
-			{
-				
-				_operation = value;
-			}
-		}
+                _left = value;
+            }
+        }
 
-		public string Right
-		{
-			get
-			{
-				
-				return _right;
-			}
+        public string Operation
+        {
+            get
+            {
 
-			set
-			{
-				
-				_right = value;
-			}
-		}
+                return _operation;
+            }
 
-		public override string ToString()
-		{
-			return string.Format("{0} {1} {2}", Left, Operation, Right);
-		}
+            set
+            {
 
-		[ContractInvariantMethod]
-		private void Invariants()
-		{
-			
-			
-			
-		}
-	}
+                _operation = value;
+            }
+        }
+
+        public string Right
+        {
+            get
+            {
+
+                return _right;
+            }
+
+            set
+            {
+
+                _right = value;
+            }
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0} {1} {2}", Left, Operation, Right);
+        }
+
+        [ContractInvariantMethod]
+        private void Invariants()
+        {
+
+
+
+        }
+    }
 }

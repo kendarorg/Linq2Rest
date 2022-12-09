@@ -12,7 +12,7 @@
 
 namespace Linq2Rest.Provider.Writers
 {
-	internal class LongValueWriter : IntegerValueWriter<long>
-	{
-	}
+    internal class LongValueWriter : IntegerValueWriter<long>
+    {
+    }
 }

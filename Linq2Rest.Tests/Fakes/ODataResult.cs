@@ -12,13 +12,13 @@
 
 namespace Linq2Rest.Tests.Fakes
 {
-	using System.Collections.Generic;
-	using System.Runtime.Serialization;
+    using System.Collections.Generic;
+    using System.Runtime.Serialization;
 
-	[DataContract]
-	public class ODataResult<T>
-	{
-		[DataMember(Name = "value")]
-		public IEnumerable<T> Results { get; set; }
-	}
+    [DataContract]
+    public class ODataResult<T>
+    {
+        [DataMember(Name = "value")]
+        public IEnumerable<T> Results { get; set; }
+    }
 }

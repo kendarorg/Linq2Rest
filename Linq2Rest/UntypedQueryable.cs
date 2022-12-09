@@ -12,55 +12,55 @@
 
 namespace Linq2Rest
 {
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
-	using System.Diagnostics.Contracts;
-	using System.Linq;
-	using System.Linq.Expressions;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
+    using System.Linq;
+    using System.Linq.Expressions;
 
-	internal class UntypedQueryable<T> : IQueryable<object>
-	{
-		private readonly IQueryable _source;
+    internal class UntypedQueryable<T> : IQueryable<object>
+    {
+        private readonly IQueryable _source;
 
-		public UntypedQueryable(IQueryable<T> source, Expression<Func<T, object>> projection)
-		{
-			
+        public UntypedQueryable(IQueryable<T> source, Expression<Func<T, object>> projection)
+        {
 
-			_source = projection == null
-						  ? (IQueryable)source
-						  : source.Select(projection);
-		}
 
-		public Expression Expression
-		{
-			get { return _source.Expression; }
-		}
+            _source = projection == null
+                          ? (IQueryable)source
+                          : source.Select(projection);
+        }
 
-		public Type ElementType
-		{
-			get { return typeof(T); }
-		}
+        public Expression Expression
+        {
+            get { return _source.Expression; }
+        }
 
-		public IQueryProvider Provider
-		{
-			get { return _source.Provider; }
-		}
+        public Type ElementType
+        {
+            get { return typeof(T); }
+        }
 
-		public IEnumerator<object> GetEnumerator()
-		{
-			return Enumerable.Cast<object>(_source).GetEnumerator();
-		}
+        public IQueryProvider Provider
+        {
+            get { return _source.Provider; }
+        }
 
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return GetEnumerator();
-		}
+        public IEnumerator<object> GetEnumerator()
+        {
+            return Enumerable.Cast<object>(_source).GetEnumerator();
+        }
 
-		[ContractInvariantMethod]
-		private void Invariants()
-		{
-			
-		}
-	}
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        [ContractInvariantMethod]
+        private void Invariants()
+        {
+
+        }
+    }
 }

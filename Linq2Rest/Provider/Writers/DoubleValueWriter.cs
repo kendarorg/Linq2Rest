@@ -12,14 +12,14 @@
 
 namespace Linq2Rest.Provider.Writers
 {
-	internal class DoubleValueWriter : RationalValueWriter<double>
-	{
-		protected override string Suffix
-		{
-			get
-			{
-				return string.Empty;
-			}
-		}
-	}
+    internal class DoubleValueWriter : RationalValueWriter<double>
+    {
+        protected override string Suffix
+        {
+            get
+            {
+                return string.Empty;
+            }
+        }
+    }
 }

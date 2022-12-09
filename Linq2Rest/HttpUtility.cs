@@ -38,139 +38,139 @@
 
 namespace Linq2Rest
 {
-	using System.IO;
-	using System.Linq;
-	using System.Text;
+    using System.IO;
+    using System.Linq;
+    using System.Text;
 
-	internal sealed class HttpUtility
-	{
-		private static readonly char[] HexChars = "0123456789abcdef".ToCharArray();
+    internal sealed class HttpUtility
+    {
+        private static readonly char[] HexChars = "0123456789abcdef".ToCharArray();
 
-		public static string UrlEncode(string s)
-		{
-			return UrlEncode(s, Encoding.UTF8);
-		}
+        public static string UrlEncode(string s)
+        {
+            return UrlEncode(s, Encoding.UTF8);
+        }
 
-		public static string UrlEncode(string s, Encoding encoding)
-		{
-			int len;
-			if (s == null || (len = s.Length) == 0)
-			{
-				return s;
-			}
+        public static string UrlEncode(string s, Encoding encoding)
+        {
+            int len;
+            if (s == null || (len = s.Length) == 0)
+            {
+                return s;
+            }
 
-			var needEncode = s.Where(c => (c < '0') || (c < 'A' && c > '9') || (c > 'Z' && c < 'a') || (c > 'z')).Any(c => !NotEncoded(c));
+            var needEncode = s.Where(c => (c < '0') || (c < 'A' && c > '9') || (c > 'Z' && c < 'a') || (c > 'z')).Any(c => !NotEncoded(c));
 
-			if (!needEncode)
-			{
-				return s;
-			}
+            if (!needEncode)
+            {
+                return s;
+            }
 
-			if (encoding == null)
-			{
-				encoding = Encoding.UTF8;
-			}
+            if (encoding == null)
+            {
+                encoding = Encoding.UTF8;
+            }
 
-			// Avoided GetByteCount call.
-			var bytes = new byte[encoding.GetMaxByteCount(len)];
-			var realLen = encoding.GetBytes(s, 0, len, bytes, 0);
+            // Avoided GetByteCount call.
+            var bytes = new byte[encoding.GetMaxByteCount(len)];
+            var realLen = encoding.GetBytes(s, 0, len, bytes, 0);
 
-			return Encoding.ASCII.GetString(UrlEncodeToBytesInternally(bytes, 0, realLen));
-		}
+            return Encoding.ASCII.GetString(UrlEncodeToBytesInternally(bytes, 0, realLen));
+        }
 
-		private static byte[] UrlEncodeToBytesInternally(byte[] bytes, int offset, int count)
-		{
-			using (var res = new MemoryStream())
-			{
-				var end = offset + count;
-				for (int i = offset; i < end; i++)
-				{
-					UrlEncodeChar((char)bytes[i], res, false);
-				}
+        private static byte[] UrlEncodeToBytesInternally(byte[] bytes, int offset, int count)
+        {
+            using (var res = new MemoryStream())
+            {
+                var end = offset + count;
+                for (int i = offset; i < end; i++)
+                {
+                    UrlEncodeChar((char)bytes[i], res, false);
+                }
 
-				res.Close();
-				return res.ToArray();
-			}
-		}
+                res.Close();
+                return res.ToArray();
+            }
+        }
 
-		private static bool NotEncoded(char c)
-		{
-			return c == '!' ||
-				   c == '\'' ||
-				   c == '(' ||
-				   c == ')' ||
-				   c == '*' ||
-				   c == '-' ||
-				   c == '.' ||
-				   c == '_';
-		}
+        private static bool NotEncoded(char c)
+        {
+            return c == '!' ||
+                   c == '\'' ||
+                   c == '(' ||
+                   c == ')' ||
+                   c == '*' ||
+                   c == '-' ||
+                   c == '.' ||
+                   c == '_';
+        }
 
-		private static void UrlEncodeChar(char c, Stream result, bool isUnicode)
-		{
-			if (c > 255)
-			{
-				// FIXME: What happens when there is an internal error?
-				//if (!isUnicode)
-				//  throw new ArgumentOutOfRangeException ("c", c, "c must be less than 256.");
+        private static void UrlEncodeChar(char c, Stream result, bool isUnicode)
+        {
+            if (c > 255)
+            {
+                // FIXME: What happens when there is an internal error?
+                //if (!isUnicode)
+                //  throw new ArgumentOutOfRangeException ("c", c, "c must be less than 256.");
 
-				result.WriteByte((byte)'%');
-				result.WriteByte((byte)'u');
+                result.WriteByte((byte)'%');
+                result.WriteByte((byte)'u');
 
-				var i = (int)c;
-				var idx = i >> 12;
-				result.WriteByte((byte)HexChars[idx]);
+                var i = (int)c;
+                var idx = i >> 12;
+                result.WriteByte((byte)HexChars[idx]);
 
-				idx = (i >> 8) & 0x0F;
-				result.WriteByte((byte)HexChars[idx]);
+                idx = (i >> 8) & 0x0F;
+                result.WriteByte((byte)HexChars[idx]);
 
-				idx = (i >> 4) & 0x0F;
-				result.WriteByte((byte)HexChars[idx]);
+                idx = (i >> 4) & 0x0F;
+                result.WriteByte((byte)HexChars[idx]);
 
-				idx = i & 0x0F;
-				result.WriteByte((byte)HexChars[idx]);
+                idx = i & 0x0F;
+                result.WriteByte((byte)HexChars[idx]);
 
-				return;
-			}
+                return;
+            }
 
-			if (c > ' ' && NotEncoded(c))
-			{
-				result.WriteByte((byte)c);
-				return;
-			}
+            if (c > ' ' && NotEncoded(c))
+            {
+                result.WriteByte((byte)c);
+                return;
+            }
 
-			if (c == ' ')
-			{
-				result.WriteByte((byte)'+');
-				return;
-			}
+            if (c == ' ')
+            {
+                result.WriteByte((byte)'+');
+                return;
+            }
 
-			if ((c < '0') ||
-				(c < 'A' && c > '9') ||
-				(c > 'Z' && c < 'a') ||
-				(c > 'z'))
-			{
-				if (isUnicode && c > 127)
-				{
-					result.WriteByte((byte)'%');
-					result.WriteByte((byte)'u');
-					result.WriteByte((byte)'0');
-					result.WriteByte((byte)'0');
-				}
-				else
-				{
-					result.WriteByte((byte)'%');
-				}
+            if ((c < '0') ||
+                (c < 'A' && c > '9') ||
+                (c > 'Z' && c < 'a') ||
+                (c > 'z'))
+            {
+                if (isUnicode && c > 127)
+                {
+                    result.WriteByte((byte)'%');
+                    result.WriteByte((byte)'u');
+                    result.WriteByte((byte)'0');
+                    result.WriteByte((byte)'0');
+                }
+                else
+                {
+                    result.WriteByte((byte)'%');
+                }
 
-				var idx = ((int)c) >> 4;
-				result.WriteByte((byte)HexChars[idx]);
+                var idx = ((int)c) >> 4;
+                result.WriteByte((byte)HexChars[idx]);
 
-				idx = ((int)c) & 0x0F;
-				result.WriteByte((byte)HexChars[idx]);
-			}
-			else
-			{
-				result.WriteByte((byte)c);
-			}
-		}
-	}
+                idx = ((int)c) & 0x0F;
+                result.WriteByte((byte)HexChars[idx]);
+            }
+            else
+            {
+                result.WriteByte((byte)c);
+            }
+        }
+    }
 }

@@ -12,11 +12,11 @@
 
 namespace Linq2Rest.Provider.Writers
 {
-	internal class StringValueWriter : ValueWriterBase<string>
-	{
-		public override string Write(object value)
-		{
-			return string.Format("'{0}'", value);
-		}
-	}
+    internal class StringValueWriter : ValueWriterBase<string>
+    {
+        public override string Write(object value)
+        {
+            return string.Format("'{0}'", value);
+        }
+    }
 }

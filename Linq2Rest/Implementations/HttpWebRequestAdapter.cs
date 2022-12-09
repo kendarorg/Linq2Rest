@@ -12,67 +12,66 @@
 
 namespace Linq2Rest.Implementations
 {
-	using System;
-	using System.Diagnostics.Contracts;
-	using System.IO;
-	using System.Net;
-	using Linq2Rest.Provider;
+    using Linq2Rest.Provider;
+    using System;
+    using System.IO;
+    using System.Net;
 
-	/// <summary>
-	/// Takes a System.Net.HttpWebRequest and wraps it in an IHttpRequest Implementation.
-	/// </summary>
-	internal class HttpWebRequestAdapter : IHttpRequest
-	{
-		public HttpWebRequestAdapter(HttpWebRequest httpWebRequest)
-		{
-			HttpWebRequest = httpWebRequest;
-		}
+    /// <summary>
+    /// Takes a System.Net.HttpWebRequest and wraps it in an IHttpRequest Implementation.
+    /// </summary>
+    internal class HttpWebRequestAdapter : IHttpRequest
+    {
+        public HttpWebRequestAdapter(HttpWebRequest httpWebRequest)
+        {
+            HttpWebRequest = httpWebRequest;
+        }
 
-		/// <summary>
-		/// The HttpWebRequest we are adapting to IHttpRequest.
-		/// </summary>
-		public HttpWebRequest HttpWebRequest { get; private set; }
+        /// <summary>
+        /// The HttpWebRequest we are adapting to IHttpRequest.
+        /// </summary>
+        public HttpWebRequest HttpWebRequest { get; private set; }
 
-		/// <summary>
-		/// Creates a basic HttpWebRequest that can then be built off of depending on what other functionality is needed.
-		/// </summary>
-		/// <param name="uri">The uri to send the request to.</param>
-		/// <param name="method">The Http Request Method.</param>
-		/// <param name="requestMimeType">The MIME type of the data we are sending.</param>
-		/// <param name="responseMimeType">The MIME we accept in response.</param>
-		/// <returns>Returns an HttpWebRequest initialized with the given parameters.</returns>
-		public static HttpWebRequest CreateHttpWebRequest(Uri uri, HttpMethod method, string responseMimeType, string requestMimeType)
-		{
-			
-			
-			
+        /// <summary>
+        /// Creates a basic HttpWebRequest that can then be built off of depending on what other functionality is needed.
+        /// </summary>
+        /// <param name="uri">The uri to send the request to.</param>
+        /// <param name="method">The Http Request Method.</param>
+        /// <param name="requestMimeType">The MIME type of the data we are sending.</param>
+        /// <param name="responseMimeType">The MIME we accept in response.</param>
+        /// <returns>Returns an HttpWebRequest initialized with the given parameters.</returns>
+        public static HttpWebRequest CreateHttpWebRequest(Uri uri, HttpMethod method, string responseMimeType, string requestMimeType)
+        {
 
-			requestMimeType = requestMimeType ?? responseMimeType;
 
-			var httpWebRequest = (HttpWebRequest)WebRequest.Create(uri);
 
-			httpWebRequest.Method = method.ToString().ToUpperInvariant();
 
-			if (method == HttpMethod.Post || method == HttpMethod.Put)
-			{
-				httpWebRequest.ContentType = requestMimeType;
-			}
+            requestMimeType = requestMimeType ?? responseMimeType;
 
-			httpWebRequest.Accept = responseMimeType;
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(uri);
 
-			return httpWebRequest;
-		}
+            httpWebRequest.Method = method.ToString().ToUpperInvariant();
 
-		public Stream GetRequestStream()
-		{
-			return HttpWebRequest.GetRequestStream();
-		}
+            if (method == HttpMethod.Post || method == HttpMethod.Put)
+            {
+                httpWebRequest.ContentType = requestMimeType;
+            }
 
-		public Stream GetResponseStream()
-		{
-			var response = HttpWebRequest.GetResponse();
-			var stream = response.GetResponseStream();
-			return stream;
-		}
-	}
+            httpWebRequest.Accept = responseMimeType;
+
+            return httpWebRequest;
+        }
+
+        public Stream GetRequestStream()
+        {
+            return HttpWebRequest.GetRequestStream();
+        }
+
+        public Stream GetResponseStream()
+        {
+            var response = HttpWebRequest.GetResponse();
+            var stream = response.GetResponseStream();
+            return stream;
+        }
+    }
 }

@@ -12,14 +12,14 @@
 
 namespace Linq2Rest.Provider.Writers
 {
-	internal class SingleValueWriter : RationalValueWriter<float>
-	{
-		protected override string Suffix
-		{
-			get
-			{
-				return "f";
-			}
-		}
-	}
+    internal class SingleValueWriter : RationalValueWriter<float>
+    {
+        protected override string Suffix
+        {
+            get
+            {
+                return "f";
+            }
+        }
+    }
 }

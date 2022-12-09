@@ -12,51 +12,51 @@
 
 namespace Linq2Rest.Tests.Parser.Readers
 {
-	using System;
-	using Linq2Rest.Parser.Readers;
-	using NUnit.Framework;
+    using Linq2Rest.Parser.Readers;
+    using NUnit.Framework;
+    using System;
 
-	[TestFixture]
-	public class DecimalExpressionFactoryTests
-	{
-		private DecimalExpressionFactory _factory;
+    [TestFixture]
+    public class DecimalExpressionFactoryTests
+    {
+        private DecimalExpressionFactory _factory;
 
-		[SetUp]
-		public void Setup()
-		{
-			_factory = new DecimalExpressionFactory();
-		}
+        [SetUp]
+        public void Setup()
+        {
+            _factory = new DecimalExpressionFactory();
+        }
 
-		[Test]
-		public void WhenFilterIncludesDecimalParameterThenReturnedExpressionContainsDecimal()
-		{
-			var expression = _factory.Convert("1.23");
+        [Test]
+        public void WhenFilterIncludesDecimalParameterThenReturnedExpressionContainsDecimal()
+        {
+            var expression = _factory.Convert("1.23");
 
-			Assert.IsAssignableFrom<decimal>(expression.Value);
-		}
+            Assert.IsAssignableFrom<decimal>(expression.Value);
+        }
 
-		[Test]
-		public void WhenFilterIncludesDecimalParameterWithTrailingLowerCaseMThenReturnedExpressionContainsDecimal()
-		{
-			var expression = _factory.Convert("1.23m");
+        [Test]
+        public void WhenFilterIncludesDecimalParameterWithTrailingLowerCaseMThenReturnedExpressionContainsDecimal()
+        {
+            var expression = _factory.Convert("1.23m");
 
-			Assert.IsAssignableFrom<decimal>(expression.Value);
-		}
+            Assert.IsAssignableFrom<decimal>(expression.Value);
+        }
 
-		[Test]
-		public void WhenFilterIncludesDecimalParameterWithTrailingUpperCaseMThenReturnedExpressionContainsDecimal()
-		{
-			var expression = _factory.Convert("1.23M");
+        [Test]
+        public void WhenFilterIncludesDecimalParameterWithTrailingUpperCaseMThenReturnedExpressionContainsDecimal()
+        {
+            var expression = _factory.Convert("1.23M");
 
-			Assert.IsAssignableFrom<decimal>(expression.Value);
-		}
+            Assert.IsAssignableFrom<decimal>(expression.Value);
+        }
 
-		[Test]
-		public void WhenFilterIsIncorrectFormatThenThrows()
-		{
-			const string Parameter = "blah";
+        [Test]
+        public void WhenFilterIsIncorrectFormatThenThrows()
+        {
+            const string Parameter = "blah";
 
-			Assert.Throws<FormatException>(() => _factory.Convert(Parameter));
-		}
-	}
+            Assert.Throws<FormatException>(() => _factory.Convert(Parameter));
+        }
+    }
 }

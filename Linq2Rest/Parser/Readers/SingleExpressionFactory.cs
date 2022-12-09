@@ -12,21 +12,21 @@
 
 namespace Linq2Rest.Parser.Readers
 {
-	using System;
-	using System.Globalization;
-	using System.Linq.Expressions;
+    using System;
+    using System.Globalization;
+    using System.Linq.Expressions;
 
-	internal class SingleExpressionFactory : ValueExpressionFactoryBase<float>
-	{
-		public override ConstantExpression Convert(string token)
-		{
-			float number;
-			if (float.TryParse(token.Trim('F', 'f'), NumberStyles.Any, CultureInfo.InvariantCulture, out number))
-			{
-				return Expression.Constant(number);
-			}
+    internal class SingleExpressionFactory : ValueExpressionFactoryBase<float>
+    {
+        public override ConstantExpression Convert(string token)
+        {
+            float number;
+            if (float.TryParse(token.Trim('F', 'f'), NumberStyles.Any, CultureInfo.InvariantCulture, out number))
+            {
+                return Expression.Constant(number);
+            }
 
-			throw new FormatException("Could not read " + token + " as short.");
-		}
-	}
+            throw new FormatException("Could not read " + token + " as short.");
+        }
+    }
 }

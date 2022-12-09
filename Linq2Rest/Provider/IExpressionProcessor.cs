@@ -12,28 +12,28 @@
 
 namespace Linq2Rest.Provider
 {
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
-	using System.Diagnostics.Contracts;
-	using System.Linq.Expressions;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
+    using System.Linq.Expressions;
 
-	[ContractClass(typeof(ExpressionProcessorContracts))]
-	internal interface IExpressionProcessor
-	{
-		object ProcessMethodCall<T>(MethodCallExpression methodCall, ParameterBuilder builder, Func<ParameterBuilder, IEnumerable<T>> resultLoader, Func<Type, ParameterBuilder, IEnumerable> intermediateResultLoader);
-	}
+    [ContractClass(typeof(ExpressionProcessorContracts))]
+    internal interface IExpressionProcessor
+    {
+        object ProcessMethodCall<T>(MethodCallExpression methodCall, ParameterBuilder builder, Func<ParameterBuilder, IEnumerable<T>> resultLoader, Func<Type, ParameterBuilder, IEnumerable> intermediateResultLoader);
+    }
 
-	[ContractClassFor(typeof(IExpressionProcessor))]
-	internal abstract class ExpressionProcessorContracts : IExpressionProcessor
-	{
-		public object ProcessMethodCall<T>(MethodCallExpression methodCall, ParameterBuilder builder, Func<ParameterBuilder, IEnumerable<T>> resultLoader, Func<Type, ParameterBuilder, IEnumerable> intermediateResultLoader)
-		{
-			
-			
-			
+    [ContractClassFor(typeof(IExpressionProcessor))]
+    internal abstract class ExpressionProcessorContracts : IExpressionProcessor
+    {
+        public object ProcessMethodCall<T>(MethodCallExpression methodCall, ParameterBuilder builder, Func<ParameterBuilder, IEnumerable<T>> resultLoader, Func<Type, ParameterBuilder, IEnumerable> intermediateResultLoader)
+        {
 
-			throw new NotImplementedException();
-		}
-	}
+
+
+
+            throw new NotImplementedException();
+        }
+    }
 }

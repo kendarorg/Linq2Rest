@@ -12,105 +12,104 @@
 
 namespace Linq2Rest.Parser
 {
-	using System;
-	using System.Diagnostics.Contracts;
-	using System.Linq;
-	using System.Text.RegularExpressions;
+    using System;
+    using System.Linq;
+    using System.Text.RegularExpressions;
 
-	internal static class TokenOperatorExtensions
-	{
-		private static readonly string[] Operations = new[] { "eq", "ne", "gt", "ge", "lt", "le", "and", "or", "not" };
-		private static readonly string[] Combiners = new[] { "and", "or", "not" };
-		private static readonly string[] Arithmetic = new[] { "add", "sub", "mul", "div", "mod" };
+    internal static class TokenOperatorExtensions
+    {
+        private static readonly string[] Operations = new[] { "eq", "ne", "gt", "ge", "lt", "le", "and", "or", "not" };
+        private static readonly string[] Combiners = new[] { "and", "or", "not" };
+        private static readonly string[] Arithmetic = new[] { "add", "sub", "mul", "div", "mod" };
 
-		private static readonly string[] BooleanFunctions = new[] { "substringof", "endswith", "startswith" };
-		private static readonly Regex CollectionFunctionRx = new Regex(@"^[0-9a-zA-Z_]+/(all|any)\((.+)\)$", RegexOptions.Compiled);
-		private static readonly Regex CleanRx = new Regex(@"^\((.+)\)$", RegexOptions.Compiled);
-		private static readonly Regex FunctionRegex = new Regex(@"^([^()/]+)\(.+\)$");
-		private static readonly Regex StringStartRx = new Regex("^[(]*'", RegexOptions.Compiled);
-		private static readonly Regex StringEndRx = new Regex("'[)]*$", RegexOptions.Compiled);
+        private static readonly string[] BooleanFunctions = new[] { "substringof", "endswith", "startswith" };
+        private static readonly Regex CollectionFunctionRx = new Regex(@"^[0-9a-zA-Z_]+/(all|any)\((.+)\)$", RegexOptions.Compiled);
+        private static readonly Regex CleanRx = new Regex(@"^\((.+)\)$", RegexOptions.Compiled);
+        private static readonly Regex FunctionRegex = new Regex(@"^([^()/]+)\(.+\)$");
+        private static readonly Regex StringStartRx = new Regex("^[(]*'", RegexOptions.Compiled);
+        private static readonly Regex StringEndRx = new Regex("'[)]*$", RegexOptions.Compiled);
 
-		public static bool IsCombinationOperation(this string operation)
-		{
-			
+        public static bool IsCombinationOperation(this string operation)
+        {
 
-			return Combiners.Any(x => string.Equals(x, operation, StringComparison.OrdinalIgnoreCase));
-		}
 
-		public static bool IsOperation(this string operation)
-		{
-			
+            return Combiners.Any(x => string.Equals(x, operation, StringComparison.OrdinalIgnoreCase));
+        }
 
-			return Operations.Any(x => string.Equals(x, operation, StringComparison.OrdinalIgnoreCase));
-		}
+        public static bool IsOperation(this string operation)
+        {
 
-		public static bool IsArithmetic(this string operation)
-		{
-			
 
-			return Arithmetic.Any(x => string.Equals(x, operation, StringComparison.OrdinalIgnoreCase));
-		}
+            return Operations.Any(x => string.Equals(x, operation, StringComparison.OrdinalIgnoreCase));
+        }
 
-		public static bool IsImpliedBoolean(this string expression)
-		{
-			
+        public static bool IsArithmetic(this string operation)
+        {
 
-			if (!string.IsNullOrWhiteSpace(expression) && !expression.IsEnclosed() && expression.IsFunction())
-			{
-				var split = expression.Split(' ');
-				return !split.Intersect(Operations).Any()
-				&& !split.Intersect(Combiners).Any()
-				&& (BooleanFunctions.Any(x => split[0].StartsWith(x, StringComparison.OrdinalIgnoreCase)) ||
-					CollectionFunctionRx.IsMatch(expression));
-			}
 
-			return false;
-		}
+            return Arithmetic.Any(x => string.Equals(x, operation, StringComparison.OrdinalIgnoreCase));
+        }
 
-		public static Match EnclosedMatch(this string expression)
-		{
-			
+        public static bool IsImpliedBoolean(this string expression)
+        {
 
-			return CleanRx.Match(expression);
-		}
 
-		public static bool IsEnclosed(this string expression)
-		{
-			
+            if (!string.IsNullOrWhiteSpace(expression) && !expression.IsEnclosed() && expression.IsFunction())
+            {
+                var split = expression.Split(' ');
+                return !split.Intersect(Operations).Any()
+                && !split.Intersect(Combiners).Any()
+                && (BooleanFunctions.Any(x => split[0].StartsWith(x, StringComparison.OrdinalIgnoreCase)) ||
+                    CollectionFunctionRx.IsMatch(expression));
+            }
 
-			var match = expression.EnclosedMatch();
-			return match != null && match.Success;
-		}
+            return false;
+        }
 
-		public static bool IsStringStart(this string expression)
-		{
-			return !string.IsNullOrWhiteSpace(expression) && StringStartRx.IsMatch(expression);
-		}
+        public static Match EnclosedMatch(this string expression)
+        {
 
-		public static bool IsStringEnd(this string expression)
-		{
-			return !string.IsNullOrWhiteSpace(expression) && StringEndRx.IsMatch(expression);
-		}
 
-		public static string GetFunctionName(this string expression)
-		{
-			var functionMatch = FunctionRegex.Match(expression);
-			if (functionMatch.Success)
-			{
-				return functionMatch.Groups[1].Value;
-			}
+            return CleanRx.Match(expression);
+        }
 
-			return string.Empty;
-		}
+        public static bool IsEnclosed(this string expression)
+        {
 
-		public static bool IsFunction(this string expression)
-		{
-			
 
-			var open = expression.IndexOf('(');
-			var close = expression.IndexOf(')');
+            var match = expression.EnclosedMatch();
+            return match != null && match.Success;
+        }
 
-			return open > 0 && close > -1;
-		}
-	}
+        public static bool IsStringStart(this string expression)
+        {
+            return !string.IsNullOrWhiteSpace(expression) && StringStartRx.IsMatch(expression);
+        }
+
+        public static bool IsStringEnd(this string expression)
+        {
+            return !string.IsNullOrWhiteSpace(expression) && StringEndRx.IsMatch(expression);
+        }
+
+        public static string GetFunctionName(this string expression)
+        {
+            var functionMatch = FunctionRegex.Match(expression);
+            if (functionMatch.Success)
+            {
+                return functionMatch.Groups[1].Value;
+            }
+
+            return string.Empty;
+        }
+
+        public static bool IsFunction(this string expression)
+        {
+
+
+            var open = expression.IndexOf('(');
+            var close = expression.IndexOf(')');
+
+            return open > 0 && close > -1;
+        }
+    }
 }

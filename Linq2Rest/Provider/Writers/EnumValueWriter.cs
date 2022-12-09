@@ -12,25 +12,24 @@
 
 namespace Linq2Rest.Provider.Writers
 {
-	using System;
-	using System.Reflection;
+    using System;
 
-	internal class EnumValueWriter : IValueWriter
-	{
-		public bool Handles(Type type)
-		{
+    internal class EnumValueWriter : IValueWriter
+    {
+        public bool Handles(Type type)
+        {
 #if !NETFX_CORE
-			return type.IsEnum;
+            return type.IsEnum;
 #else
 			return type.GetTypeInfo().IsEnum;
 #endif
-		}
+        }
 
-		public string Write(object value)
-		{
-			var enumType = value.GetType();
+        public string Write(object value)
+        {
+            var enumType = value.GetType();
 
-			return string.Format("{0}'{1}'", enumType.FullName, value);
-		}
-	}
+            return string.Format("{0}'{1}'", enumType.FullName, value);
+        }
+    }
 }

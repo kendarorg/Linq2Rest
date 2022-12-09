@@ -12,104 +12,103 @@
 
 namespace Linq2Rest.Implementations
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Diagnostics.Contracts;
-	using System.IO;
-	using System.Linq;
-	using System.Reflection;
-	using System.Runtime.Serialization.Json;
-	using Linq2Rest.Provider;
+    using Linq2Rest.Provider;
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
+    using System.IO;
+    using System.Linq;
+    using System.Runtime.Serialization.Json;
 
-	/// <summary>
-	/// Defines the JsonDataContractSerializer factory.
-	/// </summary>
-	public class JsonDataContractSerializerFactory : ISerializerFactory
-	{
-		private readonly IEnumerable<Type> _knownTypes;
+    /// <summary>
+    /// Defines the JsonDataContractSerializer factory.
+    /// </summary>
+    public class JsonDataContractSerializerFactory : ISerializerFactory
+    {
+        private readonly IEnumerable<Type> _knownTypes;
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="JsonDataContractSerializerFactory"/> class.
-		/// </summary>
-		/// <param name="knownTypes">A number of known types for serialization resolution.</param>
-		public JsonDataContractSerializerFactory(IEnumerable<Type> knownTypes)
-		{
-			
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JsonDataContractSerializerFactory"/> class.
+        /// </summary>
+        /// <param name="knownTypes">A number of known types for serialization resolution.</param>
+        public JsonDataContractSerializerFactory(IEnumerable<Type> knownTypes)
+        {
 
-			_knownTypes = knownTypes;
-		}
 
-		/// <summary>
-		/// Creates an instance of an <see cref="ISerializer{T}"/>.
-		/// </summary>
-		/// <typeparam name="T">The item type for the serializer.</typeparam>
-		/// <returns>An instance of an <see cref="ISerializer{T}"/>.</returns>
-		public ISerializer<T> Create<T>()
-		{
-			return new JsonDataContractSerializer<T>(_knownTypes);
-		}
+            _knownTypes = knownTypes;
+        }
 
-		/// <summary>
-		/// Creates an instance of an <see cref="ISerializer{T}"/>.
-		/// </summary>
-		/// <typeparam name="T">The item type for the serializer.</typeparam>
-		/// <typeparam name="TSource">The item type to provide alias metadata for the serializer.</typeparam>
-		/// <returns>An instance of an <see cref="ISerializer{T}"/>.</returns>
-		public ISerializer<T> Create<T, TSource>()
-		{
-			return Create<T>();
-		}
+        /// <summary>
+        /// Creates an instance of an <see cref="ISerializer{T}"/>.
+        /// </summary>
+        /// <typeparam name="T">The item type for the serializer.</typeparam>
+        /// <returns>An instance of an <see cref="ISerializer{T}"/>.</returns>
+        public ISerializer<T> Create<T>()
+        {
+            return new JsonDataContractSerializer<T>(_knownTypes);
+        }
 
-		[ContractInvariantMethod]
-		private void Invariants()
-		{
-			
-		}
+        /// <summary>
+        /// Creates an instance of an <see cref="ISerializer{T}"/>.
+        /// </summary>
+        /// <typeparam name="T">The item type for the serializer.</typeparam>
+        /// <typeparam name="TSource">The item type to provide alias metadata for the serializer.</typeparam>
+        /// <returns>An instance of an <see cref="ISerializer{T}"/>.</returns>
+        public ISerializer<T> Create<T, TSource>()
+        {
+            return Create<T>();
+        }
 
-		private class JsonDataContractSerializer<T> : ISerializer<T>
-		{
-			private readonly DataContractJsonSerializer _listSerializer;
-			private readonly DataContractJsonSerializer _serializer;
+        [ContractInvariantMethod]
+        private void Invariants()
+        {
 
-			public JsonDataContractSerializer(IEnumerable<Type> knownTypes)
-			{
-				
+        }
 
-				var array = knownTypes.ToArray();
-				_serializer = new DataContractJsonSerializer(typeof(T), array);
-				_listSerializer = new DataContractJsonSerializer(typeof(List<T>), array);
-			}
+        private class JsonDataContractSerializer<T> : ISerializer<T>
+        {
+            private readonly DataContractJsonSerializer _listSerializer;
+            private readonly DataContractJsonSerializer _serializer;
 
-			public T Deserialize(Stream input)
-			{
-				var result = (T)_serializer.ReadObject(input);
+            public JsonDataContractSerializer(IEnumerable<Type> knownTypes)
+            {
 
-				return result;
-			}
 
-			public IEnumerable<T> DeserializeList(Stream input)
-			{
-				var result = (List<T>)_listSerializer.ReadObject(input);
+                var array = knownTypes.ToArray();
+                _serializer = new DataContractJsonSerializer(typeof(T), array);
+                _listSerializer = new DataContractJsonSerializer(typeof(List<T>), array);
+            }
 
-				return result;
-			}
+            public T Deserialize(Stream input)
+            {
+                var result = (T)_serializer.ReadObject(input);
 
-			public Stream Serialize(T item)
-			{
-				var stream = new MemoryStream();
-				_serializer.WriteObject(stream, item);
-				stream.Flush();
-				stream.Position = 0;
+                return result;
+            }
 
-				return stream;
-			}
+            public IEnumerable<T> DeserializeList(Stream input)
+            {
+                var result = (List<T>)_listSerializer.ReadObject(input);
 
-			[ContractInvariantMethod]
-			private void Invariants()
-			{
-				
-				
-			}
-		}
-	}
+                return result;
+            }
+
+            public Stream Serialize(T item)
+            {
+                var stream = new MemoryStream();
+                _serializer.WriteObject(stream, item);
+                stream.Flush();
+                stream.Position = 0;
+
+                return stream;
+            }
+
+            [ContractInvariantMethod]
+            private void Invariants()
+            {
+
+
+            }
+        }
+    }
 }

@@ -12,68 +12,68 @@
 
 namespace Linq2Rest.Tests
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Collections.ObjectModel;
-	using System.Runtime.Serialization;
-	using System.Xml.Serialization;
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Runtime.Serialization;
+    using System.Xml.Serialization;
 
-	[DataContract]
-	public class AliasItem
-	{
-		private readonly Collection<FakeChildItem> _children = new Collection<FakeChildItem>();
-		
-		[DataMember(Name = "Text")]
-		private string _stringValue;
+    [DataContract]
+    public class AliasItem
+    {
+        private readonly Collection<FakeChildItem> _children = new Collection<FakeChildItem>();
 
-		[DataMember(Name = "ID")]
-		public int AliasID { get; set; }
+        [DataMember(Name = "Text")]
+        private string _stringValue;
 
-		[DataMember(Name = "GlobalID")]
-		public Guid AliasGlobalID { get; set; }
+        [DataMember(Name = "ID")]
+        public int AliasID { get; set; }
 
-		[DataMember(Name = "IntValue")]
-		[XmlElement(ElementName = "Number")]
-		public int AliasIntValue { get; set; }
+        [DataMember(Name = "GlobalID")]
+        public Guid AliasGlobalID { get; set; }
 
-		[DataMember(Name = "DoubleValue")]
-		public double AliasDoubleValue { get; set; }
+        [DataMember(Name = "IntValue")]
+        [XmlElement(ElementName = "Number")]
+        public int AliasIntValue { get; set; }
 
-		[DataMember(Name = "DecimalValue")]
-		public decimal AliasDecimalValue { get; set; }
+        [DataMember(Name = "DoubleValue")]
+        public double AliasDoubleValue { get; set; }
 
-		public string StringValue
-		{
-			get
-			{
-				return _stringValue;
-			}
+        [DataMember(Name = "DecimalValue")]
+        public decimal AliasDecimalValue { get; set; }
 
-			set
-			{
-				_stringValue = value;
-			}
-		}
+        public string StringValue
+        {
+            get
+            {
+                return _stringValue;
+            }
 
-		[DataMember(Name = "DateValue")]
-		public DateTime AliasDateValue { get; set; }
+            set
+            {
+                _stringValue = value;
+            }
+        }
 
-		[DataMember(Name = "Duration")]
-		public TimeSpan AliasDuration { get; set; }
+        [DataMember(Name = "DateValue")]
+        public DateTime AliasDateValue { get; set; }
 
-		[DataMember(Name = "PointInTime")]
-		public DateTimeOffset AliasPointInTime { get; set; }
+        [DataMember(Name = "Duration")]
+        public TimeSpan AliasDuration { get; set; }
 
-		[DataMember(Name = "Choice")]
-		public Choice ChoiceValue { get; set; }
+        [DataMember(Name = "PointInTime")]
+        public DateTimeOffset AliasPointInTime { get; set; }
 
-		[DataMember(Name = "Child")]
-		public ChildFakeItem AliasChild { get; set; }
+        [DataMember(Name = "Choice")]
+        public Choice ChoiceValue { get; set; }
 
-		[DataMember(Name = "Children")]
-		public ICollection<FakeChildItem> AliasChildren
-		{
-			get { return _children; }
-		}
-	}
+        [DataMember(Name = "Child")]
+        public ChildFakeItem AliasChild { get; set; }
+
+        [DataMember(Name = "Children")]
+        public ICollection<FakeChildItem> AliasChildren
+        {
+            get { return _children; }
+        }
+    }
 }

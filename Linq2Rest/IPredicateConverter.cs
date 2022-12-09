@@ -12,16 +12,16 @@
 
 namespace Linq2Rest
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Reflection;
+    using System;
+    using System.Collections.Generic;
+    using System.Reflection;
 
-	internal interface IPredicateConverter
-	{
-		Type SourceType { get; }
+    internal interface IPredicateConverter
+    {
+        Type SourceType { get; }
 
-		Type TargetType { get; }
+        Type TargetType { get; }
 
-		IDictionary<MemberInfo, MemberInfo> Substitutions { get; }
-	}
+        IDictionary<MemberInfo, MemberInfo> Substitutions { get; }
+    }
 }

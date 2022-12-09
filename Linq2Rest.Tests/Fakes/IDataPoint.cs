@@ -12,8 +12,8 @@
 
 namespace Linq2Rest.Tests.Fakes
 {
-	public interface IDataPoint : ITimeSeriesValue
-	{
-		object Extras { get; set; }
-	}
+    public interface IDataPoint : ITimeSeriesValue
+    {
+        object Extras { get; set; }
+    }
 }

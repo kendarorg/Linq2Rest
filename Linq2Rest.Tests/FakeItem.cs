@@ -12,60 +12,60 @@
 
 namespace Linq2Rest.Tests
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Collections.ObjectModel;
-	using System.Runtime.Serialization;
-	using System.Xml.Serialization;
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Runtime.Serialization;
+    using System.Xml.Serialization;
 
-	[DataContract]
-	public class FakeItem
-	{
-		private readonly Collection<FakeChildItem> _children = new Collection<FakeChildItem>();
-		[DataMember(Name = "Text")]
-		private string _stringValue;
+    [DataContract]
+    public class FakeItem
+    {
+        private readonly Collection<FakeChildItem> _children = new Collection<FakeChildItem>();
+        [DataMember(Name = "Text")]
+        private string _stringValue;
 
-		public int ID { get; set; }
+        public int ID { get; set; }
 
-		public Guid GlobalID { get; set; }
+        public Guid GlobalID { get; set; }
 
-		[XmlElement(ElementName = "Number")]
-		public int IntValue { get; set; }
+        [XmlElement(ElementName = "Number")]
+        public int IntValue { get; set; }
 
-		public double DoubleValue { get; set; }
+        public double DoubleValue { get; set; }
 
-		public decimal DecimalValue { get; set; }
+        public decimal DecimalValue { get; set; }
 
-		public string StringValue
-		{
-			get
-			{
-				return _stringValue;
-			}
+        public string StringValue
+        {
+            get
+            {
+                return _stringValue;
+            }
 
-			set
-			{
-				_stringValue = value;
-			}
-		}
+            set
+            {
+                _stringValue = value;
+            }
+        }
 
-		public DateTime DateValue { get; set; }
+        public DateTime DateValue { get; set; }
 
-		public TimeSpan Duration { get; set; }
+        public TimeSpan Duration { get; set; }
 
-		public DateTimeOffset PointInTime { get; set; }
+        public DateTimeOffset PointInTime { get; set; }
 
-		[DataMember(Name = "Choice")]
-		public Choice ChoiceValue { get; set; }
+        [DataMember(Name = "Choice")]
+        public Choice ChoiceValue { get; set; }
 
-		public ChildFakeItem Child { get; set; }
+        public ChildFakeItem Child { get; set; }
 
-		public ICollection<FakeChildItem> Children
-		{
-			get
-			{
-				return _children;
-			}
-		}
-	}
+        public ICollection<FakeChildItem> Children
+        {
+            get
+            {
+                return _children;
+            }
+        }
+    }
 }

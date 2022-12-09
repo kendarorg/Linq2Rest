@@ -12,11 +12,11 @@
 
 namespace Linq2Rest.Implementations
 {
-	using System;
-	using System.Security.Cryptography.X509Certificates;
-	using Linq2Rest.Provider;
+    using Linq2Rest.Provider;
+    using System;
+    using System.Security.Cryptography.X509Certificates;
 
-	/// <summary>
+    /// <summary>
     /// Creates an IHttpRequest with the given certificate attached to it.
     /// </summary>
     public class HttpRequestFactoryWithCertificate : IHttpRequestFactory

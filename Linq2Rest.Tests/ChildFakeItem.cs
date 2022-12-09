@@ -12,10 +12,10 @@
 
 namespace Linq2Rest.Tests
 {
-	using System.Collections.Generic;
+    using System.Collections.Generic;
 
-	public class ChildFakeItem
-	{
-		public IEnumerable<string> Attributes { get; set; } 
-	}
+    public class ChildFakeItem
+    {
+        public IEnumerable<string> Attributes { get; set; }
+    }
 }

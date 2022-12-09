@@ -12,13 +12,13 @@
 
 namespace Linq2Rest.Provider.Writers
 {
-	using System;
+    using System;
 
-	internal class GuidValueWriter : ValueWriterBase<Guid>
-	{
-		public override string Write(object value)
-		{
-			return string.Format("guid'{0}'", value);
-		}
-	}
+    internal class GuidValueWriter : ValueWriterBase<Guid>
+    {
+        public override string Write(object value)
+        {
+            return string.Format("guid'{0}'", value);
+        }
+    }
 }

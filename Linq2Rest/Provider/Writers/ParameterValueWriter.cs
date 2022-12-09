@@ -12,73 +12,73 @@
 
 namespace Linq2Rest.Provider.Writers
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Diagnostics.Contracts;
-	using System.Globalization;
-	using System.Linq;
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
+    using System.Globalization;
+    using System.Linq;
 
 #if NETFX_CORE
 	using System.Reflection;
 #endif
 
-	internal class ParameterValueWriter
-	{
-		private readonly IList<IValueWriter> _valueWriters;
+    internal class ParameterValueWriter
+    {
+        private readonly IList<IValueWriter> _valueWriters;
 
-		public ParameterValueWriter(IEnumerable<IValueWriter> valueWriters)
-		{
-			
+        public ParameterValueWriter(IEnumerable<IValueWriter> valueWriters)
+        {
 
-			_valueWriters = valueWriters.Concat(
-				new IValueWriter[]
-				{
-					new EnumValueWriter(),
-					new StringValueWriter(),
-					new BooleanValueWriter(),
-					new IntValueWriter(),
-					new LongValueWriter(),
-					new ShortValueWriter(),
-					new UnsignedIntValueWriter(),
-					new UnsignedLongValueWriter(),
-					new UnsignedShortValueWriter(),
-					new ByteArrayValueWriter(),
-					new StreamValueWriter(),
-					new DecimalValueWriter(),
-					new DoubleValueWriter(),
-					new SingleValueWriter(),
-					new ByteValueWriter(),
-					new GuidValueWriter(),
-					new DateTimeValueWriter(),
-					new TimeSpanValueWriter(),
-					new DateTimeOffsetValueWriter()
-				})
-				.ToList();
-		}
 
-		public string Write(object value)
-		{
-			if (value == null)
-			{
-				return "null";
-			}
+            _valueWriters = valueWriters.Concat(
+                new IValueWriter[]
+                {
+                    new EnumValueWriter(),
+                    new StringValueWriter(),
+                    new BooleanValueWriter(),
+                    new IntValueWriter(),
+                    new LongValueWriter(),
+                    new ShortValueWriter(),
+                    new UnsignedIntValueWriter(),
+                    new UnsignedLongValueWriter(),
+                    new UnsignedShortValueWriter(),
+                    new ByteArrayValueWriter(),
+                    new StreamValueWriter(),
+                    new DecimalValueWriter(),
+                    new DoubleValueWriter(),
+                    new SingleValueWriter(),
+                    new ByteValueWriter(),
+                    new GuidValueWriter(),
+                    new DateTimeValueWriter(),
+                    new TimeSpanValueWriter(),
+                    new DateTimeOffsetValueWriter()
+                })
+                .ToList();
+        }
 
-			var type = value.GetType();
+        public string Write(object value)
+        {
+            if (value == null)
+            {
+                return "null";
+            }
 
-			var writer = _valueWriters.FirstOrDefault(x => x.Handles(type));
+            var type = value.GetType();
 
-			if (writer != null)
-			{
-				return writer.Write(value);
-			}
+            var writer = _valueWriters.FirstOrDefault(x => x.Handles(type));
+
+            if (writer != null)
+            {
+                return writer.Write(value);
+            }
 
 #if !NETFX_CORE
-			if (typeof(Nullable<>).IsAssignableFrom(type))
-			{
-				var genericParameter = type.GetGenericArguments()[0];
+            if (typeof(Nullable<>).IsAssignableFrom(type))
+            {
+                var genericParameter = type.GetGenericArguments()[0];
 
-				return Write(Convert.ChangeType(value, genericParameter, CultureInfo.CurrentCulture));
-			}
+                return Write(Convert.ChangeType(value, genericParameter, CultureInfo.CurrentCulture));
+            }
 
 #else
 			var typeInfo = type.GetTypeInfo();
@@ -90,13 +90,13 @@ namespace Linq2Rest.Provider.Writers
 			}
 #endif
 
-			return value.ToString();
-		}
+            return value.ToString();
+        }
 
-		[ContractInvariantMethod]
-		private void Invariants()
-		{
-			
-		}
-	}
+        [ContractInvariantMethod]
+        private void Invariants()
+        {
+
+        }
+    }
 }

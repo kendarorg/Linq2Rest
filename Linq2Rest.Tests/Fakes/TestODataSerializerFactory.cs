@@ -12,18 +12,18 @@
 
 namespace Linq2Rest.Tests.Fakes
 {
-	using Linq2Rest.Provider;
+    using Linq2Rest.Provider;
 
-	public class TestODataSerializerFactory : ISerializerFactory
-	{
-		public ISerializer<T> Create<T>()
-		{
-			return new TestODataSerializer<T>();
-		}
+    public class TestODataSerializerFactory : ISerializerFactory
+    {
+        public ISerializer<T> Create<T>()
+        {
+            return new TestODataSerializer<T>();
+        }
 
-		public ISerializer<T> Create<T, TSource>()
-		{
-			return Create<T>();
-		}
-	}
+        public ISerializer<T> Create<T, TSource>()
+        {
+            return Create<T>();
+        }
+    }
 }
