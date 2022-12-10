@@ -152,6 +152,7 @@ namespace LinqCovertTools.Tests.Parser
             [TestCase("endswith(StringValue, 'text') ne true", "x => (x.StringValue.EndsWith(\"text\") != True)")]
             [TestCase("endswith(StringValue, 'text') eq false", "x => (x.StringValue.EndsWith(\"text\") == False)")]
             [TestCase("endswith(StringValue, 'text') ne false", "x => (x.StringValue.EndsWith(\"text\") != False)")]
+            [TestCase("startswith(stringValue, 'text') eq true", "x => (x.StringValue.StartsWith(\"text\") == True)")]
             [TestCase("startswith(StringValue, 'text') eq true", "x => (x.StringValue.StartsWith(\"text\") == True)")]
             [TestCase("startswith(StringValue, 'text') ne true", "x => (x.StringValue.StartsWith(\"text\") != True)")]
             [TestCase("startswith(StringValue, 'text') eq false", "x => (x.StringValue.StartsWith(\"text\") == False)")]
@@ -245,7 +246,6 @@ namespace LinqCovertTools.Tests.Parser
             public void WhenProvidingValidInputThenGetsExpectedExpression(string filter, string expression)
             {
                 var result = _factory.Create<FakeItem>(filter);
-
                 Assert.AreEqual(expression, result.ToString(), "Failed for " + filter);
             }
         }

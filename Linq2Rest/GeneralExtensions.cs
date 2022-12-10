@@ -43,32 +43,21 @@ namespace LinqCovertTools
 
         public static string Capitalize(this string input)
         {
-
-
             return char.ToUpperInvariant(input[0]) + input.Substring(1);
         }
 
         public static Stream ToStream(this string input)
         {
-
-
             return new MemoryStream(Encoding.UTF8.GetBytes(input ?? string.Empty));
         }
 
         public static IEnumerable<T> Replace<T>(this IEnumerable<T> items, Func<T, bool> predicate, T replacement)
         {
-
-
-
-
             return items.Select(item => predicate(item) ? replacement : item);
         }
 
         public static Tuple<Type, Expression> CreateMemberExpression(this IMemberNameResolver memberNameResolver, ParameterExpression parameter, IEnumerable<string> propertyChain, Type parentType, Expression propertyExpression)
         {
-
-
-
             foreach (var propertyName in propertyChain)
             {
                 var name = propertyName;
@@ -87,10 +76,6 @@ namespace LinqCovertTools
 
         public static Tuple<Type, string> GetNameFromAlias(this IMemberNameResolver memberNameResolver, MemberInfo alias, Type sourceType)
         {
-
-
-
-
             var source = sourceType.GetMembers()
                 .Select(x => new { Original = x, Name = memberNameResolver.ResolveName(x) })
                 .FirstOrDefault(x => x.Original.Name == alias.Name);

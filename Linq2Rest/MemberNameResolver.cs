@@ -56,8 +56,6 @@ namespace LinqCovertTools
 
         private static MemberInfo ResolveAliasInternal(Type type, string alias)
         {
-
-
             var member = GetMembers(type)
                 .Select(
                     x =>
@@ -73,7 +71,7 @@ namespace LinqCovertTools
 #endif
                         }
 
-                        if (x.Name == alias)
+                        if (string.Equals(x.Name, alias, StringComparison.OrdinalIgnoreCase))
                         {
                             return x;
                         }
@@ -87,8 +85,6 @@ namespace LinqCovertTools
 
         private static bool HasAliasAttribute(string alias, MemberInfo member)
         {
-
-
             var attributes = member.GetCustomAttributes(true);
             var dataMember = attributes.OfType<DataMemberAttribute>()
                 .FirstOrDefault();

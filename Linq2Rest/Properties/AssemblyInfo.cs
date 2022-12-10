@@ -36,5 +36,3 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: InternalsVisibleTo("LinqCovertTools.Tests")]
-[assembly: InternalsVisibleTo("LinqCovertTools.Reactive")]
-[assembly: InternalsVisibleTo("LinqCovertTools.Reactive.Tests")]

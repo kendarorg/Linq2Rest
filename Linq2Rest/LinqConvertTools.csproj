@@ -31,4 +31,10 @@
 	  <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+			<_Parameter1>LinqConvertTools.Tests</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+
 </Project>

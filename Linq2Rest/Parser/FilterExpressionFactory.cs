@@ -350,10 +350,6 @@ namespace LinqCovertTools.Parser
 
         private Expression GetPropertyExpression<T>(string propertyToken, ParameterExpression parameter, ICollection<ParameterExpression> lambdaParameters)
         {
-
-
-
-
             if (string.IsNullOrWhiteSpace(propertyToken))
             {
                 return null;
@@ -373,13 +369,9 @@ namespace LinqCovertTools.Parser
 
             var propertyChain = propertyToken.Split('/');
 
-
-
             if (propertyChain.Any() && lambdaParameters.Any(p => p.Name == propertyChain.First()))
             {
                 var lambdaParameter = lambdaParameters.First(p => p.Name == propertyChain.First());
-
-
 
                 parentType = lambdaParameter.Type;
                 propertyExpression = lambdaParameter;
@@ -392,10 +384,6 @@ namespace LinqCovertTools.Parser
 
         private Expression CreateExpression<T>(string filter, ParameterExpression sourceParameter, ICollection<ParameterExpression> lambdaParameters, Type type, IFormatProvider formatProvider)
         {
-
-
-
-
             if (string.IsNullOrWhiteSpace(filter))
             {
                 return null;
@@ -456,10 +444,6 @@ namespace LinqCovertTools.Parser
 
         private Expression GetTokenExpression<T>(ParameterExpression parameter, ICollection<ParameterExpression> lambdaParameters, Type type, IFormatProvider formatProvider, ICollection<TokenSet> tokens)
         {
-
-
-
-
             string combiner = null;
             Expression existing = null;
             foreach (var tokenSet in tokens)
