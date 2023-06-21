@@ -35,7 +35,7 @@ namespace LinqCovertTools
         /// Initializes a new instance of the <see cref="ODataExpressionConverter"/> class.
         /// </summary>
         public ODataExpressionConverter()
-            : this(new IValueWriter[0], new IValueExpressionFactory[0])
+            : this(Array.Empty<IValueWriter>(), Array.Empty<IValueExpressionFactory>())
         {
         }
 

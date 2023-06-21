@@ -88,5 +88,126 @@ namespace LinqCovertTools.Tests
 
             Assert.AreEqual(expression.ToString(), converted.ToString());
         }
+
+        [Test]
+        public void ConvertsFilterToExpressionForInterface()
+        {
+            const string filter = "startswith(emailAddress, 'user@')";
+            var converter = new ODataExpressionConverter();
+
+            Expression<Func<IQueryableUser, bool>> converted = converter.Convert<IQueryableUser>(filter);
+
+            List<User> users = new()
+            {
+                new User()
+                { 
+                    GivenName = "User",
+                    FamilyName = "One",
+                    EmailAddress = new EmailAddress("user@xyz.com")
+                },
+                new User()
+                { 
+                    GivenName = "User",
+                    FamilyName = "Two",
+                    EmailAddress = new EmailAddress("nonuser@xyz.com")
+                }
+            };
+
+            IQueryable<User> query = users.AsQueryable();
+            
+            query = query.Where(converted).Cast<User>();
+
+            Assert.AreEqual(1, query.Count());
+        }
+
+        [Test]
+        public void ConvertsFilterToExpressionForExplicitInterfaceProps()
+        {
+            const string filter = "firstName eq 'Mr.'";
+            var converter = new ODataExpressionConverter();
+
+            Expression<Func<IQueryableUser, bool>> converted = converter.Convert<IQueryableUser>(filter);
+
+            List<User> users = new()
+            {
+                new User()
+                {
+                    GivenName = "User",
+                    FamilyName = "One",
+                    EmailAddress = new EmailAddress("user@xyz.com")
+                },
+                new User()
+                {
+                    GivenName = "Mr.",
+                    FamilyName = "Two",
+                    EmailAddress = new EmailAddress("nonuser@xyz.com")
+                }
+            };
+
+            IQueryable<User> query = users.AsQueryable();
+
+            query = query.Where(converted).Cast<User>();
+
+            Assert.AreEqual(1, query.Count());
+        }
+
+        [TestCase("start gt datetimeoffset'2023-07-01'")]
+        [TestCase("start gt datetimeoffset'2023-07-01T08:00'")]
+        public void CanReadShortDateTimeOffsetValues(string filter)
+        {
+            // Arrange
+            ODataExpressionConverter converter = new ();
+            Expression<Func<DateTimeObject, bool>> converted = converter.Convert<DateTimeObject>(filter);
+
+            DateTimeObject[] objects = new DateTimeObject[]
+            {
+                new DateTimeObject{ Start = new DateTimeOffset(2023, 07, 04, 0, 0, 0, TimeSpan.FromHours(0)) }
+            };
+
+            // Act
+            var filterted = objects.AsQueryable().Where(converted);
+
+            // Assert
+            Assert.AreEqual(1, filterted.Count());
+        }
+
+        private class EmailAddress
+        {
+            public EmailAddress(string value)
+            {
+                Value = value;
+            }
+
+            public string Value { get; set; }
+
+            public string? Name { get; set; }
+        }
+
+        private interface IQueryableUser
+        {
+            string? EmailAddress { get; }
+
+            string? FirstName { get; }
+        }
+
+        private class DateTimeObject
+        {
+            public DateTimeOffset? Start { get; set; }
+        }
+
+        private class User : IQueryableUser
+        {
+            public string GivenName { get; set; }
+
+            public string FamilyName { get; set; }
+
+            public ICollection<string> Roles { get; set; }
+
+            public EmailAddress? EmailAddress { get; set; }
+
+            string? IQueryableUser.EmailAddress => EmailAddress?.Value;
+
+            string? IQueryableUser.FirstName => GivenName;
+        }
     }
 }
