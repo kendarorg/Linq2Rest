@@ -172,31 +172,28 @@ namespace LinqCovertTools.Parser
             return result;
         }
 
-        private static Expression GetFunction(string function, Expression left, Expression right, ParameterExpression sourceParameter, ICollection<ParameterExpression> lambdaParameters)
+        private static Expression? GetFunction(string function, Expression left, Expression right, ParameterExpression sourceParameter, ICollection<ParameterExpression> lambdaParameters)
         {
-
-
-
             switch (function.ToLowerInvariant())
             {
                 case "substringof":
-                    return Expression.Call(right, MethodProvider.ContainsMethod, new[] { left });
+                    return Expression.AndAlso(Expression.NotEqual(left, Expression.Constant(null, typeof(object))), Expression.Call(right, MethodProvider.ContainsMethod, new[] { left }));
                 case "endswith":
-                    return Expression.Call(left, MethodProvider.EndsWithMethod, new[] { right });
+                    return Expression.AndAlso(Expression.NotEqual(left, Expression.Constant(null, typeof(object))), Expression.Call(left, MethodProvider.EndsWithMethod, new[] { right }));
                 case "startswith":
-                    return Expression.Call(left, MethodProvider.StartsWithMethod, new[] { right });
+                    return Expression.AndAlso(Expression.NotEqual(left, Expression.Constant(null, typeof(object))), Expression.Call(left, MethodProvider.StartsWithMethod, new[] { right }));
                 case "length":
                     return Expression.Property(left, MethodProvider.LengthProperty);
                 case "indexof":
-                    return Expression.Call(left, MethodProvider.IndexOfMethod, new[] { right });
+                    return Expression.AndAlso(Expression.NotEqual(left, Expression.Constant(null, typeof(object))), Expression.Call(left, MethodProvider.IndexOfMethod, new[] { right }));
                 case "substring":
-                    return Expression.Call(left, MethodProvider.SubstringMethod, new[] { right });
+                    return Expression.AndAlso(Expression.NotEqual(left, Expression.Constant(null, typeof(object))), Expression.Call(left, MethodProvider.SubstringMethod, new[] { right }));
                 case "tolower":
-                    return Expression.Call(left, MethodProvider.ToLowerMethod);
+                    return Expression.AndAlso(Expression.NotEqual(left, Expression.Constant(null, typeof(object))), Expression.Call(left, MethodProvider.ToLowerMethod));
                 case "toupper":
-                    return Expression.Call(left, MethodProvider.ToUpperMethod);
+                    return Expression.AndAlso(Expression.NotEqual(left, Expression.Constant(null, typeof(object))), Expression.Call(left, MethodProvider.ToUpperMethod));
                 case "trim":
-                    return Expression.Call(left, MethodProvider.TrimMethod);
+                    return Expression.AndAlso(Expression.NotEqual(left, Expression.Constant(null, typeof(object))), Expression.Call(left, MethodProvider.TrimMethod));
                 case "hour":
                     return Expression.Property(left, MethodProvider.HourProperty);
                 case "minute":
@@ -218,9 +215,6 @@ namespace LinqCovertTools.Parser
                 case "any":
                 case "all":
                     {
-
-
-
                         return CreateAnyAllExpression(
                                                       left,
                                                       right,
@@ -520,10 +514,6 @@ namespace LinqCovertTools.Parser
 
         private Expression GetAnyAllFunctionExpression<T>(string filter, ParameterExpression sourceParameter, ICollection<ParameterExpression> lambdaParameters, IFormatProvider formatProvider)
         {
-
-
-
-
             var functionTokens = filter.GetAnyAllFunctionTokens();
             if (functionTokens == null)
             {
@@ -560,10 +550,6 @@ namespace LinqCovertTools.Parser
 
         private Expression GetFunctionExpression<T>(string filter, ParameterExpression sourceParameter, ICollection<ParameterExpression> lambdaParameters, Type type, IFormatProvider formatProvider)
         {
-
-
-
-
             var functionTokens = filter.GetFunctionTokens();
             if (functionTokens == null)
             {

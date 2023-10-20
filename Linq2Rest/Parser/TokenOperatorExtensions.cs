@@ -31,29 +31,21 @@ namespace LinqCovertTools.Parser
 
         public static bool IsCombinationOperation(this string operation)
         {
-
-
             return Combiners.Any(x => string.Equals(x, operation, StringComparison.OrdinalIgnoreCase));
         }
 
         public static bool IsOperation(this string operation)
         {
-
-
             return Operations.Any(x => string.Equals(x, operation, StringComparison.OrdinalIgnoreCase));
         }
 
         public static bool IsArithmetic(this string operation)
         {
-
-
             return Arithmetic.Any(x => string.Equals(x, operation, StringComparison.OrdinalIgnoreCase));
         }
 
         public static bool IsImpliedBoolean(this string expression)
         {
-
-
             if (!string.IsNullOrWhiteSpace(expression) && !expression.IsEnclosed() && expression.IsFunction())
             {
                 var split = expression.Split(' ');
@@ -68,15 +60,11 @@ namespace LinqCovertTools.Parser
 
         public static Match EnclosedMatch(this string expression)
         {
-
-
             return CleanRx.Match(expression);
         }
 
         public static bool IsEnclosed(this string expression)
         {
-
-
             var match = expression.EnclosedMatch();
             return match != null && match.Success;
         }
@@ -104,8 +92,6 @@ namespace LinqCovertTools.Parser
 
         public static bool IsFunction(this string expression)
         {
-
-
             var open = expression.IndexOf('(');
             var close = expression.IndexOf(')');
 
