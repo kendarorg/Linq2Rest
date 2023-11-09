@@ -177,11 +177,11 @@ namespace LinqCovertTools.Parser
             switch (function.ToLowerInvariant())
             {
                 case "substringof":
-                    return Expression.AndAlso(Expression.NotEqual(left, Expression.Constant(null, typeof(object))), Expression.Call(right, MethodProvider.ContainsMethod, new[] { left }));
+                    return Expression.AndAlso(Expression.NotEqual(left, Expression.Constant(null, typeof(object))), Expression.Call(Expression.Call(right, MethodProvider.ToLowerMethod), MethodProvider.ContainsMethod, new[] { left }));
                 case "endswith":
-                    return Expression.AndAlso(Expression.NotEqual(left, Expression.Constant(null, typeof(object))), Expression.Call(left, MethodProvider.EndsWithMethod, new[] { right }));
+                    return Expression.AndAlso(Expression.NotEqual(left, Expression.Constant(null, typeof(object))), Expression.Call(Expression.Call(left, MethodProvider.ToLowerMethod), MethodProvider.EndsWithMethod, new[] { right }));
                 case "startswith":
-                    return Expression.AndAlso(Expression.NotEqual(left, Expression.Constant(null, typeof(object))), Expression.Call(left, MethodProvider.StartsWithMethod, new[] { right }));
+                    return Expression.AndAlso(Expression.NotEqual(left, Expression.Constant(null, typeof(object))), Expression.Call(Expression.Call(left, MethodProvider.ToLowerMethod), MethodProvider.StartsWithMethod, new[] { right }));
                 case "length":
                     return Expression.Property(left, MethodProvider.LengthProperty);
                 case "indexof":
