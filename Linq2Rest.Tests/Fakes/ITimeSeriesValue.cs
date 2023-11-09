@@ -10,12 +10,12 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Tests.Fakes
+namespace LinqCovertTools.Tests.Fakes
 {
-	public interface ITimeSeriesValue
-	{
-		QualityFlags Flags { get; set; }
+    public interface ITimeSeriesValue
+    {
+        QualityFlags Flags { get; set; }
 
-		object Value { get; set; }
-	}
+        object Value { get; set; }
+    }
 }

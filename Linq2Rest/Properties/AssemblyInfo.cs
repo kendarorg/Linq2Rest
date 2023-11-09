@@ -14,11 +14,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Linq2Rest")]
 [assembly: AssemblyDescription("Generates OData style URL queries from LINQ queries and parses the queries to LINQ serverside.")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Reimers.dk")]
-[assembly: AssemblyProduct("Linq2Rest")]
 [assembly: AssemblyCopyright("Copyright © Reimers.dk 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -39,8 +35,4 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("4.1.0.0")]
-[assembly: AssemblyFileVersion("4.1.0.0")]
-[assembly: InternalsVisibleTo("Linq2Rest.Tests")]
-[assembly: InternalsVisibleTo("Linq2Rest.Reactive")]
-[assembly: InternalsVisibleTo("Linq2Rest.Reactive.Tests")]
+[assembly: InternalsVisibleTo("LinqCovertTools.Tests")]

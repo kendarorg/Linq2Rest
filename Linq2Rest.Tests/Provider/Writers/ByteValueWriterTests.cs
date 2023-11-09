@@ -10,29 +10,29 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Tests.Provider.Writers
+namespace LinqCovertTools.Tests.Provider.Writers
 {
-	using Linq2Rest.Provider.Writers;
-	using NUnit.Framework;
+    using LinqCovertTools.Provider.Writers;
+    using NUnit.Framework;
 
-	[TestFixture]
-	public class ByteValueWriterTests
-	{
-		private ByteValueWriter _writer;
+    [TestFixture]
+    public class ByteValueWriterTests
+    {
+        private ByteValueWriter _writer;
 
-		[SetUp]
-		public void Setup()
-		{
-			_writer = new ByteValueWriter();
-		}
+        [SetUp]
+        public void Setup()
+        {
+            _writer = new ByteValueWriter();
+        }
 
-		[Test]
-		public void WhenWritingByteValueThenWritesString()
-		{
-			const byte Value = 255;
-			var result = _writer.Write(Value);
+        [Test]
+        public void WhenWritingByteValueThenWritesString()
+        {
+            const byte Value = 255;
+            var result = _writer.Write(Value);
 
-			Assert.AreEqual("FF", result);
-		}
-	}
+            Assert.AreEqual("FF", result);
+        }
+    }
 }

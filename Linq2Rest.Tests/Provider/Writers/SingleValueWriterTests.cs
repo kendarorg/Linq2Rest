@@ -10,28 +10,28 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Tests.Provider.Writers
+namespace LinqCovertTools.Tests.Provider.Writers
 {
-	using Linq2Rest.Provider.Writers;
-	using NUnit.Framework;
+    using LinqCovertTools.Provider.Writers;
+    using NUnit.Framework;
 
-	[TestFixture]
-	public class SingleValueWriterTests
-	{
-		private SingleValueWriter _writer;
+    [TestFixture]
+    public class SingleValueWriterTests
+    {
+        private SingleValueWriter _writer;
 
-		[SetUp]
-		public void Setup()
-		{
-			_writer = new SingleValueWriter();
-		}
+        [SetUp]
+        public void Setup()
+        {
+            _writer = new SingleValueWriter();
+        }
 
-		[Test]
-		public void WhenWritingSingleValueThenWritesString()
-		{
-			var result = _writer.Write(1.23f);
+        [Test]
+        public void WhenWritingSingleValueThenWritesString()
+        {
+            var result = _writer.Write(1.23f);
 
-			Assert.AreEqual("1.23f", result);
-		}
-	}
+            Assert.AreEqual("1.23f", result);
+        }
+    }
 }

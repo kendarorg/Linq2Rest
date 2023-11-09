@@ -10,18 +10,16 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Provider.Writers
+namespace LinqCovertTools.Provider.Writers
 {
-	using System;
-
-	internal class DecimalValueWriter : RationalValueWriter<decimal>
-	{
-		protected override string Suffix
-		{
-			get
-			{
-				return "m";
-			}
-		}
-	}
+    internal class DecimalValueWriter : RationalValueWriter<decimal>
+    {
+        protected override string Suffix
+        {
+            get
+            {
+                return "m";
+            }
+        }
+    }
 }

@@ -10,79 +10,77 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Provider
+namespace LinqCovertTools.Provider
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Diagnostics.Contracts;
-	using System.IO;
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
+    using System.IO;
 
-	/// <summary>
-	/// Defines the public interface for an object serializer.
-	/// </summary>
-	/// <typeparam name="T"></typeparam>
-	[ContractClass(typeof(SerializerContracts<>))]
-	public interface ISerializer<T>
-	{
-		/// <summary>
-		/// Deserializes a single item.
-		/// </summary>
-		/// <param name="input">The serialized item.</param>
-		/// <returns>An instance of the serialized item.</returns>
-		T Deserialize(Stream input);
+    /// <summary>
+    /// Defines the public interface for an object serializer.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    [ContractClass(typeof(SerializerContracts<>))]
+    public interface ISerializer<T>
+    {
+        /// <summary>
+        /// Deserializes a single item.
+        /// </summary>
+        /// <param name="input">The serialized item.</param>
+        /// <returns>An instance of the serialized item.</returns>
+        T Deserialize(Stream input);
 
-		/// <summary>
-		/// Deserializes a list of items.
-		/// </summary>
-		/// <param name="input">The serialized items.</param>
-		/// <returns>An list of the serialized items.</returns>
-		IEnumerable<T> DeserializeList(Stream input);
+        /// <summary>
+        /// Deserializes a list of items.
+        /// </summary>
+        /// <param name="input">The serialized items.</param>
+        /// <returns>An list of the serialized items.</returns>
+        IEnumerable<T> DeserializeList(Stream input);
 
-		/// <summary>
-		/// Serializes the passed item into a <see cref="Stream"/>.
-		/// </summary>
-		/// <param name="item">The item to serialize.</param>
-		/// <returns>A <see cref="Stream"/> representation of the item.</returns>
-		Stream Serialize(T item);
-	}
+        /// <summary>
+        /// Serializes the passed item into a <see cref="Stream"/>.
+        /// </summary>
+        /// <param name="item">The item to serialize.</param>
+        /// <returns>A <see cref="Stream"/> representation of the item.</returns>
+        Stream Serialize(T item);
+    }
 
-	[ContractClassFor(typeof(ISerializer<>))]
-	internal abstract class SerializerContracts<T> : ISerializer<T>
-	{
-		/// <summary>
-		/// Deserializes a single item.
-		/// </summary>
-		/// <param name="input">The serialized item.</param>
-		/// <returns>An instance of the serialized item.</returns>
-		public T Deserialize(Stream input)
-		{
-			Contract.Requires<ArgumentNullException>(input != null);
+    [ContractClassFor(typeof(ISerializer<>))]
+    internal abstract class SerializerContracts<T> : ISerializer<T>
+    {
+        /// <summary>
+        /// Deserializes a single item.
+        /// </summary>
+        /// <param name="input">The serialized item.</param>
+        /// <returns>An instance of the serialized item.</returns>
+        public T Deserialize(Stream input)
+        {
 
-			throw new NotImplementedException();
-		}
 
-		/// <summary>
-		/// Deserializes a list of items.
-		/// </summary>
-		/// <param name="input">The serialized items.</param>
-		/// <returns>An list of the serialized items.</returns>
-		public IEnumerable<T> DeserializeList(Stream input)
-		{
-			Contract.Requires<ArgumentNullException>(input != null);
+            throw new NotImplementedException();
+        }
 
-			throw new NotImplementedException();
-		}
+        /// <summary>
+        /// Deserializes a list of items.
+        /// </summary>
+        /// <param name="input">The serialized items.</param>
+        /// <returns>An list of the serialized items.</returns>
+        public IEnumerable<T> DeserializeList(Stream input)
+        {
 
-		/// <summary>
-		/// Serializes the passed item into a <see cref="Stream"/>.
-		/// </summary>
-		/// <param name="item">The item to serialize.</param>
-		/// <returns>A <see cref="Stream"/> representation of the item.</returns>
-		public Stream Serialize(T item)
-		{
-			Contract.Requires<ArgumentNullException>(!ReferenceEquals(item, null));
 
-			throw new NotImplementedException();
-		}
-	}
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Serializes the passed item into a <see cref="Stream"/>.
+        /// </summary>
+        /// <param name="item">The item to serialize.</param>
+        /// <returns>A <see cref="Stream"/> representation of the item.</returns>
+        public Stream Serialize(T item)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

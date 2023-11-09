@@ -10,28 +10,28 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Tests.Parser
+namespace LinqCovertTools.Tests.Parser
 {
-	using Linq2Rest.Parser;
-	using NUnit.Framework;
+    using LinqCovertTools.Parser;
+    using NUnit.Framework;
 
-	[TestFixture]
-	public class TokenSetTests
-	{
-		[Test]
-		public void FunctionTokenSetToStringWritesOperationLeftRight()
-		{
-			var set = new FunctionTokenSet { Left = "Left", Operation = "Operation", Right = "Right" };
+    [TestFixture]
+    public class TokenSetTests
+    {
+        [Test]
+        public void FunctionTokenSetToStringWritesOperationLeftRight()
+        {
+            var set = new FunctionTokenSet { Left = "Left", Operation = "Operation", Right = "Right" };
 
-			Assert.AreEqual("Operation Left Right", set.ToString());
-		}
+            Assert.AreEqual("Operation Left Right", set.ToString());
+        }
 
-		[Test]
-		public void TokenSetToStringWritesLeftOperationRight()
-		{
-			var set = new TokenSet { Left = "Left", Operation = "Operation", Right = "Right" };
+        [Test]
+        public void TokenSetToStringWritesLeftOperationRight()
+        {
+            var set = new TokenSet { Left = "Left", Operation = "Operation", Right = "Right" };
 
-			Assert.AreEqual("Left Operation Right", set.ToString());
-		}
-	}
+            Assert.AreEqual("Left Operation Right", set.ToString());
+        }
+    }
 }

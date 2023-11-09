@@ -10,33 +10,33 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Tests.Fakes
+namespace LinqCovertTools.Tests.Fakes
 {
-	using System;
-	using System.Collections.Generic;
-	using System.IO;
-	using System.Runtime.Serialization.Json;
-	using Linq2Rest.Provider;
-	using Linq2Rest.Tests.Provider;
+    using LinqCovertTools.Provider;
+    using LinqCovertTools.Tests.Provider;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Runtime.Serialization.Json;
 
-	public class TestComplexSerializer : ISerializer<ComplexDto>
-	{
-		private readonly DataContractJsonSerializer _innerListSerializer = new DataContractJsonSerializer(typeof(List<ComplexDto>));
-		private readonly DataContractJsonSerializer _innerSerializer = new DataContractJsonSerializer(typeof(ComplexDto));
+    public class TestComplexSerializer : ISerializer<ComplexDto>
+    {
+        private readonly DataContractJsonSerializer _innerListSerializer = new DataContractJsonSerializer(typeof(List<ComplexDto>));
+        private readonly DataContractJsonSerializer _innerSerializer = new DataContractJsonSerializer(typeof(ComplexDto));
 
-		public ComplexDto Deserialize(Stream input)
-		{
-			return (ComplexDto)_innerSerializer.ReadObject(input);
-		}
+        public ComplexDto Deserialize(Stream input)
+        {
+            return (ComplexDto)_innerSerializer.ReadObject(input);
+        }
 
-		public IEnumerable<ComplexDto> DeserializeList(Stream input)
-		{
-			return (List<ComplexDto>)_innerListSerializer.ReadObject(input);
-		}
+        public IEnumerable<ComplexDto> DeserializeList(Stream input)
+        {
+            return (List<ComplexDto>)_innerListSerializer.ReadObject(input);
+        }
 
-		public Stream Serialize(ComplexDto item)
-		{
-			throw new NotImplementedException();
-		}
-	}
+        public Stream Serialize(ComplexDto item)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

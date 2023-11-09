@@ -10,28 +10,28 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Tests.Provider.Writers
+namespace LinqCovertTools.Tests.Provider.Writers
 {
-	using Linq2Rest.Provider.Writers;
-	using NUnit.Framework;
+    using LinqCovertTools.Provider.Writers;
+    using NUnit.Framework;
 
-	[TestFixture]
-	public class DoubleValueWriterTests
-	{
-		private DoubleValueWriter _writer;
+    [TestFixture]
+    public class DoubleValueWriterTests
+    {
+        private DoubleValueWriter _writer;
 
-		[SetUp]
-		public void Setup()
-		{
-			_writer = new DoubleValueWriter();
-		}
+        [SetUp]
+        public void Setup()
+        {
+            _writer = new DoubleValueWriter();
+        }
 
-		[Test]
-		public void WhenWritingDoubleValueThenWritesString()
-		{
-			var result = _writer.Write(1.23d);
+        [Test]
+        public void WhenWritingDoubleValueThenWritesString()
+        {
+            var result = _writer.Write(1.23d);
 
-			Assert.AreEqual("1.23", result);
-		}
-	}
+            Assert.AreEqual("1.23", result);
+        }
+    }
 }

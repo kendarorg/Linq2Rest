@@ -10,15 +10,15 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Provider.Writers
+namespace LinqCovertTools.Provider.Writers
 {
-	internal class BooleanValueWriter : ValueWriterBase<bool>
-	{
-		public override string Write(object value)
-		{
-			var boolean = (bool)value;
+    internal class BooleanValueWriter : ValueWriterBase<bool>
+    {
+        public override string Write(object value)
+        {
+            var boolean = (bool)value;
 
-			return boolean ? "true" : "false";
-		}
-	}
+            return boolean ? "true" : "false";
+        }
+    }
 }

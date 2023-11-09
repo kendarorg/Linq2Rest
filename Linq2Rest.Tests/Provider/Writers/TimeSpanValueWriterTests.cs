@@ -10,39 +10,39 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Tests.Provider.Writers
+namespace LinqCovertTools.Tests.Provider.Writers
 {
-	using System;
-	using Linq2Rest.Provider.Writers;
-	using NUnit.Framework;
+    using LinqCovertTools.Provider.Writers;
+    using NUnit.Framework;
+    using System;
 
-	[TestFixture]
-	public class TimeSpanValueWriterTests
-	{
-		private TimeSpanValueWriter _writer;
+    [TestFixture]
+    public class TimeSpanValueWriterTests
+    {
+        private TimeSpanValueWriter _writer;
 
-		[SetUp]
-		public void Setup()
-		{
-			_writer = new TimeSpanValueWriter();
-		}
+        [SetUp]
+        public void Setup()
+        {
+            _writer = new TimeSpanValueWriter();
+        }
 
-		[Test]
-		public void WhenWritingShortTimeSpanValueThenWritesString()
-		{
-			var value = new TimeSpan(2, 15, 0);
-			var result = _writer.Write(value);
+        [Test]
+        public void WhenWritingShortTimeSpanValueThenWritesString()
+        {
+            var value = new TimeSpan(2, 15, 0);
+            var result = _writer.Write(value);
 
-			Assert.AreEqual("time'PT2H15M'", result);
-		}
+            Assert.AreEqual("time'PT2H15M'", result);
+        }
 
-		[Test]
-		public void WhenWritingTimeSpanValueThenWritesString()
-		{
-			var value = new TimeSpan(2, 2, 15, 0);
-			var result = _writer.Write(value);
+        [Test]
+        public void WhenWritingTimeSpanValueThenWritesString()
+        {
+            var value = new TimeSpan(2, 2, 15, 0);
+            var result = _writer.Write(value);
 
-			Assert.AreEqual("time'P2DT2H15M'", result);
-		}
-	}
+            Assert.AreEqual("time'P2DT2H15M'", result);
+        }
+    }
 }

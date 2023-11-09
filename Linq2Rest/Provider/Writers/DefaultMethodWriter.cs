@@ -10,47 +10,47 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Provider.Writers
+namespace LinqCovertTools.Provider.Writers
 {
-	using System;
-	using System.Diagnostics.Contracts;
-	using System.Linq.Expressions;
+    using System;
+    using System.Diagnostics.Contracts;
+    using System.Linq.Expressions;
 
-	internal class DefaultMethodWriter : IMethodCallWriter
-	{
-		private readonly ParameterValueWriter _valueWriter;
+    internal class DefaultMethodWriter : IMethodCallWriter
+    {
+        private readonly ParameterValueWriter _valueWriter;
 
-		public DefaultMethodWriter(ParameterValueWriter valueWriter)
-		{
-			Contract.Requires(valueWriter != null);
+        public DefaultMethodWriter(ParameterValueWriter valueWriter)
+        {
 
-			_valueWriter = valueWriter;
-		}
 
-		public bool CanHandle(MethodCallExpression expression)
-		{
-			return true;
-		}
+            _valueWriter = valueWriter;
+        }
 
-		public string Handle(MethodCallExpression expression, Func<Expression, string> expressionWriter)
-		{
-			return _valueWriter.Write(GetValue(expression));
-		}
+        public bool CanHandle(MethodCallExpression expression)
+        {
+            return true;
+        }
 
-		private static object GetValue(Expression input)
-		{
-			Contract.Requires(input != null);
+        public string Handle(MethodCallExpression expression, Func<Expression, string> expressionWriter)
+        {
+            return _valueWriter.Write(GetValue(expression));
+        }
 
-			var objectMember = Expression.Convert(input, typeof(object));
-			var getterLambda = Expression.Lambda<Func<object>>(objectMember).Compile();
+        private static object GetValue(Expression input)
+        {
 
-			return getterLambda();
-		}
 
-		[ContractInvariantMethod]
-		private void Invariants()
-		{
-			Contract.Invariant(_valueWriter != null);
-		}
-	}
+            var objectMember = Expression.Convert(input, typeof(object));
+            var getterLambda = Expression.Lambda<Func<object>>(objectMember).Compile();
+
+            return getterLambda();
+        }
+
+        [ContractInvariantMethod]
+        private void Invariants()
+        {
+
+        }
+    }
 }

@@ -10,83 +10,204 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Tests
+namespace LinqCovertTools.Tests
 {
-	using System;
-	using System.Linq;
-	using System.Linq.Expressions;
-	using Linq2Rest.Tests.Provider;
-	using NUnit.Framework;
+    using LinqCovertTools.Tests.Provider;
+    using NUnit.Framework;
+    using System;
+    using System.Linq;
+    using System.Linq.Expressions;
 
-	[TestFixture]
-	public class ODataExpressionWriterTests
-	{
-		[Test]
-		public void CanFilterOnSubCollection()
-		{
-			var converter = new ODataExpressionConverter();
-			Expression<Func<FakeItem, bool>> expression = x => x.Child.Attributes.Any(y => y == "blah");
+    [TestFixture]
+    public class ODataExpressionWriterTests
+    {
+        [Test]
+        public void CanFilterOnSubCollection()
+        {
+            var converter = new ODataExpressionConverter();
+            Expression<Func<FakeItem, bool>> expression = x => x.Child.Attributes.Any(y => y == "blah");
 
-			var serialized = converter.Convert(expression);
+            var serialized = converter.Convert(expression);
 
-			Assert.AreEqual("Child/Attributes/any(y: y eq 'blah')", serialized);
-		}
+            Assert.AreEqual("Child/Attributes/any(y: y eq 'blah')", serialized);
+        }
 
-		[Test]
-		public void CanSerializeEmptyGuid()
-		{
-			var converter = new ODataExpressionConverter();
-			Expression<Func<ChildDto, bool>> expression = x => x.GlobalID != Guid.Empty;
+        [Test]
+        public void CanSerializeEmptyGuid()
+        {
+            var converter = new ODataExpressionConverter();
+            Expression<Func<ChildDto, bool>> expression = x => x.GlobalID != Guid.Empty;
 
-			var serialized = converter.Convert(expression);
+            var serialized = converter.Convert(expression);
 
-			Assert.AreEqual("GlobalID ne guid'00000000-0000-0000-0000-000000000000'", serialized);
-		}
+            Assert.AreEqual("GlobalID ne guid'00000000-0000-0000-0000-000000000000'", serialized);
+        }
 
-		[Test]
-		public void ConvertsExpressionToString()
-		{
-			var converter = new ODataExpressionConverter();
-			Expression<Func<ChildDto, bool>> expression = x => x.Name == "blah";
+        [Test]
+        public void ConvertsExpressionToString()
+        {
+            var converter = new ODataExpressionConverter();
+            Expression<Func<ChildDto, bool>> expression = x => x.Name == "blah";
 
-			var serialized = converter.Convert(expression);
+            var serialized = converter.Convert(expression);
 
-			Assert.AreEqual("Name eq 'blah'", serialized);
-		}
+            Assert.AreEqual("Name eq 'blah'", serialized);
+        }
 
-		[Test]
-		public void ConvertsExpressionToString2()
-		{
-			var converter = new ODataExpressionConverter();
-			Expression<Func<ChildDto, bool>> expression = x => x.Name.Length + (1 + 1) == 7;
+        [Test]
+        public void ConvertsExpressionToString2()
+        {
+            var converter = new ODataExpressionConverter();
+            Expression<Func<ChildDto, bool>> expression = x => x.Name.Length + (1 + 1) == 7;
 
-			var serialized = converter.Convert(expression);
+            var serialized = converter.Convert(expression);
 
-			Assert.AreEqual("length(Name) add 2 eq 7", serialized);
-		}
+            Assert.AreEqual("length(Name) add 2 eq 7", serialized);
+        }
 
-		[Test]
-		public void ConvertsFilterToExpression()
-		{
-			const string Filter = "Name eq 'blah'";
-			var converter = new ODataExpressionConverter();
-			Expression<Func<ChildDto, bool>> expression = x => x.Name == "blah";
+        [Test]
+        public void ConvertsFilterToExpression()
+        {
+            const string Filter = "Name eq 'blah'";
+            var converter = new ODataExpressionConverter();
+            Expression<Func<ChildDto, bool>> expression = x => x.Name == "blah";
 
-			var converted = converter.Convert<ChildDto>(Filter);
+            var converted = converter.Convert<ChildDto>(Filter);
 
-			Assert.AreEqual(converted.ToString(), expression.ToString());
-		}
+            Assert.AreEqual(converted.ToString(), expression.ToString());
+        }
 
-		[Test]
-		public void ConvertsFilterToExpression2()
-		{
-			const string Filter = "(length(Name) add 2) eq 7";
-			var converter = new ODataExpressionConverter();
-			Expression<Func<ChildDto, bool>> expression = x => x.Name.Length + (1 + 1) == 7;
+        [Test]
+        public void ConvertsFilterToExpression2()
+        {
+            const string Filter = "(length(Name) add 2) eq 7";
+            var converter = new ODataExpressionConverter();
+            Expression<Func<ChildDto, bool>> expression = x => x.Name.Length + (1 + 1) == 7;
 
-			var converted = converter.Convert<ChildDto>(Filter);
+            var converted = converter.Convert<ChildDto>(Filter);
 
-			Assert.AreEqual(expression.ToString(), converted.ToString());
-		}
-	}
+            Assert.AreEqual(expression.ToString(), converted.ToString());
+        }
+
+        [Test]
+        public void ConvertsFilterToExpressionForInterface()
+        {
+            const string filter = "startswith(emailAddress, 'user@')";
+            var converter = new ODataExpressionConverter();
+
+            Expression<Func<IQueryableUser, bool>> converted = converter.Convert<IQueryableUser>(filter);
+
+            List<User> users = new()
+            {
+                new User()
+                { 
+                    GivenName = "User",
+                    FamilyName = "One",
+                    EmailAddress = new EmailAddress("user@xyz.com")
+                },
+                new User()
+                { 
+                    GivenName = "User",
+                    FamilyName = "Two",
+                    EmailAddress = new EmailAddress("nonuser@xyz.com")
+                }
+            };
+
+            IQueryable<User> query = users.AsQueryable();
+            
+            query = query.Where(converted).Cast<User>();
+
+            Assert.AreEqual(1, query.Count());
+        }
+
+        [Test]
+        public void ConvertsFilterToExpressionForExplicitInterfaceProps()
+        {
+            const string filter = "firstName eq 'Mr.'";
+            var converter = new ODataExpressionConverter();
+
+            Expression<Func<IQueryableUser, bool>> converted = converter.Convert<IQueryableUser>(filter);
+
+            List<User> users = new()
+            {
+                new User()
+                {
+                    GivenName = "User",
+                    FamilyName = "One",
+                    EmailAddress = new EmailAddress("user@xyz.com")
+                },
+                new User()
+                {
+                    GivenName = "Mr.",
+                    FamilyName = "Two",
+                    EmailAddress = new EmailAddress("nonuser@xyz.com")
+                }
+            };
+
+            IQueryable<User> query = users.AsQueryable();
+
+            query = query.Where(converted).Cast<User>();
+
+            Assert.AreEqual(1, query.Count());
+        }
+
+        [TestCase("start gt datetimeoffset'2023-07-01'")]
+        [TestCase("start gt datetimeoffset'2023-07-01T08:00'")]
+        public void CanReadShortDateTimeOffsetValues(string filter)
+        {
+            // Arrange
+            ODataExpressionConverter converter = new ();
+            Expression<Func<DateTimeObject, bool>> converted = converter.Convert<DateTimeObject>(filter);
+
+            DateTimeObject[] objects = new DateTimeObject[]
+            {
+                new DateTimeObject{ Start = new DateTimeOffset(2023, 07, 04, 0, 0, 0, TimeSpan.FromHours(0)) }
+            };
+
+            // Act
+            var filterted = objects.AsQueryable().Where(converted);
+
+            // Assert
+            Assert.AreEqual(1, filterted.Count());
+        }
+
+        private class EmailAddress
+        {
+            public EmailAddress(string value)
+            {
+                Value = value;
+            }
+
+            public string Value { get; set; }
+
+            public string? Name { get; set; }
+        }
+
+        private interface IQueryableUser
+        {
+            string? EmailAddress { get; }
+
+            string? FirstName { get; }
+        }
+
+        private class DateTimeObject
+        {
+            public DateTimeOffset? Start { get; set; }
+        }
+
+        private class User : IQueryableUser
+        {
+            public string GivenName { get; set; }
+
+            public string FamilyName { get; set; }
+
+            public ICollection<string> Roles { get; set; }
+
+            public EmailAddress? EmailAddress { get; set; }
+
+            string? IQueryableUser.EmailAddress => EmailAddress?.Value;
+
+            string? IQueryableUser.FirstName => GivenName;
+        }
+    }
 }

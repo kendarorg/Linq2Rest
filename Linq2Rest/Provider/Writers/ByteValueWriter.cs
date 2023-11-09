@@ -10,15 +10,15 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Provider.Writers
+namespace LinqCovertTools.Provider.Writers
 {
-	internal class ByteValueWriter : ValueWriterBase<byte>
-	{
-		public override string Write(object value)
-		{
-			var byteValue = (byte)value;
+    internal class ByteValueWriter : ValueWriterBase<byte>
+    {
+        public override string Write(object value)
+        {
+            var byteValue = (byte)value;
 
-			return byteValue.ToString("X");
-		}
-	}
+            return byteValue.ToString("X");
+        }
+    }
 }

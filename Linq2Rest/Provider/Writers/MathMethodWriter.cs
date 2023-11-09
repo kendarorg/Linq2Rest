@@ -10,44 +10,44 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Provider.Writers
+namespace LinqCovertTools.Provider.Writers
 {
-	using System;
-	using System.Diagnostics.CodeAnalysis;
-	using System.Diagnostics.Contracts;
-	using System.Linq.Expressions;
+    using System;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Diagnostics.Contracts;
+    using System.Linq.Expressions;
 
-	[ContractClass(typeof(MathMethodWriterContracts))]
-	internal abstract class MathMethodWriter : IMethodCallWriter
-	{
-		protected abstract string MethodName { get; }
+    [ContractClass(typeof(MathMethodWriterContracts))]
+    internal abstract class MathMethodWriter : IMethodCallWriter
+    {
+        protected abstract string MethodName { get; }
 
-		public abstract bool CanHandle(MethodCallExpression expression);
+        public abstract bool CanHandle(MethodCallExpression expression);
 
-		public string Handle(MethodCallExpression expression, Func<Expression, string> expressionWriter)
-		{
-			Contract.Assume(expression.Arguments.Count > 0);
+        public string Handle(MethodCallExpression expression, Func<Expression, string> expressionWriter)
+        {
 
-			var mathArgument = expression.Arguments[0];
 
-			Contract.Assume(mathArgument != null);
+            var mathArgument = expression.Arguments[0];
 
-			return string.Format("{0}({1})", MethodName, expressionWriter(mathArgument));
-		}
-	}
 
-	[SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Contract class.")]
-	[ContractClassFor(typeof(MathMethodWriter))]
-	internal abstract class MathMethodWriterContracts : MathMethodWriter
-	{
-		[Pure]
-		protected override string MethodName
-		{
-			get
-			{
-				Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
-				throw new NotImplementedException();
-			}
-		}
-	}
+
+            return string.Format("{0}({1})", MethodName, expressionWriter(mathArgument));
+        }
+    }
+
+    [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Contract class.")]
+    [ContractClassFor(typeof(MathMethodWriter))]
+    internal abstract class MathMethodWriterContracts : MathMethodWriter
+    {
+        [Pure]
+        protected override string MethodName
+        {
+            get
+            {
+
+                throw new NotImplementedException();
+            }
+        }
+    }
 }

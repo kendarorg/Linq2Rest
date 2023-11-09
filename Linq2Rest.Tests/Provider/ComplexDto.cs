@@ -10,22 +10,22 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Tests.Provider
+namespace LinqCovertTools.Tests.Provider
 {
-	using System;
+    using System;
 
-	public class ComplexDto
-	{
-		public int ID { get; set; }
+    public class ComplexDto
+    {
+        public int ID { get; set; }
 
-		public string Content { get; set; }
+        public string Content { get; set; }
 
-		public double Value { get; set; }
+        public double Value { get; set; }
 
-		public DateTime Date { get; set; }
+        public DateTime Date { get; set; }
 
-		public Choice Choice { get; set; }
+        public Choice Choice { get; set; }
 
-		public ChildDto Child { get; set; }
-	}
+        public ChildDto Child { get; set; }
+    }
 }

@@ -10,15 +10,15 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Tests
+namespace LinqCovertTools.Tests
 {
-	using System;
+    using System;
 
-	[Flags]
-	public enum Choice
-	{
-		This = 1, 
-		That = 2, 
-		Either = This | That
-	}
+    [Flags]
+    public enum Choice
+    {
+        This = 1,
+        That = 2,
+        Either = This | That
+    }
 }

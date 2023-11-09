@@ -10,13 +10,13 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Provider
+namespace LinqCovertTools.Provider
 {
-	using System;
-	using System.Diagnostics.Contracts;
-	using System.IO;
+    using System;
+    using System.Diagnostics.Contracts;
+    using System.IO;
 
-	/// <summary>
+    /// <summary>
     /// Defines the public enumeration of supported HTTP methods.
     /// </summary>
     public enum HttpMethod
@@ -24,22 +24,22 @@ namespace Linq2Rest.Provider
         /// <summary>
         /// Shouldn't ever be explicitly used. Here as a default.
         /// </summary>
-        None = 0, 
+        None = 0,
 
         /// <summary>
         /// Represents the GET HTTP method.
         /// </summary>
-        Get, 
+        Get,
 
         /// <summary>
         /// Represents the PUT HTTP method.
         /// </summary>
-        Put, 
+        Put,
 
         /// <summary>
         /// Represents the POST HTTP method.
         /// </summary>
-        Post, 
+        Post,
 
         /// <summary>
         /// Represents the DELETE HTTP method.
@@ -69,16 +69,16 @@ namespace Linq2Rest.Provider
     {
         public Stream GetRequestStream()
         {
-            Contract.Ensures(Contract.Result<Stream>() != null);
-            Contract.Ensures(Contract.Result<Stream>().CanWrite);
+
+
 
             throw new NotImplementedException();
         }
 
         public Stream GetResponseStream()
         {
-            Contract.Ensures(Contract.Result<Stream>() != null);
-            Contract.Ensures(Contract.Result<Stream>().CanRead);
+
+
 
             throw new NotImplementedException();
         }

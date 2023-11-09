@@ -10,26 +10,26 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Provider.Writers
+namespace LinqCovertTools.Provider.Writers
 {
-	using System;
-	using System.IO;
+    using System;
+    using System.IO;
 
-	internal class StreamValueWriter : ValueWriterBase<Stream>
-	{
-		public override string Write(object value)
-		{
-			var stream = (Stream)value;
-			if (stream.CanSeek)
-			{
-				stream.Seek(0, SeekOrigin.Begin);
-			}
+    internal class StreamValueWriter : ValueWriterBase<Stream>
+    {
+        public override string Write(object value)
+        {
+            var stream = (Stream)value;
+            if (stream.CanSeek)
+            {
+                stream.Seek(0, SeekOrigin.Begin);
+            }
 
-			var buffer = new byte[stream.Length];
-			stream.Read(buffer, 0, buffer.Length);
-			var base64 = Convert.ToBase64String(buffer);
+            var buffer = new byte[stream.Length];
+            stream.Read(buffer, 0, buffer.Length);
+            var base64 = Convert.ToBase64String(buffer);
 
-			return string.Format("X'{0}'", base64);
-		}
-	}
+            return string.Format("X'{0}'", base64);
+        }
+    }
 }

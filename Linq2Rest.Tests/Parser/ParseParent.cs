@@ -10,28 +10,28 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Tests.Parser
+namespace LinqCovertTools.Tests.Parser
 {
-	public class ParseParent
-	{
-		public ParseObject Item { get; set; }
+    public class ParseParent
+    {
+        public ParseObject Item { get; set; }
 
-		public int Number { get; set; }
+        public int Number { get; set; }
 
-		public class ParseObject
-		{
-			public int Value { get; set; }
+        public class ParseObject
+        {
+            public int Value { get; set; }
 
-			public static ParseObject Parse(string input)
-			{
-				var value = int.Parse(input);
-				return new ParseObject { Value = value };
-			}
+            public static ParseObject Parse(string input)
+            {
+                var value = int.Parse(input);
+                return new ParseObject { Value = value };
+            }
 
-			public override string ToString()
-			{
-				return Value.ToString();
-			}
-		}
-	}
+            public override string ToString()
+            {
+                return Value.ToString();
+            }
+        }
+    }
 }

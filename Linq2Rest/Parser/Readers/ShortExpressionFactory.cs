@@ -10,22 +10,22 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Parser.Readers
+namespace LinqCovertTools.Parser.Readers
 {
-	using System;
-	using System.Linq.Expressions;
+    using System;
+    using System.Linq.Expressions;
 
-	internal class ShortExpressionFactory : ValueExpressionFactoryBase<short>
-	{
-		public override ConstantExpression Convert(string token)
-		{
-			short number;
-			if (short.TryParse(token, out number))
-			{
-				return Expression.Constant(number);
-			}
+    internal class ShortExpressionFactory : ValueExpressionFactoryBase<short>
+    {
+        public override ConstantExpression Convert(string token)
+        {
+            short number;
+            if (short.TryParse(token, out number))
+            {
+                return Expression.Constant(number);
+            }
 
-			throw new FormatException("Could not read " + token + " as Short.");
-		}
-	}
+            throw new FormatException("Could not read " + token + " as Short.");
+        }
+    }
 }

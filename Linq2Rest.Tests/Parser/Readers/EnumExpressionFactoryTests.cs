@@ -10,38 +10,38 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Tests.Parser.Readers
+namespace LinqCovertTools.Tests.Parser.Readers
 {
-	using System;
-	using Linq2Rest.Parser.Readers;
-	using NUnit.Framework;
+    using LinqCovertTools.Parser.Readers;
+    using NUnit.Framework;
+    using System;
 
-	[TestFixture]
-	public class EnumExpressionFactoryTests
-	{
-		private const string EnumString = "Linq2Rest.Tests.Choice'That'";
-		private EnumExpressionFactory _factory;
+    [TestFixture]
+    public class EnumExpressionFactoryTests
+    {
+        private const string EnumString = "LinqCovertTools.Tests.Choice'That'";
+        private EnumExpressionFactory _factory;
 
-		[SetUp]
-		public void Setup()
-		{
-			_factory = new EnumExpressionFactory();
-		}
+        [SetUp]
+        public void Setup()
+        {
+            _factory = new EnumExpressionFactory();
+        }
 
-		[Test]
-		public void WhenFilterIncludesCorrectEnumValueThenReturnedExpressionContainsEnumValue()
-		{
-			var expression = _factory.Convert(EnumString);
+        [Test]
+        public void WhenFilterIncludesCorrectEnumValueThenReturnedExpressionContainsEnumValue()
+        {
+            var expression = _factory.Convert(EnumString);
 
-			Assert.IsAssignableFrom<Choice>(expression.Value);
-		}
+            Assert.IsAssignableFrom<Choice>(expression.Value);
+        }
 
-		[Test]
-		public void WhenFilterIsIncorrectFormatThenThrows()
-		{
-			const string Parameter = "blah";
+        [Test]
+        public void WhenFilterIsIncorrectFormatThenThrows()
+        {
+            const string Parameter = "blah";
 
-			Assert.Throws<FormatException>(() => _factory.Convert(Parameter));
-		}
-	}
+            Assert.Throws<FormatException>(() => _factory.Convert(Parameter));
+        }
+    }
 }

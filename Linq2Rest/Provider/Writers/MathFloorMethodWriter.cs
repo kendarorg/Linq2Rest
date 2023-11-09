@@ -10,25 +10,24 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Provider.Writers
+namespace LinqCovertTools.Provider.Writers
 {
-	using System;
-	using System.Diagnostics.Contracts;
-	using System.Linq.Expressions;
+    using System;
+    using System.Linq.Expressions;
 
-	internal class MathFloorMethodWriter : MathMethodWriter
-	{
-		protected override string MethodName
-		{
-			get { return "floor"; }
-		}
+    internal class MathFloorMethodWriter : MathMethodWriter
+    {
+        protected override string MethodName
+        {
+            get { return "floor"; }
+        }
 
-		public override bool CanHandle(MethodCallExpression expression)
-		{
-			Contract.Assert(expression.Method != null);
+        public override bool CanHandle(MethodCallExpression expression)
+        {
 
-			return expression.Method.DeclaringType == typeof(Math)
-				   && expression.Method.Name == "Floor";
-		}
-	}
+
+            return expression.Method.DeclaringType == typeof(Math)
+                   && expression.Method.Name == "Floor";
+        }
+    }
 }

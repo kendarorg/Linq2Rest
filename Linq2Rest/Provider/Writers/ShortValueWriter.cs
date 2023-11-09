@@ -10,9 +10,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Provider.Writers
+namespace LinqCovertTools.Provider.Writers
 {
-	internal class ShortValueWriter : IntegerValueWriter<short>
-	{
-	}
+    internal class ShortValueWriter : IntegerValueWriter<short>
+    {
+    }
 }

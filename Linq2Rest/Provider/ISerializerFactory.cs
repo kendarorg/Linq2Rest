@@ -10,46 +10,46 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Provider
+namespace LinqCovertTools.Provider
 {
-	using System;
-	using System.Diagnostics.Contracts;
+    using System;
+    using System.Diagnostics.Contracts;
 
-	/// <summary>
-	/// Defines the public interface for a factory of <see cref="ISerializer{T}"/>.
-	/// </summary>
-	[ContractClass(typeof(SerializerFactoryContracts))]
-	public interface ISerializerFactory
-	{
-		/// <summary>
-		/// Creates an instance of an <see cref="ISerializer{T}"/>.
-		/// </summary>
-		/// <typeparam name="T">The item type for the serializer.</typeparam>
-		/// <returns>An instance of an <see cref="ISerializer{T}"/>.</returns>
-		ISerializer<T> Create<T>();
+    /// <summary>
+    /// Defines the public interface for a factory of <see cref="ISerializer{T}"/>.
+    /// </summary>
+    [ContractClass(typeof(SerializerFactoryContracts))]
+    public interface ISerializerFactory
+    {
+        /// <summary>
+        /// Creates an instance of an <see cref="ISerializer{T}"/>.
+        /// </summary>
+        /// <typeparam name="T">The item type for the serializer.</typeparam>
+        /// <returns>An instance of an <see cref="ISerializer{T}"/>.</returns>
+        ISerializer<T> Create<T>();
 
-		/// <summary>
-		/// Creates an instance of an <see cref="ISerializer{T}"/>.
-		/// </summary>
-		/// <typeparam name="T">The item type for the serializer.</typeparam>
-		/// <typeparam name="TSource">The item type to provide alias metadata for the serializer.</typeparam>
-		/// <returns>An instance of an <see cref="ISerializer{T}"/>.</returns>
-		ISerializer<T> Create<T, TSource>();
-	}
+        /// <summary>
+        /// Creates an instance of an <see cref="ISerializer{T}"/>.
+        /// </summary>
+        /// <typeparam name="T">The item type for the serializer.</typeparam>
+        /// <typeparam name="TSource">The item type to provide alias metadata for the serializer.</typeparam>
+        /// <returns>An instance of an <see cref="ISerializer{T}"/>.</returns>
+        ISerializer<T> Create<T, TSource>();
+    }
 
-	[ContractClassFor(typeof(ISerializerFactory))]
-	internal abstract class SerializerFactoryContracts : ISerializerFactory
-	{
-		public ISerializer<T> Create<T>()
-		{
-			Contract.Ensures(Contract.Result<ISerializer<T>>() != null);
-			throw new NotImplementedException();
-		}
+    [ContractClassFor(typeof(ISerializerFactory))]
+    internal abstract class SerializerFactoryContracts : ISerializerFactory
+    {
+        public ISerializer<T> Create<T>()
+        {
 
-		public ISerializer<T> Create<T, TSource>()
-		{
-			Contract.Ensures(Contract.Result<ISerializer<T>>() != null);
-			throw new NotImplementedException();
-		}
-	}
+            throw new NotImplementedException();
+        }
+
+        public ISerializer<T> Create<T, TSource>()
+        {
+
+            throw new NotImplementedException();
+        }
+    }
 }

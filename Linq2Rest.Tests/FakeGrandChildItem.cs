@@ -10,13 +10,13 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Tests
+namespace LinqCovertTools.Tests
 {
-	using System.Runtime.Serialization;
+    using System.Runtime.Serialization;
 
-	[DataContract]
-	public class FakeGrandChildItem
-	{
-		public string GrandChildStringValue { get; set; }
-	}
+    [DataContract]
+    public class FakeGrandChildItem
+    {
+        public string GrandChildStringValue { get; set; }
+    }
 }

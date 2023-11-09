@@ -10,105 +10,105 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Tests
+namespace LinqCovertTools.Tests
 {
-	using System;
-	using System.Collections.Specialized;
-	using System.Linq;
-	using Linq2Rest.Tests.Fakes;
-	using NUnit.Framework;
+    using LinqCovertTools.Tests.Fakes;
+    using NUnit.Framework;
+    using System;
+    using System.Collections.Specialized;
+    using System.Linq;
 
-	[TestFixture]
-	public class ModelFilterExtensionsTests
-	{
-		private FakeItem[] _source;
+    [TestFixture]
+    public class ModelFilterExtensionsTests
+    {
+        private FakeItem[] _source;
 
-		[SetUp]
-		public void TestSetup()
-		{
-			_source = new[]
-				          {
-					          new FakeItem
-						          {
-							          DoubleValue = 123d
-						          }
-				          };
-		}
+        [SetUp]
+        public void TestSetup()
+        {
+            _source = new[]
+                          {
+                              new FakeItem
+                                  {
+                                      DoubleValue = 123d
+                                  }
+                          };
+        }
 
-		[TestCase("DoubleValue gt blah")]
-		[TestCase("DateValue eq 123")]
-		[TestCase("DateValue eq datetime'123'")]
-		public void WhenFilteringWithInvalidFilterParametersThenThrows(string filter)
-		{
-			var parameters = new NameValueCollection
-				                 {
-					                 { "$filter", filter }
-				                 };
+        [TestCase("DoubleValue gt blah")]
+        [TestCase("DateValue eq 123")]
+        [TestCase("DateValue eq datetime'123'")]
+        public void WhenFilteringWithInvalidFilterParametersThenThrows(string filter)
+        {
+            var parameters = new NameValueCollection
+                                 {
+                                     { "$filter", filter }
+                                 };
 
-			Assert.Throws<FormatException>(() => _source.Filter(parameters));
-		}
+            Assert.Throws<FormatException>(() => _source.Filter(parameters));
+        }
 
-		[TestCase("DoubleValues")]
-		[TestCase("Date")]
-		[TestCase("'123'")]
-		public void WhenFilteringWithInvalidOrderingParametersThenThrows(string sorting)
-		{
-			var parameters = new NameValueCollection
-				                 {
-					                 { "$orderby", sorting }
-				                 };
+        [TestCase("DoubleValues")]
+        [TestCase("Date")]
+        [TestCase("'123'")]
+        public void WhenFilteringWithInvalidOrderingParametersThenThrows(string sorting)
+        {
+            var parameters = new NameValueCollection
+                                 {
+                                     { "$orderby", sorting }
+                                 };
 
-			Assert.Throws<FormatException>(() => _source.Filter(parameters));
-		}
+            Assert.Throws<FormatException>(() => _source.Filter(parameters));
+        }
 
-		[TestCase("DoubleValues")]
-		[TestCase("x")]
-		[TestCase("'123'")]
-		public void WhenFilteringWithInvalidTopParametersThenThrows(string top)
-		{
-			var parameters = new NameValueCollection
-				                 {
-					                 { "$top", top }
-				                 };
+        [TestCase("DoubleValues")]
+        [TestCase("x")]
+        [TestCase("'123'")]
+        public void WhenFilteringWithInvalidTopParametersThenThrows(string top)
+        {
+            var parameters = new NameValueCollection
+                                 {
+                                     { "$top", top }
+                                 };
 
-			Assert.Throws<FormatException>(() => _source.Filter(parameters));
-		}
+            Assert.Throws<FormatException>(() => _source.Filter(parameters));
+        }
 
-		[TestCase("DoubleValues")]
-		[TestCase("x")]
-		[TestCase("'123'")]
-		public void WhenFilteringWithInvalidSkipParametersThenThrows(string top)
-		{
-			var parameters = new NameValueCollection
-				                 {
-					                 { "$skip", top }
-				                 };
+        [TestCase("DoubleValues")]
+        [TestCase("x")]
+        [TestCase("'123'")]
+        public void WhenFilteringWithInvalidSkipParametersThenThrows(string top)
+        {
+            var parameters = new NameValueCollection
+                                 {
+                                     { "$skip", top }
+                                 };
 
-			Assert.Throws<FormatException>(() => _source.Filter(parameters));
-		}
+            Assert.Throws<FormatException>(() => _source.Filter(parameters));
+        }
 
-		[Test]
-		public void WhenFilteringOnInterfaceThenReturnsResults()
-		{
-			var points = new object[]
-						   {
-							   new DataPoint { Flags = new QualityFlags(100) }
-						   };
-			var nc = new NameValueCollection { { "$filter", "Flags/Value gt 64" } };
-			
-			CollectionAssert.IsNotEmpty(points.Cast<IDataPoint>().Filter(nc));
-		}
+        [Test]
+        public void WhenFilteringOnInterfaceThenReturnsResults()
+        {
+            var points = new object[]
+                           {
+                               new DataPoint { Flags = new QualityFlags(100) }
+                           };
+            var nc = new NameValueCollection { { "$filter", "Flags/Value gt 64" } };
 
-		[Test]
-		public void WhenFilteringOnConcreteTypeThenReturnsResults()
-		{
-			var points = new object[]
-						   {
-							   new DataPoint { Flags = new QualityFlags(100) }
-						   };
-			var nc = new NameValueCollection { { "$filter", "Flags/Value gt 64" } };
+            CollectionAssert.IsNotEmpty(points.Cast<IDataPoint>().Filter(nc));
+        }
 
-			CollectionAssert.IsNotEmpty(points.Cast<DataPoint>().Filter(nc));
-		}
-	}
+        [Test]
+        public void WhenFilteringOnConcreteTypeThenReturnsResults()
+        {
+            var points = new object[]
+                           {
+                               new DataPoint { Flags = new QualityFlags(100) }
+                           };
+            var nc = new NameValueCollection { { "$filter", "Flags/Value gt 64" } };
+
+            CollectionAssert.IsNotEmpty(points.Cast<DataPoint>().Filter(nc));
+        }
+    }
 }

@@ -10,37 +10,37 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Tests.Parser.Readers
+namespace LinqCovertTools.Tests.Parser.Readers
 {
-	using System;
-	using Linq2Rest.Parser.Readers;
-	using NUnit.Framework;
+    using LinqCovertTools.Parser.Readers;
+    using NUnit.Framework;
+    using System;
 
-	[TestFixture]
-	public class UnsignedLongExpressionFactoryTests
-	{
-		private UnsignedLongExpressionFactory _factory;
+    [TestFixture]
+    public class UnsignedLongExpressionFactoryTests
+    {
+        private UnsignedLongExpressionFactory _factory;
 
-		[SetUp]
-		public void Setup()
-		{
-			_factory = new UnsignedLongExpressionFactory();
-		}
+        [SetUp]
+        public void Setup()
+        {
+            _factory = new UnsignedLongExpressionFactory();
+        }
 
-		[Test]
-		public void WhenFilterIncludesUnsignedLongParameterThenReturnedExpressionContainsUnsignedLong()
-		{
-			var expression = _factory.Convert("123");
+        [Test]
+        public void WhenFilterIncludesUnsignedLongParameterThenReturnedExpressionContainsUnsignedLong()
+        {
+            var expression = _factory.Convert("123");
 
-			Assert.IsAssignableFrom<ulong>(expression.Value);
-		}
+            Assert.IsAssignableFrom<ulong>(expression.Value);
+        }
 
-		[Test]
-		public void WhenFilterIsIncorrectFormatThenThrows()
-		{
-			const string Parameter = "blah";
+        [Test]
+        public void WhenFilterIsIncorrectFormatThenThrows()
+        {
+            const string Parameter = "blah";
 
-			Assert.Throws<FormatException>(() => _factory.Convert(Parameter));
-		}
-	}
+            Assert.Throws<FormatException>(() => _factory.Convert(Parameter));
+        }
+    }
 }

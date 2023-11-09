@@ -10,28 +10,27 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Provider.Writers
+namespace LinqCovertTools.Provider.Writers
 {
-	using System;
-	using System.Diagnostics.Contracts;
-	using System.Linq.Expressions;
+    using System;
+    using System.Linq.Expressions;
 
-	internal class EqualsMethodWriter : IMethodCallWriter
-	{
-		public bool CanHandle(MethodCallExpression expression)
-		{
-			return expression.Method.Name == "Equals";
-		}
+    internal class EqualsMethodWriter : IMethodCallWriter
+    {
+        public bool CanHandle(MethodCallExpression expression)
+        {
+            return expression.Method.Name == "Equals";
+        }
 
-		public string Handle(MethodCallExpression expression, Func<Expression, string> expressionWriter)
-		{
-			Contract.Assert(expression.Arguments != null);
-			Contract.Assume(expression.Arguments.Count > 0);
+        public string Handle(MethodCallExpression expression, Func<Expression, string> expressionWriter)
+        {
 
-			return string.Format(
-				"{0} eq {1}", 
-				expressionWriter(expression.Object), 
-				expressionWriter(expression.Arguments[0]));
-		}
-	}
+
+
+            return string.Format(
+                "{0} eq {1}",
+                expressionWriter(expression.Object),
+                expressionWriter(expression.Arguments[0]));
+        }
+    }
 }

@@ -10,9 +10,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Parser.Readers
+namespace LinqCovertTools.Parser.Readers
 {
-	internal class ByteArrayExpressionFactory : ByteArrayExpressionFactoryBase<byte[]>
-	{
-	}
+    internal class ByteArrayExpressionFactory : ByteArrayExpressionFactoryBase<byte[]>
+    {
+    }
 }

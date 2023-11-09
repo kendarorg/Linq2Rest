@@ -10,22 +10,22 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Parser.Readers
+namespace LinqCovertTools.Parser.Readers
 {
-	using System;
-	using System.Linq.Expressions;
+    using System;
+    using System.Linq.Expressions;
 
-	internal class IntExpressionFactory : ValueExpressionFactoryBase<int>
-	{
-		public override ConstantExpression Convert(string token)
-		{
-			int number;
-			if (int.TryParse(token, out number))
-			{
-				return Expression.Constant(number);
-			}
+    internal class IntExpressionFactory : ValueExpressionFactoryBase<int>
+    {
+        public override ConstantExpression Convert(string token)
+        {
+            int number;
+            if (int.TryParse(token, out number))
+            {
+                return Expression.Constant(number);
+            }
 
-			throw new FormatException("Could not read " + token + " as integer.");
-		}
-	}
+            throw new FormatException("Could not read " + token + " as integer.");
+        }
+    }
 }

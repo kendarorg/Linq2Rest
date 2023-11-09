@@ -10,39 +10,39 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Tests
+namespace LinqCovertTools.Tests
 {
-	using System.Linq;
-	using Linq2Rest.Parser;
-	using NUnit.Framework;
+    using LinqCovertTools.Parser;
+    using NUnit.Framework;
+    using System.Linq;
 
-	public class SelectExpressionFactoryTests
-	{
-		private SelectExpressionFactory<FakeItem> _factory;
-		private FakeItem[] _items;
+    public class SelectExpressionFactoryTests
+    {
+        private SelectExpressionFactory<FakeItem> _factory;
+        private FakeItem[] _items;
 
-		[TestFixtureSetUp]
-		public void FixtureSetup()
-		{
-			var memberNameResolver = new MemberNameResolver();
-			_factory = new SelectExpressionFactory<FakeItem>(memberNameResolver, new RuntimeTypeProvider(memberNameResolver));
+        [OneTimeSetUp]
+        public void FixtureSetup()
+        {
+            var memberNameResolver = new MemberNameResolver();
+            _factory = new SelectExpressionFactory<FakeItem>(memberNameResolver, new RuntimeTypeProvider(memberNameResolver));
 
-			_items = new[]
-				{
-					new FakeItem { IntValue = 2, DoubleValue = 5 }, 
-					new FakeItem { IntValue = 1, DoubleValue = 4 }, 
-					new FakeItem { IntValue = 3, DoubleValue = 4 }
-				};
-		}
+            _items = new[]
+                {
+                    new FakeItem { IntValue = 2, DoubleValue = 5 },
+                    new FakeItem { IntValue = 1, DoubleValue = 4 },
+                    new FakeItem { IntValue = 3, DoubleValue = 4 }
+                };
+        }
 
-		[Test]
-		public void WhenApplyingSelectionThenReturnsObjectWithOnlySelectedPropertiesAsFields()
-		{
-			var expression = _factory.Create("Number").Compile();
+        [Test]
+        public void WhenApplyingSelectionThenReturnsObjectWithOnlySelectedPropertiesAsFields()
+        {
+            var expression = _factory.Create("Number").Compile();
 
-			var selection = _items.Select(expression);
+            var selection = _items.Select(expression);
 
-			Assert.True(selection.All(x => x.GetType().GetProperty("Number") != null));
-		}
-	}
+            Assert.True(selection.All(x => x.GetType().GetProperty("Number") != null));
+        }
+    }
 }

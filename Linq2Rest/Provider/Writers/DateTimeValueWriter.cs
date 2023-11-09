@@ -10,22 +10,22 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Provider.Writers
+namespace LinqCovertTools.Provider.Writers
 {
-	using System;
-	using System.Xml;
+    using System;
+    using System.Xml;
 
-	internal class DateTimeValueWriter : ValueWriterBase<DateTime>
-	{
-		public override string Write(object value)
-		{
-			var dateTimeValue = (DateTime)value;
+    internal class DateTimeValueWriter : ValueWriterBase<DateTime>
+    {
+        public override string Write(object value)
+        {
+            var dateTimeValue = (DateTime)value;
 
 #if !NETFX_CORE
-			return string.Format("datetime'{0}'", XmlConvert.ToString(dateTimeValue, XmlDateTimeSerializationMode.Utc));
+            return string.Format("datetime'{0}'", XmlConvert.ToString(dateTimeValue, XmlDateTimeSerializationMode.Utc));
 #else
 			return string.Format("datetime'{0}'", XmlConvert.ToString(dateTimeValue.ToUniversalTime()));
 #endif
-		}
-	}
+        }
+    }
 }

@@ -10,10 +10,10 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Tests.Fakes
+namespace LinqCovertTools.Tests.Fakes
 {
-	public interface IDataPoint : ITimeSeriesValue
-	{
-		object Extras { get; set; }
-	}
+    public interface IDataPoint : ITimeSeriesValue
+    {
+        object Extras { get; set; }
+    }
 }

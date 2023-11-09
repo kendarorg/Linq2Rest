@@ -10,30 +10,30 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Tests.Provider.Writers
+namespace LinqCovertTools.Tests.Provider.Writers
 {
-	using System;
-	using Linq2Rest.Provider.Writers;
-	using NUnit.Framework;
+    using LinqCovertTools.Provider.Writers;
+    using NUnit.Framework;
+    using System;
 
-	[TestFixture]
-	public class DateTimeOffsetValueWriterTests
-	{
-		private DateTimeOffsetValueWriter _writer;
+    [TestFixture]
+    public class DateTimeOffsetValueWriterTests
+    {
+        private DateTimeOffsetValueWriter _writer;
 
-		[SetUp]
-		public void Setup()
-		{
-			_writer = new DateTimeOffsetValueWriter();
-		}
+        [SetUp]
+        public void Setup()
+        {
+            _writer = new DateTimeOffsetValueWriter();
+        }
 
-		[Test]
-		public void WhenWritingDateTimeValueThenWritesString()
-		{
-			var value = new DateTimeOffset(2012, 5, 6, 16, 11, 00, TimeSpan.FromHours(2));
-			var result = _writer.Write(value);
+        [Test]
+        public void WhenWritingDateTimeValueThenWritesString()
+        {
+            var value = new DateTimeOffset(2012, 5, 6, 16, 11, 00, TimeSpan.FromHours(2));
+            var result = _writer.Write(value);
 
-			Assert.AreEqual("datetimeoffset'2012-05-06T16:11:00+02:00'", result);
-		}
-	}
+            Assert.AreEqual("datetimeoffset'2012-05-06T16:11:00+02:00'", result);
+        }
+    }
 }

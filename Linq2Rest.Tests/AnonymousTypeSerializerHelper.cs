@@ -10,13 +10,13 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Tests
+namespace LinqCovertTools.Tests
 {
-	using System;
-	using System.Reflection;
+    using System;
+    using System.Reflection;
 
-	internal static class AnonymousTypeSerializerHelper
-	{
-		public static readonly MethodInfo InnerChangeTypeMethod = typeof(Convert).GetMethod("ChangeType", new[] { typeof(object), typeof(Type) });
-	}
+    internal static class AnonymousTypeSerializerHelper
+    {
+        public static readonly MethodInfo InnerChangeTypeMethod = typeof(Convert).GetMethod("ChangeType", new[] { typeof(object), typeof(Type) });
+    }
 }

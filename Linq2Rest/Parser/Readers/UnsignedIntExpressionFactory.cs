@@ -10,22 +10,22 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Parser.Readers
+namespace LinqCovertTools.Parser.Readers
 {
-	using System;
-	using System.Linq.Expressions;
+    using System;
+    using System.Linq.Expressions;
 
-	internal class UnsignedIntExpressionFactory : ValueExpressionFactoryBase<uint>
-	{
-		public override ConstantExpression Convert(string token)
-		{
-			uint number;
-			if (uint.TryParse(token, out number))
-			{
-				return Expression.Constant(number);
-			}
+    internal class UnsignedIntExpressionFactory : ValueExpressionFactoryBase<uint>
+    {
+        public override ConstantExpression Convert(string token)
+        {
+            uint number;
+            if (uint.TryParse(token, out number))
+            {
+                return Expression.Constant(number);
+            }
 
-			throw new FormatException("Could not read " + token + " as Unsigned Integer.");
-		}
-	}
+            throw new FormatException("Could not read " + token + " as Unsigned Integer.");
+        }
+    }
 }

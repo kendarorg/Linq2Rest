@@ -10,37 +10,37 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Tests.Parser.Readers
+namespace LinqCovertTools.Tests.Parser.Readers
 {
-	using System;
-	using Linq2Rest.Parser.Readers;
-	using NUnit.Framework;
+    using LinqCovertTools.Parser.Readers;
+    using NUnit.Framework;
+    using System;
 
-	[TestFixture]
-	public class ShortExpressionFactoryTests
-	{
-		private ShortExpressionFactory _factory;
+    [TestFixture]
+    public class ShortExpressionFactoryTests
+    {
+        private ShortExpressionFactory _factory;
 
-		[SetUp]
-		public void Setup()
-		{
-			_factory = new ShortExpressionFactory();
-		}
+        [SetUp]
+        public void Setup()
+        {
+            _factory = new ShortExpressionFactory();
+        }
 
-		[Test]
-		public void WhenFilterIncludesShortParameterThenReturnedExpressionContainsShort()
-		{
-			var expression = _factory.Convert("123");
+        [Test]
+        public void WhenFilterIncludesShortParameterThenReturnedExpressionContainsShort()
+        {
+            var expression = _factory.Convert("123");
 
-			Assert.IsAssignableFrom<short>(expression.Value);
-		}
+            Assert.IsAssignableFrom<short>(expression.Value);
+        }
 
-		[Test]
-		public void WhenFilterIsIncorrectFormatThenThrows()
-		{
-			const string Parameter = "blah";
+        [Test]
+        public void WhenFilterIsIncorrectFormatThenThrows()
+        {
+            const string Parameter = "blah";
 
-			Assert.Throws<FormatException>(() => _factory.Convert(Parameter));
-		}
-	}
+            Assert.Throws<FormatException>(() => _factory.Convert(Parameter));
+        }
+    }
 }

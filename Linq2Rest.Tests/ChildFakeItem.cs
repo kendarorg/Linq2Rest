@@ -10,12 +10,12 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Tests
+namespace LinqCovertTools.Tests
 {
-	using System.Collections.Generic;
+    using System.Collections.Generic;
 
-	public class ChildFakeItem
-	{
-		public IEnumerable<string> Attributes { get; set; } 
-	}
+    public class ChildFakeItem
+    {
+        public IEnumerable<string> Attributes { get; set; }
+    }
 }

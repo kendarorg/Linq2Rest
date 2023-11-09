@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<LangVersion>latest</LangVersion>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<RootNamespace>LinqConvertTools.Tests</RootNamespace>
+		<ProjectGuid>{0D3564AF-F8C9-42A4-8A01-A4C95526FA28}</ProjectGuid>
+		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+		<EnableNETAnalyzers>True</EnableNETAnalyzers>
+		<AnalysisLevel>latest-all</AnalysisLevel>
+    <IsPackable>false</IsPackable>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<Company>Reimers.dk</Company>
+		<PackageId>LinqConvertTools.Tests</PackageId>
+		<Version>8.0.30703</Version>
+		<AssemblyName>LinqConvertTools.Tests</AssemblyName>
+		<AssemblyVersion>4.1.0.0</AssemblyVersion>
+		<AssemblyDescription>Generates OData style URL queries from LINQ queries and parses the queries to LINQ serverside.</AssemblyDescription>
+		<AssemblyProduct>LinqConvertTools</AssemblyProduct>
+	</PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Linq2Rest\LinqConvertTools.csproj" />
+  </ItemGroup>
+
+	<ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.0" />
+	  <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.4.0" />
+	  <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+	  <PackageReference Include="NUnit" Version="3.13.3" />
+	  <PackageReference Include="NUnit3TestAdapter" Version="4.3.1" />
+	  <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
+    <PackageReference Include="Moq" Version="4.18.2" />
+    <PackageReference Include="coverlet.collector" Version="3.2.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+	</ItemGroup>
+
+</Project>

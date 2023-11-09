@@ -10,13 +10,13 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Provider.Writers
+namespace LinqCovertTools.Provider.Writers
 {
-	internal class StringValueWriter : ValueWriterBase<string>
-	{
-		public override string Write(object value)
-		{
-			return string.Format("'{0}'", value);
-		}
-	}
+    internal class StringValueWriter : ValueWriterBase<string>
+    {
+        public override string Write(object value)
+        {
+            return string.Format("'{0}'", value);
+        }
+    }
 }

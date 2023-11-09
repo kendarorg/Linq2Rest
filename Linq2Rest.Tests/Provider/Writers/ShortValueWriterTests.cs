@@ -10,28 +10,28 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Tests.Provider.Writers
+namespace LinqCovertTools.Tests.Provider.Writers
 {
-	using Linq2Rest.Provider.Writers;
-	using NUnit.Framework;
+    using LinqCovertTools.Provider.Writers;
+    using NUnit.Framework;
 
-	[TestFixture]
-	public class ShortValueWriterTests
-	{
-		private ShortValueWriter _writer;
+    [TestFixture]
+    public class ShortValueWriterTests
+    {
+        private ShortValueWriter _writer;
 
-		[SetUp]
-		public void Setup()
-		{
-			_writer = new ShortValueWriter();
-		}
+        [SetUp]
+        public void Setup()
+        {
+            _writer = new ShortValueWriter();
+        }
 
-		[Test]
-		public void WhenWritingShortValueThenWritesString()
-		{
-			var result = _writer.Write((short)123);
+        [Test]
+        public void WhenWritingShortValueThenWritesString()
+        {
+            var result = _writer.Write((short)123);
 
-			Assert.AreEqual("123", result);
-		}
-	}
+            Assert.AreEqual("123", result);
+        }
+    }
 }

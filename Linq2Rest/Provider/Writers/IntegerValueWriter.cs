@@ -10,13 +10,13 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Provider.Writers
+namespace LinqCovertTools.Provider.Writers
 {
-	internal abstract class IntegerValueWriter<T> : ValueWriterBase<T>
-	{
-		public override string Write(object value)
-		{
-			return value.ToString();
-		}
-	}
+    internal abstract class IntegerValueWriter<T> : ValueWriterBase<T>
+    {
+        public override string Write(object value)
+        {
+            return value.ToString();
+        }
+    }
 }

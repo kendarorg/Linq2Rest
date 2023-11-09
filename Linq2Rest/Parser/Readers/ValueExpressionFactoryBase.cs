@@ -10,22 +10,22 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Parser.Readers
+namespace LinqCovertTools.Parser.Readers
 {
-	using System;
-	using System.Linq.Expressions;
+    using System;
+    using System.Linq.Expressions;
 
-	internal abstract class ValueExpressionFactoryBase<T> : IValueExpressionFactory
-	{
-		public bool Handles(Type type)
-		{
+    internal abstract class ValueExpressionFactoryBase<T> : IValueExpressionFactory
+    {
+        public bool Handles(Type type)
+        {
 #if !NETFX_CORE
-			return typeof(T) == type;
+            return typeof(T) == type;
 #else
 			return typeof(T).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo());
 #endif
-		}
+        }
 
-		public abstract ConstantExpression Convert(string token);
-	}
+        public abstract ConstantExpression Convert(string token);
+    }
 }

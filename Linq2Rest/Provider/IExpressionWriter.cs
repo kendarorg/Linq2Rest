@@ -10,29 +10,29 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Provider
+namespace LinqCovertTools.Provider
 {
-	using System;
-	using System.Linq.Expressions;
+    using System;
+    using System.Linq.Expressions;
 
-	/// <summary>
-	/// Defines the public interface for an expression visitor.
-	/// </summary>
-	public interface IExpressionWriter
-	{
-		///// <summary>
-		///// Generates a string representation of the passed expression.
-		///// </summary>
-		///// <param name="expression">The <see cref="Expression"/> to visit.</param>
-		///// <returns>A string value.</returns>
-		//string Write(Expression expression);
+    /// <summary>
+    /// Defines the public interface for an expression visitor.
+    /// </summary>
+    public interface IExpressionWriter
+    {
+        ///// <summary>
+        ///// Generates a string representation of the passed expression.
+        ///// </summary>
+        ///// <param name="expression">The <see cref="Expression"/> to visit.</param>
+        ///// <returns>A string value.</returns>
+        //string Write(Expression expression);
 
-		/// <summary>
-		/// Generates a string representation of the passed expression.
-		/// </summary>
-		/// <param name="expression">The <see cref="Expression"/> to visit.</param>
-		/// <param name="sourceType"></param>
-		/// <returns>A string value.</returns>
-		string Write(Expression expression, Type sourceType);
-	}
+        /// <summary>
+        /// Generates a string representation of the passed expression.
+        /// </summary>
+        /// <param name="expression">The <see cref="Expression"/> to visit.</param>
+        /// <param name="sourceType"></param>
+        /// <returns>A string value.</returns>
+        string Write(Expression expression, Type sourceType);
+    }
 }

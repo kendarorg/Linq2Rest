@@ -10,16 +10,16 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Provider.Writers
+namespace LinqCovertTools.Provider.Writers
 {
-	using System;
-	using System.Xml;
+    using System;
+    using System.Xml;
 
-	internal class DateTimeOffsetValueWriter : ValueWriterBase<DateTimeOffset>
-	{
-		public override string Write(object value)
-		{
-			return string.Format("datetimeoffset'{0}'", XmlConvert.ToString((DateTimeOffset)value));
-		}
-	}
+    internal class DateTimeOffsetValueWriter : ValueWriterBase<DateTimeOffset>
+    {
+        public override string Write(object value)
+        {
+            return string.Format("datetimeoffset'{0}'", XmlConvert.ToString((DateTimeOffset)value));
+        }
+    }
 }

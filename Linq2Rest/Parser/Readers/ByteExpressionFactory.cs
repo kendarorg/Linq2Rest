@@ -10,23 +10,23 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Parser.Readers
+namespace LinqCovertTools.Parser.Readers
 {
-	using System;
-	using System.Globalization;
-	using System.Linq.Expressions;
+    using System;
+    using System.Globalization;
+    using System.Linq.Expressions;
 
-	internal class ByteExpressionFactory : ValueExpressionFactoryBase<byte>
-	{
-		public override ConstantExpression Convert(string token)
-		{
-			byte number;
-			if (byte.TryParse(token, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out number))
-			{
-				return Expression.Constant(number);
-			}
+    internal class ByteExpressionFactory : ValueExpressionFactoryBase<byte>
+    {
+        public override ConstantExpression Convert(string token)
+        {
+            byte number;
+            if (byte.TryParse(token, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out number))
+            {
+                return Expression.Constant(number);
+            }
 
-			throw new FormatException("Could not read " + token + " as byte.");
-		}
-	}
+            throw new FormatException("Could not read " + token + " as byte.");
+        }
+    }
 }

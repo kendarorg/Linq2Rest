@@ -10,34 +10,33 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest.Provider.Writers
+namespace LinqCovertTools.Provider.Writers
 {
-	using System;
-	using System.Diagnostics.Contracts;
-	using System.Linq.Expressions;
+    using System;
+    using System.Linq.Expressions;
 
-	internal class StringIndexOfMethodWriter : IMethodCallWriter
-	{
-		public bool CanHandle(MethodCallExpression expression)
-		{
-			Contract.Assert(expression.Method != null);
+    internal class StringIndexOfMethodWriter : IMethodCallWriter
+    {
+        public bool CanHandle(MethodCallExpression expression)
+        {
 
-			return expression.Method.DeclaringType == typeof(string)
-				   && expression.Method.Name == "IndexOf";
-		}
 
-		public string Handle(MethodCallExpression expression, Func<Expression, string> expressionWriter)
-		{
-			Contract.Assert(expression.Arguments != null);
-			Contract.Assume(expression.Arguments.Count > 0);
+            return expression.Method.DeclaringType == typeof(string)
+                   && expression.Method.Name == "IndexOf";
+        }
 
-			var argumentExpression = expression.Arguments[0];
-			var obj = expression.Object;
+        public string Handle(MethodCallExpression expression, Func<Expression, string> expressionWriter)
+        {
 
-			Contract.Assume(obj != null);
-			Contract.Assume(argumentExpression != null);
 
-			return string.Format("indexof({0}, {1})", expressionWriter(obj), expressionWriter(argumentExpression));
-		}
-	}
+
+            var argumentExpression = expression.Arguments[0];
+            var obj = expression.Object;
+
+
+
+
+            return string.Format("indexof({0}, {1})", expressionWriter(obj), expressionWriter(argumentExpression));
+        }
+    }
 }

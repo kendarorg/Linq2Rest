@@ -10,7 +10,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Linq2Rest
+namespace LinqCovertTools
 {
     /// <summary>
     /// Settings
@@ -23,15 +23,15 @@ namespace Linq2Rest
         public static bool UseContainsInsteadOfSubstring { get; set; }
     }
 
-	internal static class StringConstants
-	{
-		internal const string OrderByParameter = "$orderby";
-		internal const string SelectParameter = "$select";
-		internal const string FilterParameter = "$filter";
-		internal const string SkipParameter = "$skip";
-		internal const string TopParameter = "$top";
+    internal static class StringConstants
+    {
+        internal const string OrderByParameter = "$orderby";
+        internal const string SelectParameter = "$select";
+        internal const string FilterParameter = "$filter";
+        internal const string SkipParameter = "$skip";
+        internal const string TopParameter = "$top";
         internal const string ExpandParameter = "$expand";
-		internal const string JsonMimeType = "application/json";
-		internal const string XmlMimeType = "application/xml";
-	}
+        internal const string JsonMimeType = "application/json";
+        internal const string XmlMimeType = "application/xml";
+    }
 }
