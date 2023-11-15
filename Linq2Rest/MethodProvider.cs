@@ -263,8 +263,6 @@ namespace LinqCovertTools
 
         public static MethodInfo GetAnyAllMethod(string name, Type collectionType)
         {
-
-
             var implementationType = GetIEnumerableImpl(collectionType);
 
             var elemType = implementationType.GetGenericArguments()[0];
@@ -282,8 +280,6 @@ namespace LinqCovertTools
 
         public static Type GetIEnumerableImpl(Type type)
         {
-
-
             // Get IEnumerable implementation. Either type is IEnumerable<T> for some T, 
             // or it implements IEnumerable<T> for some T. We need to find the interface.
             if (IsIEnumerable(type))
@@ -291,21 +287,15 @@ namespace LinqCovertTools
                 return type;
             }
 
-            var interfaces = type.FindInterfaces((m, o) => IsIEnumerable(m), null);
+            Type[] interfaces = type.FindInterfaces((m, o) => IsIEnumerable(m), null);
 
-
-
-            var t = interfaces.First();
+            Type t = interfaces[0];
 
             return t;
         }
 
         private static MethodBase GetGenericMethod(Type type, string name, Type[] typeArgs, Type[] argTypes, BindingFlags flags)
         {
-
-
-
-
             var typeArity = typeArgs.Length;
             var methods = type.GetMethods()
                 .Where(m => m.Name == name)
@@ -317,8 +307,6 @@ namespace LinqCovertTools
 
         private static bool IsIEnumerable(Type type)
         {
-
-
             return type.IsGenericType
                 && type.GetGenericTypeDefinition() == typeof(IEnumerable<>);
         }

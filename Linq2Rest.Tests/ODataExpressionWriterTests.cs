@@ -43,6 +43,36 @@ namespace LinqCovertTools.Tests
             Assert.AreEqual("GlobalID ne guid'00000000-0000-0000-0000-000000000000'", serialized);
         }
 
+        [Theory]
+        [TestCase("indexof(GivenName, 'test') eq 0")]
+        [TestCase("GivenName eq 'test'")]
+        [TestCase("GivenName ne null")]
+        [TestCase("startswith(GivenName, 'test')")]
+        [TestCase("endswith(GivenName, 'test')")]
+        [TestCase("length(GivenName) gt 1")]
+        [TestCase("tolower(GivenName) eq 'test'")]
+        [TestCase("toupper(GivenName) eq 'test'")]
+        [TestCase("trim(GivenName) eq 'test'")]
+        public void QueryReturnsEmptySetWhenProviderValueIsNull(string query)
+        {
+            // Arrange
+            ODataExpressionConverter converter = new();
+            List<User> users = new()
+            {
+                new()
+                {
+                    GivenName = null,
+                    FamilyName = "Parks"
+                }
+            };
+
+            // Act
+            Func<User, bool> converted = converter.Convert<User>(query).Compile();
+
+            // Assert
+            Assert.IsEmpty(users.Where(converted));
+        }
+
         [Test]
         public void ConvertsExpressionToString()
         {

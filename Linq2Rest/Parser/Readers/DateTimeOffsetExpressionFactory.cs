@@ -19,12 +19,13 @@ namespace LinqCovertTools.Parser.Readers
 
     internal class DateTimeOffsetExpressionFactory : ValueExpressionFactoryBase<DateTimeOffset>
     {
-        private static readonly Regex DateTimeOffsetRegex = new(@"datetimeoffset['\""]([TZ:\d-]+)['\""]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex DateTimeOffsetRegex = new(@"datetimeoffset['\""]([TZ:\d.+-]+)['\""]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         public override ConstantExpression Convert(string token)
         {
             var match = DateTimeOffsetRegex.Match(token);
-            if (match.Success && DateTimeOffset.TryParse(match.Groups[1].Value, out DateTimeOffset dateTimeOffset))
+            string dateTimeOffsetString = match.Groups[1].Value;
+            if (match.Success && DateTimeOffset.TryParse(dateTimeOffsetString, out DateTimeOffset dateTimeOffset))
             {
                 return Expression.Constant(dateTimeOffset);
             }

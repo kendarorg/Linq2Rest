@@ -42,14 +42,11 @@ namespace LinqCovertTools.Parser.Readers
     {
         public bool Handles(Type type)
         {
-
             throw new NotImplementedException();
         }
 
         public ConstantExpression Convert(string token)
         {
-
-
             throw new NotImplementedException();
         }
     }
