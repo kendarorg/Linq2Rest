@@ -50,9 +50,9 @@ namespace LinqCovertTools.Parser
         /// <param name="filter">The string representation of the filter.</param>
         /// <typeparam name="T">The <see cref="Type"/> of item to filter.</typeparam>
         /// <returns>An <see cref="Expression{TDelegate}"/> if the passed filter is valid, otherwise null.</returns>
-        public Expression<Func<T, bool>> Create<T>(string filter)
+        public Expression<Func<T, bool>> Create<T>(string filter, bool ignoreCase = false)
         {
-            return Create<T>(filter, CultureInfo.InvariantCulture);
+            return Create<T>(filter, CultureInfo.InvariantCulture, ignoreCase);
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace LinqCovertTools.Parser
         /// <param name="formatProvider">The <see cref="IFormatProvider"/> to use when reading the filter.</param>
         /// <typeparam name="T">The <see cref="Type"/> of item to filter.</typeparam>
         /// <returns>An <see cref="Expression{TDelegate}"/> if the passed filter is valid, otherwise null.</returns>
-        public Expression<Func<T, bool>> Create<T>(string filter, IFormatProvider formatProvider)
+        public Expression<Func<T, bool>> Create<T>(string filter, IFormatProvider formatProvider, bool ignoreCase = false)
         {
             if (string.IsNullOrWhiteSpace(filter))
             {
@@ -71,14 +71,11 @@ namespace LinqCovertTools.Parser
 
             var parameter = Expression.Parameter(typeof(T), "x");
 
-            var expression = CreateExpression<T>(filter, parameter, new List<ParameterExpression>(), null, formatProvider);
+            Expression? expression = CreateExpression<T>(filter, parameter, new List<ParameterExpression>(), null, formatProvider, ignoreCase);
 
-            if (expression != null)
-            {
-                return Expression.Lambda<Func<T, bool>>(expression, parameter);
-            }
-
-            throw new InvalidOperationException("Could not create valid expression from: " + filter);
+            return expression is null
+                ? throw new InvalidOperationException("Could not create valid expression from: " + filter)
+                : Expression.Lambda<Func<T, bool>>(expression, parameter);
         }
 
         private static Type? GetFunctionParameterType(string operation)
@@ -92,14 +89,14 @@ namespace LinqCovertTools.Parser
             }
         }
 
-        private static Expression GetOperation(string token, Expression? left, Expression right)
+        private static Expression GetOperation(string token, Expression? left, Expression right, bool ignoreCase)
         {
-            return left == null ? GetRightOperation(token, right) : GetNullSafeLeftRightOperation(token, left, right);
+            return left == null ? GetRightOperation(token, right) : GetNullSafeLeftRightOperation(token, left, right, ignoreCase);
         }
 
-        private static Expression GetNullSafeLeftRightOperation(string token, Expression left, Expression right)
+        private static Expression GetNullSafeLeftRightOperation(string token, Expression left, Expression right, bool ignoreCase)
         {
-            Expression binaryExpression = GetLeftRightOperation(token, left, right);
+            Expression binaryExpression = GetLeftRightOperation(token, left, right, ignoreCase);
             if (left is MemberExpression memberExpression && memberExpression.Expression?.NodeType == ExpressionType.MemberAccess && !memberExpression.Expression.Type.IsValueType)
             {
                 return Expression.AndAlso(Expression.NotEqual(_nullConstantExpression, memberExpression.Expression), binaryExpression);
@@ -112,7 +109,19 @@ namespace LinqCovertTools.Parser
             return binaryExpression;
         }
 
-        private static Expression GetLeftRightOperation(string token, Expression left, Expression right)
+        private static Expression GetCaseAwareLeftRightOperation(BinaryExpression binaryExpression, bool ignoreCase)
+        {
+            if (!ignoreCase || binaryExpression.Left.Type != typeof(string))
+            {
+                return binaryExpression;
+            }
+
+            Expression left = Expression.Call(binaryExpression.Left, MethodProvider.ToUpperMethod);
+            Expression right = Expression.Call(binaryExpression.Right, MethodProvider.ToUpperMethod);
+            return binaryExpression.Update(left, binaryExpression.Conversion, right);
+        }
+
+        private static Expression GetLeftRightOperation(string token, Expression left, Expression right, bool ignoreCase)
         {
             switch (token.ToUpperInvariant())
             {
@@ -125,18 +134,17 @@ namespace LinqCovertTools.Parser
                         var andExpression = Expression.And(leftValue, rightValue);
                         return Expression.Equal(andExpression, rightValue);
                     }
-
-                    return Expression.Equal(left, right);
+                    return GetCaseAwareLeftRightOperation(Expression.Equal(left, right), ignoreCase);
                 case "NE":
-                    return Expression.NotEqual(left, right);
+                    return GetCaseAwareLeftRightOperation(Expression.NotEqual(left, right), ignoreCase);
                 case "GT":
-                    return Expression.GreaterThan(left, right);
+                    return GetCaseAwareLeftRightOperation(Expression.GreaterThan(left, right), ignoreCase);
                 case "GE":
-                    return Expression.GreaterThanOrEqual(left, right);
+                    return GetCaseAwareLeftRightOperation(Expression.GreaterThanOrEqual(left, right), ignoreCase);
                 case "LT":
-                    return Expression.LessThan(left, right);
+                    return GetCaseAwareLeftRightOperation(Expression.LessThan(left, right), ignoreCase);
                 case "LE":
-                    return Expression.LessThanOrEqual(left, right);
+                    return GetCaseAwareLeftRightOperation(Expression.LessThanOrEqual(left, right), ignoreCase);
                 case "AND":
                     return Expression.AndAlso(left, right);
                 case "OR":
@@ -174,20 +182,28 @@ namespace LinqCovertTools.Parser
             return result;
         }
 
-        private static Expression? GetFunction(string function, Expression left, Expression? right, ParameterExpression sourceParameter, ICollection<ParameterExpression> lambdaParameters)
+        private static Expression? GetCaseAwareFunction(Expression instance, MethodInfo method, Expression[] parameters, bool ignoreCase)
+        {
+            Expression innerInstance = ignoreCase ? Expression.Call(instance, MethodProvider.ToUpperMethod) : instance;
+            Expression[] innerParameters = ignoreCase ? parameters.Select(x => Expression.Call(x, MethodProvider.ToUpperMethod)).ToArray() : parameters;
+
+            return Expression.Call(innerInstance, method, innerParameters);
+        }
+
+        private static Expression? GetFunction(string function, Expression left, Expression? right, ParameterExpression sourceParameter, ICollection<ParameterExpression> lambdaParameters, bool ignoreCase)
         {
             switch (function.ToUpperInvariant())
             {
                 case "SUBSTRINGOF":
-                    return Expression.Call(right, MethodProvider.ContainsMethod, new[] { left });
+                    return GetCaseAwareFunction(right, MethodProvider.ContainsMethod, new[] { left }, ignoreCase);
                 case "ENDSWITH":
-                    return Expression.AndAlso(Expression.NotEqual(left, _nullConstantExpression), Expression.Call(left, MethodProvider.EndsWithMethod, new[] { right }));
+                    return Expression.AndAlso(Expression.NotEqual(left, _nullConstantExpression), GetCaseAwareFunction(left, MethodProvider.EndsWithMethod, new[] { right }, ignoreCase));
                 case "STARTSWITH":
-                    return Expression.AndAlso(Expression.NotEqual(left, _nullConstantExpression), Expression.Call(left, MethodProvider.StartsWithMethod, new[] { right }));
+                    return Expression.AndAlso(Expression.NotEqual(left, _nullConstantExpression), GetCaseAwareFunction(left, MethodProvider.StartsWithMethod, new[] { right }, ignoreCase));
                 case "LENGTH":
                     return Expression.Property(left, MethodProvider.LengthProperty);
                 case "INDEXOF":
-                    return Expression.Call(left, MethodProvider.IndexOfMethod, new[] { right });
+                    return GetCaseAwareFunction(left, MethodProvider.IndexOfMethod, new[] { right }, ignoreCase);
                 case "SUBSTRING":
                     return Expression.Call(left, MethodProvider.SubstringMethod, new[] { right });
                 case "TOLOWER":
@@ -364,7 +380,7 @@ namespace LinqCovertTools.Parser
             return propertyExpression;
         }
 
-        private Expression? CreateExpression<T>(string filter, ParameterExpression sourceParameter, ICollection<ParameterExpression> lambdaParameters, Type? type, IFormatProvider formatProvider)
+        private Expression? CreateExpression<T>(string filter, ParameterExpression sourceParameter, ICollection<ParameterExpression> lambdaParameters, Type? type, IFormatProvider formatProvider, bool ignoreCase)
         {
             if (string.IsNullOrWhiteSpace(filter))
             {
@@ -375,7 +391,7 @@ namespace LinqCovertTools.Parser
 
             if (tokens.Any())
             {
-                return GetTokenExpression<T>(sourceParameter, lambdaParameters, type, formatProvider, tokens);
+                return GetTokenExpression<T>(sourceParameter, lambdaParameters, type, formatProvider, tokens, ignoreCase);
             }
 
             if (string.Equals(filter, "null", StringComparison.OrdinalIgnoreCase))
@@ -397,7 +413,8 @@ namespace LinqCovertTools.Parser
                     sourceParameter,
                     lambdaParameters,
                     type,
-                    formatProvider);
+                    formatProvider,
+                    ignoreCase);
 
                 if (negateExpression is not null && SupportsNegate(negateExpression.Type))
                 {
@@ -407,17 +424,17 @@ namespace LinqCovertTools.Parser
                 throw new InvalidOperationException("Cannot negate " + negateExpression);
             }
 
-            var expression = GetAnyAllFunctionExpression<T>(filter, sourceParameter, lambdaParameters, formatProvider)
+            var expression = GetAnyAllFunctionExpression<T>(filter, sourceParameter, lambdaParameters, formatProvider, ignoreCase)
                 ?? GetPropertyExpression<T>(filter, sourceParameter, lambdaParameters)
-                ?? GetArithmeticExpression<T>(filter, sourceParameter, lambdaParameters, type, formatProvider)
-                ?? GetFunctionExpression<T>(filter, sourceParameter, lambdaParameters, type, formatProvider)
+                ?? GetArithmeticExpression<T>(filter, sourceParameter, lambdaParameters, type, formatProvider, ignoreCase)
+                ?? GetFunctionExpression<T>(filter, sourceParameter, lambdaParameters, type, formatProvider, ignoreCase)
                 ?? GetParameterExpression(filter, type, formatProvider)
                 ?? GetBooleanExpression(filter, formatProvider);
 
             return expression ?? throw new InvalidOperationException("Could not create expression from: " + filter);
         }
 
-        private Expression? GetTokenExpression<T>(ParameterExpression parameter, ICollection<ParameterExpression> lambdaParameters, Type type, IFormatProvider formatProvider, ICollection<TokenSet> tokens)
+        private Expression? GetTokenExpression<T>(ParameterExpression parameter, ICollection<ParameterExpression> lambdaParameters, Type type, IFormatProvider formatProvider, ICollection<TokenSet> tokens, bool ignoreCase)
         {
             string? combiner = null;
             Expression? existing = null;
@@ -432,11 +449,12 @@ namespace LinqCovertTools.Parser
                                                         parameter,
                                                         lambdaParameters,
                                                         type ?? GetExpressionType<T>(tokenSet, parameter, lambdaParameters),
-                                                        formatProvider);
+                                                        formatProvider,
+                                                        ignoreCase);
 
                         return right is null
                                 ? null
-                                : GetOperation(tokenSet.Operation, null, right);
+                                : GetOperation(tokenSet.Operation, null, right, ignoreCase);
                     }
 
                     combiner = tokenSet.Operation;
@@ -448,23 +466,24 @@ namespace LinqCovertTools.Parser
                                                    parameter,
                                                    lambdaParameters,
                                                    type ?? GetExpressionType<T>(tokenSet, parameter, lambdaParameters),
-                                                   formatProvider);
+                                                   formatProvider,
+                                                   ignoreCase);
                     if (left is null)
                     {
                         return null;
                     }
 
                     Type? rightExpressionType = tokenSet.Operation == "and" ? null : left.Type;
-                    var right = CreateExpression<T>(tokenSet.Right, parameter, lambdaParameters, rightExpressionType, formatProvider);
+                    var right = CreateExpression<T>(tokenSet.Right, parameter, lambdaParameters, rightExpressionType, formatProvider, ignoreCase);
 
                     if (existing != null && !string.IsNullOrWhiteSpace(combiner))
                     {
-                        Expression? current = right is null ? null : GetOperation(tokenSet.Operation, left, right);
-                        existing = GetOperation(combiner, existing, current ?? left);
+                        Expression? current = right is null ? null : GetOperation(tokenSet.Operation, left, right, ignoreCase);
+                        existing = GetOperation(combiner, existing, current ?? left, ignoreCase);
                     }
                     else if (right != null)
                     {
-                        existing = GetOperation(tokenSet.Operation, left, right);
+                        existing = GetOperation(tokenSet.Operation, left, right, ignoreCase);
                     }
                 }
             }
@@ -472,7 +491,7 @@ namespace LinqCovertTools.Parser
             return existing;
         }
 
-        private Expression? GetArithmeticExpression<T>(string filter, ParameterExpression parameter, ICollection<ParameterExpression> lambdaParameters, Type type, IFormatProvider formatProvider)
+        private Expression? GetArithmeticExpression<T>(string filter, ParameterExpression parameter, ICollection<ParameterExpression> lambdaParameters, Type type, IFormatProvider formatProvider, bool ignoreCase)
         {
             var arithmeticToken = filter.GetArithmeticToken();
             if (arithmeticToken is null)
@@ -480,16 +499,16 @@ namespace LinqCovertTools.Parser
                 return null;
             }
 
-            var type1 = type ?? GetExpressionType<T>(arithmeticToken, parameter, lambdaParameters);
-            var leftExpression = CreateExpression<T>(arithmeticToken.Left, parameter, lambdaParameters, type1, formatProvider);
-            var rightExpression = CreateExpression<T>(arithmeticToken.Right, parameter, lambdaParameters, type1, formatProvider);
+            Type? type1 = type ?? GetExpressionType<T>(arithmeticToken, parameter, lambdaParameters);
+            Expression? leftExpression = CreateExpression<T>(arithmeticToken.Left, parameter, lambdaParameters, type1, formatProvider, ignoreCase);
+            Expression? rightExpression = CreateExpression<T>(arithmeticToken.Right, parameter, lambdaParameters, type1, formatProvider, ignoreCase);
 
             return leftExpression == null || rightExpression == null
                     ? null
-                    : GetLeftRightOperation(arithmeticToken.Operation, leftExpression, rightExpression);
+                    : GetLeftRightOperation(arithmeticToken.Operation, leftExpression, rightExpression, ignoreCase);
         }
 
-        private Expression? GetAnyAllFunctionExpression<T>(string filter, ParameterExpression sourceParameter, ICollection<ParameterExpression> lambdaParameters, IFormatProvider formatProvider)
+        private Expression? GetAnyAllFunctionExpression<T>(string filter, ParameterExpression sourceParameter, ICollection<ParameterExpression> lambdaParameters, IFormatProvider formatProvider, bool ignoreCase)
         {
             TokenSet? functionTokens = filter.GetAnyAllFunctionTokens();
             if (functionTokens is null)
@@ -504,7 +523,8 @@ namespace LinqCovertTools.Parser
                 sourceParameter,
                 lambdaParameters,
                 leftType,
-                formatProvider);
+                formatProvider,
+                ignoreCase);
 
             if (left is null)
             {
@@ -521,13 +541,13 @@ namespace LinqCovertTools.Parser
 
             var isLambdaAnyAllFunction = lambdaFilter.GetAnyAllFunctionTokens() != null;
             var right = isLambdaAnyAllFunction
-                ? GetAnyAllFunctionExpression<T>(lambdaFilter, lambdaParameter, lambdaParameters, formatProvider)
-                : CreateExpression<T>(lambdaFilter, sourceParameter, lambdaParameters, lambdaType, formatProvider);
+                ? GetAnyAllFunctionExpression<T>(lambdaFilter, lambdaParameter, lambdaParameters, formatProvider, ignoreCase)
+                : CreateExpression<T>(lambdaFilter, sourceParameter, lambdaParameters, lambdaType, formatProvider, ignoreCase);
 
-            return GetFunction(functionTokens.Operation, left, right, sourceParameter, lambdaParameters);
+            return GetFunction(functionTokens.Operation, left, right, sourceParameter, lambdaParameters, ignoreCase);
         }
 
-        private Expression? GetFunctionExpression<T>(string filter, ParameterExpression sourceParameter, ICollection<ParameterExpression> lambdaParameters, Type type, IFormatProvider formatProvider)
+        private Expression? GetFunctionExpression<T>(string filter, ParameterExpression sourceParameter, ICollection<ParameterExpression> lambdaParameters, Type type, IFormatProvider formatProvider, bool ignoreCase)
         {
             var functionTokens = filter.GetFunctionTokens();
             if (functionTokens is null)
@@ -540,7 +560,8 @@ namespace LinqCovertTools.Parser
                 sourceParameter,
                 lambdaParameters,
                 type ?? GetExpressionType<T>(functionTokens, sourceParameter, lambdaParameters),
-                formatProvider);
+                formatProvider,
+                ignoreCase);
 
             if (left is null)
             {
@@ -552,9 +573,10 @@ namespace LinqCovertTools.Parser
                                 sourceParameter,
                                 lambdaParameters,
                                 GetFunctionParameterType(functionTokens.Operation) ?? left.Type,
-                                formatProvider);
+                                formatProvider,
+                                ignoreCase);
 
-            return GetFunction(functionTokens.Operation, left, right, sourceParameter, lambdaParameters);
+            return GetFunction(functionTokens.Operation, left, right, sourceParameter, lambdaParameters, ignoreCase);
         }
 
         /// <summary>

@@ -26,7 +26,7 @@ namespace LinqCovertTools.Parser
         /// <param name="filter">The string representation of the filter.</param>
         /// <typeparam name="T">The <see cref="Type"/> of item to filter.</typeparam>
         /// <returns>An <see cref="Expression{TDelegate}"/> if the passed filter is valid, otherwise null.</returns>
-        Expression<Func<T, bool>> Create<T>(string filter);
+        Expression<Func<T, bool>> Create<T>(string filter, bool ignoreCase = false);
 
         /// <summary>
         /// Creates a filter expression from its string representation.
@@ -35,6 +35,6 @@ namespace LinqCovertTools.Parser
         /// <param name="formatProvider">The <see cref="IFormatProvider"/> to use when reading the filter.</param>
         /// <typeparam name="T">The <see cref="Type"/> of item to filter.</typeparam>
         /// <returns>An <see cref="Expression{TDelegate}"/> if the passed filter is valid, otherwise null.</returns>
-        Expression<Func<T, bool>> Create<T>(string filter, IFormatProvider formatProvider);
+        Expression<Func<T, bool>> Create<T>(string filter, IFormatProvider formatProvider, bool ignoreCase = false);
     }
 }

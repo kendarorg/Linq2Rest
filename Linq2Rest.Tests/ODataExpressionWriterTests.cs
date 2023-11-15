@@ -44,6 +44,62 @@ namespace LinqCovertTools.Tests
         }
 
         [Theory]
+        [TestCase("givenName eq 'john'")]
+        [TestCase("startswith(givenName, 'jo')")]
+        [TestCase("endswith(givenName, 'Hn')")]
+        [TestCase("indexof(givenName, 'j') eq 0")]
+        [TestCase("substring(givenName, 0) eq 'john'")]
+        [TestCase("substringof('OH', givenName)")]
+        public void CollectionShouldBeEmptyWhenCaseIsNotIgnored(string query)
+        {
+            // Arrange
+            ODataExpressionConverter converter = new();
+            List<User> users = new()
+            {
+                new User()
+                {
+                    GivenName = "John"
+                }
+            };
+
+
+            // Act
+            var predicate = converter.Convert<User>(query, false).Compile();
+            var results = users.Where(predicate);
+
+            // Assert
+            Assert.IsEmpty(results);
+        }
+
+        [Theory]
+        [TestCase("givenName eq 'john'")]
+        [TestCase("startswith(givenName, 'jo')")]
+        [TestCase("endswith(givenName, 'Hn')")]
+        [TestCase("indexof(givenName, 'j') eq 0")]
+        [TestCase("substring(givenName, 0) eq 'john'")]
+        [TestCase("substringof('OH', givenName)")]
+        public void CollectionShouldNotBeEmptyWhenCaseIsIgnored(string query)
+        {
+            // Arrange
+            ODataExpressionConverter converter = new();
+            List<User> users = new()
+            {
+                new User()
+                {
+                    GivenName = "John"
+                }
+            };
+
+
+            // Act
+            var predicate = converter.Convert<User>(query, true).Compile();
+            var results = users.Where(predicate);
+
+            // Assert
+            Assert.IsNotEmpty(results);
+        }
+
+        [Theory]
         [TestCase("indexof(GivenName, 'test') eq 0")]
         [TestCase("GivenName eq 'test'")]
         [TestCase("GivenName ne null")]

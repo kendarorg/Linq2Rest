@@ -34,8 +34,8 @@ namespace LinqCovertTools
         /// <summary>
         /// Initializes a new instance of the <see cref="ODataExpressionConverter"/> class.
         /// </summary>
-        public ODataExpressionConverter()
-            : this(Array.Empty<IValueWriter>(), Array.Empty<IValueExpressionFactory>())
+        public ODataExpressionConverter(bool ignoreCase = false)
+            : this(Array.Empty<IValueWriter>(), Array.Empty<IValueExpressionFactory>(), null, ignoreCase)
         {
         }
 
@@ -45,7 +45,7 @@ namespace LinqCovertTools
         /// <param name="valueWriters">The custom value writers to use.</param>
         /// <param name="valueExpressionFactories">The custom expression writers to use.</param>
         /// <param name="memberNameResolver">The custom <see cref="IMemberNameResolver"/> to use.</param>
-        public ODataExpressionConverter(IEnumerable<IValueWriter> valueWriters, IEnumerable<IValueExpressionFactory> valueExpressionFactories, IMemberNameResolver memberNameResolver = null)
+        public ODataExpressionConverter(IEnumerable<IValueWriter> valueWriters, IEnumerable<IValueExpressionFactory> valueExpressionFactories, IMemberNameResolver? memberNameResolver = null, bool ignoreCase = false)
         {
             var writers = (valueWriters ?? Enumerable.Empty<IValueWriter>()).ToArray();
             var expressionFactories = (valueExpressionFactories ?? Enumerable.Empty<IValueExpressionFactory>()).ToArray();
@@ -72,9 +72,9 @@ namespace LinqCovertTools
         /// <param name="filter">The query to convert.</param>
         /// <typeparam name="T">The parameter type.</typeparam>
         /// <returns>An expression tree for the passed query.</returns>
-        public Expression<Func<T, bool>> Convert<T>(string filter)
+        public Expression<Func<T, bool>> Convert<T>(string filter, bool ignoreCase = false)
         {
-            return _parser.Create<T>(filter);
+            return _parser.Create<T>(filter, ignoreCase);
         }
 
         [ContractInvariantMethod]
